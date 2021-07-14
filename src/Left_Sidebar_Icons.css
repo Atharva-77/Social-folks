@@ -1,0 +1,15 @@
+.Sidebar_Icons
+{
+    display: flex;
+    align-items: center;
+    padding: 1.3rem;
+    font-size: 1.3rem;
+    /* border: 2px solid red; */
+    /* color: blueviolet; */
+}
+.icon
+{
+    font-size: 2rem !important;
+    padding-right: 5px;
+    color:#1da1f2;
+}
