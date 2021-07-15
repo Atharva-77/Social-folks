@@ -2,14 +2,39 @@
 {
     display: flex;
     align-items: center;
-    padding: 1.3rem;
-    font-size: 1.3rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    padding-left: 2rem;
+    font-weight: 500;
     /* border: 2px solid red; */
     /* color: blueviolet; */
 }
 .icon
 {
-    font-size: 2rem !important;
+    font-size: 1.5rem !important;
     padding-right: 5px;
-    color:#1da1f2;
+    /* color:#1da1f2; */
+    color:rgb(54, 53, 53);
+
 }
+.Sidebar_Icons:hover
+{
+    background-color: rgb(236, 235, 235);
+    cursor:pointer;
+    border-radius: 30px;
+
+
+}
+
+.Sidebar_Icons:hover .icon
+{
+        color:#1da1f2;
+
+}
+.Sidebar_Icons:hover .name
+{
+        color:#1da1f2;
+        font-weight: 800;
+
+}
+

@@ -4,7 +4,8 @@ import './Left_Sidebar_Icons.css'
 function Left_Sidebar_Icons({name,Icons}) {
     return (
         <div className="Sidebar_Icons">
-           <Icons className="icon"/> {name}
+           <Icons className="icon"/> 
+           <div className="name">{name}</div>
         </div>
     )
 }

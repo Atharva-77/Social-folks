@@ -1,11 +1,33 @@
 .Left_Sidebar
 {
-    flex:0.25;
+    flex:0.2;
     border:2px solid black;
 }
 .main_icon
 {
-     padding-left: 1.3rem;
+     padding-left: 2rem;
      font-size: 2.2rem !important;
      color: #1da1f2;
+}
+.post_button
+{
+ color: white;
+ background-color: #1da1f2;
+ font-size: large;
+ padding: 10px 80px;
+ margin-left: 1rem;
+ margin-bottom: 1rem;
+ /* border: 1px solid red; */
+ border:none;
+ border-radius: 20px;
+ margin-top: 1rem;
+ cursor:pointer;
+
+ /* font-weight: 700; */
+}
+
+.post_button:hover
+{
+    font-weight: 700;
+    background-color: #0d9af1;
 }

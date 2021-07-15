@@ -18,7 +18,7 @@ function Left_Sidebar() {
             <Left_Sidebar_Icons name="Bookmark" Icons={BookmarkIcon } />
             <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} />
             
-            
+            <button className="post_button">+ Post</button>
             
         </div>
     )
