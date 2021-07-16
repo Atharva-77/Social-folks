@@ -1,6 +1,27 @@
 .HomePage
 {
     flex:0.55;
-    border:2px solid black;
+    /* border:2px solid rgb(233, 33, 33); */
+    border-right: 1px solid lightgray;
+    /* overflow-y: scroll; */
+   
+
+}
+h2
+{
+    margin:0.5rem;
+    /* font-size: x-large; */
+    /* font-weight: 570; */
+    margin-left: 1rem;
+    margin-top: 0.6rem;
+    /* margin-bottom: 2rem; */
+    padding-bottom: 0.2rem;
+}
+.HomePage_title
+{
+    position: sticky;
+    top:0;
+    /* z-index: 100; */
+    border-bottom: 1px solid lightgray;
 
 }

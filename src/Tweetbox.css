@@ -1,0 +1,48 @@
+.Tweetbox
+{
+    /* display: flex; */
+    padding:2rem;
+    border-bottom: 12px solid rgb(235, 235, 235);
+}
+
+
+.Tweetbox_avatar_input
+{
+    display: flex;
+}
+
+.Tweetbox_avatar
+{
+    margin-right: 2rem;
+}
+.Tweetbox_input
+{
+    border:none;
+    height:40px;
+    width:100%;
+    font-size: 15px;
+}
+input[type="text"]
+{
+    font-size:1.2rem;
+}
+::placeholder 
+{
+    font-size: 1.2rem;
+  }
+
+.Tweetbox_button
+{
+    color: white;
+    background-color: #1da1f2;
+    font-size: large;
+    padding: 10px 80px;
+    margin-left: 1.4rem;
+    margin-bottom: 1rem;
+    /* border: 1px solid red; */
+    border:none;
+    border-radius: 20px;
+    margin-top: 1rem;
+    cursor:pointer;
+   
+}
