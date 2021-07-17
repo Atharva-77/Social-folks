@@ -1,7 +1,7 @@
 .Tweetbox
 {
     /* display: flex; */
-    padding:2rem;
+    padding:2rem 2rem 1rem 2rem;
     border-bottom: 12px solid rgb(235, 235, 235);
 }
 
@@ -22,12 +22,23 @@
     width:100%;
     font-size: 15px;
 }
+
+.Tweetbox_img_input
+{
+    border:none;
+    margin-top: 2px;
+    height:30px;
+    width:100%;
+    font-size: 15px;
+
+}
 input[type="text"]
 {
     font-size:1.2rem;
 }
-::placeholder 
+.Tweetbox_avatar_input ::placeholder 
 {
+    color: #1da1f2;
     font-size: 1.2rem;
   }
 
@@ -35,14 +46,22 @@ input[type="text"]
 {
     color: white;
     background-color: #1da1f2;
+    
     font-size: large;
-    padding: 10px 80px;
-    margin-left: 1.4rem;
-    margin-bottom: 1rem;
-    /* border: 1px solid red; */
+   
+    padding: 11px 30px;
+    margin-left: 530px;
+    
     border:none;
     border-radius: 20px;
     margin-top: 1rem;
     cursor:pointer;
+    
    
+}
+
+.Tweetbox_button:hover
+{
+    font-weight: 700;
+    background-color: #0d9af1;
 }
