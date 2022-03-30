@@ -18,7 +18,7 @@ function HomePage() {
                   postText="The early stage VC community is so tight, if founders exaggerate / over represent their company while fundraising it usually comes back to bite them quick.
 
                   syndicate leads on angel list though… seem to have a much looser feedback mechanism with fewer consequences"
-                  imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                  imageUrl="https://media.giphy.com/media/FdRnTOHG0qP0eur2fA/giphy.gif"
                   verified="True"/>
 
 <Post 

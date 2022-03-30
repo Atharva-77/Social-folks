@@ -36,7 +36,7 @@ function Post({Icon,displayName, username, postText, imageUrl, verified}) {
                     <ChatBubbleOutlineIcon fontSize="small" />
                     <RepeatIcon fontSize="small" />
                     <FavoriteBorderIcon fontSize="small" />
-                    <PublishIcon fontSize="small" />
+                    {/* <PublishIcon fontSize="small" /> */}
               </div>
 
         </div>
