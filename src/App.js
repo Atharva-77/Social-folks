@@ -10,20 +10,30 @@ import Register from './Register';
 function App() {
   return (
     <div className="App">
+       
      
       <Router >
       <Switch >
         
-        {/* <div className="sidebar"> */}
+       
             
             <Route path="/register">
-              <Register/>
+               <Register/>
             </Route>
 
             <Route path="/login">
-              <Login/>
+               <Login/>
             </Route> 
-        {/* </div> */}
+
+            <Route path="/">
+              <div className="sidebar">
+                 
+                  <Sidebar />
+                  <HomePage />
+                  <Right_sidebar />
+
+               </div>
+           </Route>
 
       </ Switch>
       </ Router>

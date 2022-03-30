@@ -1,6 +1,7 @@
 .Tweetbox
 {
-    /* display: flex; */
+    display: flex;
+    flex-direction: column;
     padding:2rem 2rem 1rem 2rem;
     border-bottom: 12px solid rgb(235, 235, 235);
 }
@@ -50,8 +51,17 @@ input[type="text"]
     font-size: large;
    
     padding: 11px 30px;
-    margin-left: 530px;
     
+
+    /*align POST button to right  */
+    /* display: flex; */
+    /* justify-content: flex-end; */
+    /* margin-left: auto; */
+    /* margin-right: 0; */
+    float: right;
+    /* margin-left: 450px; */
+    /* align-self: flex-end; */
+
     border:none;
     border-radius: 20px;
     margin-top: 1rem;
@@ -64,4 +74,9 @@ input[type="text"]
 {
     font-weight: 700;
     background-color: #0d9af1;
+}
+
+.button_div
+{
+    float: right;
 }

@@ -24,8 +24,12 @@ function Tweetbox() {
                 <Avatar className="Tweetbox_avatar" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
                 <textarea className="Tweetbox_input" placeholder="Write a Post?" type ="text" name="YO" onChange={(e)=>seta(e.target.value)} onKeyDown={handleKeyDown}/> 
             </div>
-            <input className="Tweetbox_img_input" placeholder="Optional: Enter image url"/>
+            {/* <input className="Tweetbox_img_input" placeholder="Optional: Enter image url"/> */}
+
+            <div className='button_div'>
             <button className="Tweetbox_button" type="submit" onClick={submit_form}>Post</button>
+            </div>
+            
         {/* </form> */}
         
         </div>
