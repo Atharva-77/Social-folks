@@ -5,6 +5,7 @@ import HomePage from './HomePage';
 import Right_sidebar from './Right_Sidebar';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Login from './Login';
+import Register from './Register';
 
 function App() {
   return (
@@ -14,7 +15,11 @@ function App() {
       <Switch >
         
         {/* <div className="sidebar"> */}
-         
+            
+            <Route path="/register">
+              <Register/>
+            </Route>
+
             <Route path="/login">
               <Login/>
             </Route> 
