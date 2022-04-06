@@ -75,8 +75,17 @@ input[type="text"]
     font-weight: 700;
     background-color: #0d9af1;
 }
-
+/* 
 .button_div
 {
     float: right;
+} */
+
+button:disabled,
+button[disabled]:hover{
+  
+  background-color: rgb(173, 167, 167);
+  font-weight: 400;
+  /* cursor:context-menu; */
+
 }
