@@ -7,6 +7,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import PublishIcon from '@material-ui/icons/Publish';
 
 function Post({Icon,displayName, username, postText, imageUrl, verified}) {
+    console.log("js.POST",displayName,username);
     return (
         <div className="Post">
 

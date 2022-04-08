@@ -29,8 +29,12 @@ const protect = async(req,res,next)=> {
         }
     }
         
-    // else
-    // console.log("ERR wala",req.headers.authorizations);
+    else
+    {
+        res.status(401).send("Fail.NOt auth")
+        // throw new Error("NOt auth re baba")
+        // console.log("Not found");
+    }
 
     next();
 }

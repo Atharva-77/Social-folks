@@ -18,6 +18,7 @@ router.post('/add',async(req,res)=>
     {
         console.log("LOGG",req.body);
         const Name=req.body.name
+        const username=req.body.username
         const email=req.body.email
         const password=req.body.password
         // const confirmPassword=req.body.confirmPassword
@@ -34,18 +35,20 @@ router.post('/add',async(req,res)=>
             // {
                  const newUser=new RegisterDb({
                      Name,
+                     username,
                      email,
                      password,
                     //  confirmPassword
                  })
          
-                 console.log(newUser.Name,newUser.email,newUser.password)
+                 console.log(newUser.Name,newUser.username,newUser.email,newUser.password)
 
                 newUser.save()
                  .then(()=>res.status(201).json(
                      {
                         id:newUser._id,
                         name:newUser.Name,
+                        username:newUser.username,
                         email:email,
                         isAdmin:newUser.isAdmin,
                         token:generateToken(newUser._id)

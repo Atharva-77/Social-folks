@@ -52,7 +52,7 @@ router.post('/add',async(req,res)=>
 })
 
 
-router.get('/profile',protect,async(req,res)=>
+router.get('/profile',protect,(req,res)=>
 {
     console.log("Profile mai",req.userAuth);
 
