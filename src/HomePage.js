@@ -8,30 +8,45 @@ import axios from 'axios';
 function HomePage() {
    
     const [data, setdata] = useState('')
+    const [reload,setreload]=useState(0)
     useEffect(() => 
     {
         axios.get(`http://localhost:4000/post/allpost`)
         .then(res=>
             {
-                console.log("HomePg RES.DATA ",(res.data));
+                // console.log("HomePg RES.DATA ",(res.data));
                 setdata(res.data);
+                setreload(0)
                 
                 
             })
 
-    }, [])
-{   var result = Object.keys(data).map((key) => [data[key]]);
-    console.log("RESULT",result,typeof(result));}
+    }, [reload])
 
-// {console.log("data", data[0].content,typeof(data),Object.keys(data).length,Object.keys(data));}
-{(typeof(data)!='undefined')?
-   console.log("data",typeof(data),Object.keys(data).length,Object.keys(data))
-    // console.log("data", data[0].content,typeof(data),Object.keys(data).length,Object.keys(data))
+        { 
+            var result = Object.keys(data).map((key) => [data[key]]);
+            console.log("RESULT",result,typeof(result));
+        }
 
-    :
-    console.log("data ELSE")
+        // {console.log("data", data[0].content,typeof(data),Object.keys(data).length,Object.keys(data));}
+        // {  (typeof(data)!='undefined') 
+        //     ?
+        //          console.log("data",typeof(data),Object.keys(data).length,Object.keys(data))
+        //          // console.log("data", data[0].content,typeof(data),Object.keys(data).length,Object.keys(data))
 
-}
+        //     :
+        //          console.log("data ELSE")
+
+        // }
+
+        const parentFunc=()=>
+        {
+            console.log("clicked");
+            setreload(1);
+            // alert("Button clicked")
+        }
+
+
 
     return (
         <div className="HomePage">
@@ -39,7 +54,7 @@ function HomePage() {
                 <h2>Home</h2>
             </div>
 
-            <Tweetbox />
+            <Tweetbox parentHandler={()=>parentFunc()}/>
             {/* <Post 
                   Icon={Avatar}  
                   displayName="Atharva Shirode"
@@ -83,6 +98,7 @@ function HomePage() {
                 // {
                     result.map((i)=>(
                         <Post 
+                            key={i[0]._id}
                             Icon={Avatar}  
                             displayName={i[0].postedBy.Name}
                             username={i[0].postedBy.username}

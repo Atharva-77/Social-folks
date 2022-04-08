@@ -3,16 +3,16 @@ import React, { useState } from 'react'
 import './Tweetbox.css';
 import axios from 'axios';
 
-function Tweetbox() {
+function Tweetbox(props) {
 
     const [content, setcontent] = useState('')
     const [content2, setcontent2] = useState('')
     
-    console.log("TweetBox",content,typeof(undefined)=='undefined');
+    // console.log("TweetBox",content,typeof(undefined)=='undefined');
     
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
-          console.log('do validate',content,content.length)
+        //   console.log('do validate',content,content.length)
          
           //content data dosen't get trimmed
         //   var x=content.trim()
@@ -29,29 +29,41 @@ function Tweetbox() {
     {
         setcontent(content.trim());
         var x=content.trim()
-        console.log("POST:-",content,content.length,x,x.length)
+        // console.log("POST:-",content,content.length,x,x.length)
         
-        console.log("TRIM:-",content.trim(),content.trim().length)
+        // console.log("TRIM:-",content.trim(),content.trim().length)
         setcontent('')
-        console.log("POST35:-",content,content.length)
+        // console.log("POST35:-",content,content.length)
         
-        const config={
-            headers:{
+        const config=
+        {
+            headers:
+            {
                 'Content-Type':"application/json",
                 Authorization:`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGZlZDdlOGNkMzhhY2NkYWZkMDgyNiIsImlhdCI6MTY0OTQwNTM0NiwiZXhwIjoxNjUxOTk3MzQ2fQ.TUcvRXEKqNPrlZUOPAtcgFZFg3tNmg8dgk7u_tgnir8`
             }
         }
-        console.log(config);
+       
+        // console.log(config);
         const content_data=
         {
-            "content":content
+            "content":content.trim()
         }
 
         axios.post(`http://localhost:4000/post/add`,content_data,config)
-        .then(res => console.log("AXIOS:-",res.data))
+        .then( res =>
+                {
+                    console.log("AXIOS:-",res.data); 
+                    console.log("PROPS.parentHandler",props.parentHandler); 
+                    props.parentHandler();
+                }
+            )
+
+        // console.log("PROPS.abc",props.greeted);
+        // props.greeted();
     }
    
-    {        console.log("POST38:-",content,content.length)}
+    //  {console.log("POST38:-",content,content.length)}
 
     return (
         <div className="Tweetbox">
@@ -69,7 +81,9 @@ function Tweetbox() {
                 {typeof(content)!='undefined' && content.trim().length>0   
                 ?
                     <button className="Tweetbox_button" type="submit" onClick={submit_form}>Post</button>   
-                 :  <button disabled className="Tweetbox_button" type="submit" onClick={submit_form}>Post</button>}
+                 :  <button disabled className="Tweetbox_button" type="submit" onClick={submit_form} >Post</button>}
+
+                 {/* <button onClick={props.greeted}>Hi</button> */}
             </div>
             
         {/* </form> */}

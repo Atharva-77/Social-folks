@@ -7,7 +7,9 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import PublishIcon from '@material-ui/icons/Publish';
 
 function Post({Icon,displayName, username, postText, imageUrl, verified}) {
-    console.log("js.POST",displayName,username);
+   
+    // console.log("js.POST",displayName,username);
+   
     return (
         <div className="Post">
 
@@ -24,13 +26,13 @@ function Post({Icon,displayName, username, postText, imageUrl, verified}) {
                     <VerifiedUserIcon className="Post_verified"/>
                     {/* </div> */}
                     
-                    <div className="Post_username">{username}</div>
+                    <div className="Post_username">@{username}</div>
                 
               </div>
 
               <div className="Post_text_img">
                     <p className="Post_postText">{postText}</p>
-                    <img className="Post_img" src={imageUrl} />
+                    {/* <img className="Post_img" src={imageUrl} /> */}
               </div>
                 
               <div className="Post_bottomIcons">
