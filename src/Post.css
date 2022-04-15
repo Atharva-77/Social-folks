@@ -1,9 +1,26 @@
 .Post
 {
     /* display: flex; */
-    margin:1rem;
+    /* margin:1rem; */
+    padding: 1rem;
     border-bottom: 1px solid lightgray;
-    margin-bottom: 1.5rem;
+    /* margin-top:1rem; */
+    /* margin-left: 1rem; */
+    /* margin-right: 1rem; */
+    /* margin-bottom: 0rem; */
+    padding-bottom: 0rem;
+    cursor: pointer;
+    /* line-height: 30px;
+    height: 40px; */
+    /* color:#7c7f80; */
+
+}
+.Post:hover
+{
+    background-color:rgb(243, 243, 243,0.4);
+    /* margin: 1rem; */
+    /* margin-bottom: 0rem; */
+    /* line-height: 29px; */
 }
 .Post_header
 {
@@ -20,6 +37,12 @@
 {
     font-weight: 800;
     margin-right: 2px;
+}
+
+.Post_displayName:hover
+{
+    text-decoration: underline;
+    /* color: red; */
 }
 .Post_verified
 {
@@ -57,10 +80,54 @@
 {
     display: flex;
     justify-content: space-evenly;
+    color: #5c5d5e;
+    margin-bottom: 0.5rem;
+    /* font-size: large !important; */
+    /* padding: 0 10px; */
+    /* margin: 5px; */
+   
 }
 
-.Post_bottomIcons
+/* Icons hovering */
+.Post_bottomIcons .icon-like
 {
-    color: #5c5d5e;
-    margin-bottom: 1.1rem;
+    padding: 6px;
+}
+
+.Post_bottomIcons .icon-like:hover
+{
+    color: red;
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 50%;
+  
+}
+
+
+
+.Post_bottomIcons .icon-comment
+{
+    padding: 6px;
+}
+
+.Post_bottomIcons .icon-comment:hover
+{
+    color: #138bd6;
+    background-color: rgba(44,167,242,0.2);
+    border-radius: 50%;
+  
+}
+
+
+
+.Post_bottomIcons .icon-retweet
+{
+    padding: 6px;
+}
+
+.Post_bottomIcons .icon-retweet:hover
+{
+    color: rgb(32, 174, 32);
+    background-color: rgb(34, 192, 34, 0.1);
+    border-radius: 50%;
+  
 }

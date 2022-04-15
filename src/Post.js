@@ -35,10 +35,17 @@ function Post({Icon,displayName, username, postText, imageUrl, verified}) {
                     {/* <img className="Post_img" src={imageUrl} /> */}
               </div>
                 
+                {/* <div>
+                    <button>
+                        <i class="fa-regular fa-comment"></i>
+                    </button>
+                </div> */}
+                {/* <FontAwesomeIcon icon="fa-regular fa-comment" /> */}
+
               <div className="Post_bottomIcons">
-                    <ChatBubbleOutlineIcon fontSize="small" />
-                    <RepeatIcon fontSize="small" />
-                    <FavoriteBorderIcon fontSize="small" />
+                    <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+                    <RepeatIcon fontSize="small" className='icon-retweet'/>
+                    <FavoriteBorderIcon fontSize="small" className='icon-like'/>
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
 
