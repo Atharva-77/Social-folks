@@ -90,7 +90,12 @@
     height: 10%; */
 
 }
-
+.Post_icon_button
+{
+    background-color: transparent;
+    border:none;
+    color: #5c5d5e;
+}
 .Post_bottomIcons
 {
     display: flex;

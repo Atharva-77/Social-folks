@@ -6,10 +6,15 @@ import RepeatIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import PublishIcon from '@material-ui/icons/Publish';
 
-function Post({Icon,displayName, username, postText, imageUrl, verified,createdAt}) {
+function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt}) {
    
     // console.log("js.POST",displayName,username);
     var timestamp=timeDifference(new Date(),new Date(createdAt))
+
+    const like_clicked=()=>
+    {
+        console.log("clicked",displayName,"POSTID:-",id,username);
+    }
    
     return (
         <div className="Post">
@@ -46,9 +51,18 @@ function Post({Icon,displayName, username, postText, imageUrl, verified,createdA
                 {/* <FontAwesomeIcon icon="fa-regular fa-comment" /> */}
 
               <div className="Post_bottomIcons">
-                    <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
-                    <RepeatIcon fontSize="small" className='icon-retweet'/>
-                    <FavoriteBorderIcon fontSize="small" className='icon-like'/>
+
+                    <button className='Post_icon_button'> 
+                        <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+                    </button>
+
+                    <button className='Post_icon_button'>
+                        <RepeatIcon fontSize="small" className='icon-retweet'/>
+                    </button>
+
+                    <button className='Post_icon_button' onClick={()=>like_clicked(displayName)}>
+                        <FavoriteBorderIcon fontSize="small" className='icon-like'/>
+                    </button>
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
 

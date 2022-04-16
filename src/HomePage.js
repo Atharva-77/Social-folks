@@ -99,6 +99,7 @@ function HomePage() {
                     result.map((i)=>(
                         <Post 
                             key={i[0]._id}
+                            id={i[0]._id}
                             Icon={Avatar}  
                             displayName={i[0].postedBy.Name}
                             username={i[0].postedBy.username}

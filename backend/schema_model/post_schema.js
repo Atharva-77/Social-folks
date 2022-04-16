@@ -20,7 +20,13 @@ const PostSchema=new mongoose.Schema({
     pinned:
     {
         type:Boolean
-    }
+    },
+    //like a tweet
+    likes:
+    [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Register'
+    }],
 
 
  },

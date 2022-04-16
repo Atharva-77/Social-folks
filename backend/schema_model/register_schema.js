@@ -30,6 +30,13 @@ const RegisterSchema = new mongoose.Schema({
         type: Boolean,
         default:false
     },
+    //POn profile pg
+    likes:
+    [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Post'
+    }]
+    ,
 },
     {
         timestamps:true
