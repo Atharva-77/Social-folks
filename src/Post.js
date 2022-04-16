@@ -6,9 +6,10 @@ import RepeatIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import PublishIcon from '@material-ui/icons/Publish';
 
-function Post({Icon,displayName, username, postText, imageUrl, verified}) {
+function Post({Icon,displayName, username, postText, imageUrl, verified,createdAt}) {
    
     // console.log("js.POST",displayName,username);
+    var timestamp=timeDifference(new Date(),new Date(createdAt))
    
     return (
         <div className="Post">
@@ -26,7 +27,9 @@ function Post({Icon,displayName, username, postText, imageUrl, verified}) {
                     <VerifiedUserIcon className="Post_verified"/>
                     {/* </div> */}
                     
-                    <div className="Post_username">@{username}</div>
+                    <div className="Post_username">@{username} </div>
+                    <div className='Post_dot'>.</div>
+                    <div className='Post_date'>{timestamp}</div>
                 
               </div>
 
@@ -53,4 +56,43 @@ function Post({Icon,displayName, username, postText, imageUrl, verified}) {
     )
 }
 
+
+function timeDifference(current, previous) {
+
+    var msPerMinute = 60 * 1000;
+    var msPerHour = msPerMinute * 60;
+    var msPerDay = msPerHour * 24;
+    var msPerMonth = msPerDay * 30;
+    var msPerYear = msPerDay * 365;
+
+    var elapsed = current - previous;
+
+    if (elapsed < msPerMinute) {
+        
+        if(elapsed/1000<30)
+            return 'Just now';
+
+         return Math.round(elapsed/1000) + ' seconds ago';   
+    }
+
+    else if (elapsed < msPerHour) {
+         return Math.round(elapsed/msPerMinute) + ' minutes ago';   
+    }
+
+    else if (elapsed < msPerDay ) {
+         return Math.round(elapsed/msPerHour ) + ' hours ago';   
+    }
+
+    else if (elapsed < msPerMonth) {
+        return Math.round(elapsed/msPerDay) + ' days ago';   
+    }
+
+    else if (elapsed < msPerYear) {
+        return Math.round(elapsed/msPerMonth) + ' months ago';   
+    }
+
+    else {
+        return Math.round(elapsed/msPerYear ) + ' years ago';   
+    }
+}
 export default Post

@@ -38,7 +38,7 @@ router.get('/allpost',async(req,res)=>
     try
     {   
         // console.log("All Poste mai",req.userAuth);
-        const data=await PostDb.find({}).populate('postedBy','Name username email')
+        const data=await PostDb.find({}).populate('postedBy','Name username email').sort({"createdAt":-1})
         try{
             res.status(200).json(data)
         }

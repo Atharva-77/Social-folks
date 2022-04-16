@@ -103,6 +103,7 @@ function HomePage() {
                             displayName={i[0].postedBy.Name}
                             username={i[0].postedBy.username}
                             postText={i[0].content}
+                            createdAt={i[0].createdAt}
                             // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
                              verified="True"
                         />

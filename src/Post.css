@@ -53,7 +53,22 @@
 .Post_username
 {
     color:#7c7f80;
+    padding-right: 8px;
 }
+.Post_dot
+{
+    color:#7c7f80;
+    padding-right: 5px;
+    padding-bottom: 7px;
+    /* font-size: large;     */
+    font-weight: 650;
+}
+
+.Post_date
+{
+    color:#7c7f80;
+}
+
 .Post_text_img
 {
     /* display: block; */
