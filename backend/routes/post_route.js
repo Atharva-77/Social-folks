@@ -60,22 +60,31 @@ router.get('/allpost',async(req,res)=>
 
 router.put("/:id/like",protect,async(req,res)=>
 {
-    var postid=req.params.id;
+    var postid=req.params.id || req.body.postid;
     var userid=req.userAuth._id;
     
-    // console.log("LIKEPost, user ",typeof(userid));
+    // console.log("LIKEPost, user ",req.body.postid);
 
     var isLiked=req.userAuth.likes && req.userAuth.likes.includes(postid);
 
     var option= isLiked ? "$pull" : "$addToSet" ;
-    const yo=await RegisterDb.findByIdAndUpdate(userid,{ [option]:{likes:postid} },{new:true})
-    .then(res.status(201).json("Success put "+ isLiked))
+    
+    //Insert like in Register db
+    const updatedUser=await RegisterDb.findByIdAndUpdate(userid,{ [option]:{likes:postid} },{new:true})
+    // .then(res.status(201).json("Success put "+ isLiked))
+    .catch(err=>res.status(401).json("POST ka Error is "+err)) 
+
+    //Insert like in Post db
+    const updatedPost=await PostDb.findByIdAndUpdate(postid,{ [option]:{likes:userid} },{new:true})
+    // .then(res.status(201).json("Success put "+ isLiked))
     .catch(err=>res.status(401).json("POST ka Error is "+err)) 
 
     console.log("LIKE ",isLiked , req.userAuth.likes ,req.userAuth.likes.includes(postid), option);
-    console.log("YO",yo);
+    console.log("UpdatedUser",updatedUser);
+    console.log("UpdatedPost",updatedPost);
 
-    // res.status(200).json("Success put"+ isLiked);
+    res.status(200).json(updatedPost);
+    // res.status(200).json("SUCCESS");
 })
 
 module.exports=router;

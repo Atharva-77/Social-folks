@@ -107,8 +107,10 @@ function HomePage() {
                             createdAt={i[0].createdAt}
                             // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
                              verified="True"
+                             parentHandler={()=>parentFunc()}
+                             likeslength={i[0].likes.length}
                         />
-                        // console.log("i=",i[0].content,i[0])
+                        // console.log("i=",i[0].likes.length,i[0])
                         ))
                 // }
             :

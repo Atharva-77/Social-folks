@@ -5,29 +5,57 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import PublishIcon from '@material-ui/icons/Publish';
+import axios from 'axios';
 
-function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt}) {
+function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,likeslength}) {
    
     // console.log("js.POST",displayName,username);
     var timestamp=timeDifference(new Date(),new Date(createdAt))
-    const [likeCounter, setlikeCounter] = useState(0)
+    // const [likeCounter, setlikeCounter] = useState(0)
+    const [data, setdata] = useState(likeslength);
     var x=1;
 
     const like_clicked=()=>
     {
-        x=likeCounter;
-        console.log("YO1",likeCounter,x);
-        setlikeCounter(previous=>previous+1)
-        console.log("YO2",likeCounter,x);
+        // x=likeCounter;
+        // console.log("B4",likeCounter,x);
+        // setlikeCounter(previous=>previous+1)
+        // console.log("After",likeCounter,x);
 
-        console.log("clicked",displayName,"POSTID:-",id,username," LIKE:-",likeCounter);
+        // console.log("clicked",displayName,"POSTID:-",id,username," LIKE:-",likeCounter);
 
-        if(likeCounter%2==0)
-            console.log("LIKE KARO",likeCounter);
-        else
-            console.log("Dislike Kyu kiya",likeCounter);
+        // if(likeCounter%2==0)
+        //     console.log("LIKE KARO",likeCounter);
+        // else
+        //     console.log("Dislike Kyu kiya",likeCounter);
+
+        const config=
+        {
+            headers:
+            {
+                'Content-Type':"application/json",
+                Authorization:`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGZlZTMwOGNkMzhhY2NkYWZkMDgzNyIsImlhdCI6MTY1MDI4NTU5OSwiZXhwIjoxNjUyODc3NTk5fQ.kwMETGPwM47QTmHZXE-9_BoA-yCRVWZVuitC_veg2ro`
+            }
+        }
+        console.log("POST ID",id);
+       
+        const postData=
+         {
+            "postid":id
+         }
+
+        axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
+        .then( res =>
+                {
+                    console.log("POST-LIKE-AXIOS:-",res.data, res.data.likes.length);
+                    setdata(res.data.likes.length);
+                    // console.log("data",data); 
+                }
+            )
+            // parentHandler();
     }
-    console.log("Like val",likeCounter,x);
+    console.log("data56",data); 
+    // console.log("Like val",likeCounter,x);
    
     return (
         <div className="Post">
@@ -75,6 +103,8 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
 
                     <button className='Post_icon_button' onClick={()=>like_clicked(displayName)}>
                         <FavoriteBorderIcon fontSize="small" className='icon-like'/>
+                        <span>{data || ""}</span>
+                        {/* In JavaScript, undefined, null, empty string and 0 all evaluate to false in a boolean context. Using || in an assignment is a way of saying "if defined, otherwise use this". */}
                     </button>
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
