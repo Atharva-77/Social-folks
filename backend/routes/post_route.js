@@ -3,6 +3,7 @@ const { protect } = require('../middleware/authmiddleware');
 const router=exp.Router()
 
 let PostDb=require('../schema_model/post_schema');
+let RegisterDb=require('../schema_model/register_schema')
 
 router.post('/add',protect,(req,res)=>
 {
@@ -54,6 +55,27 @@ router.get('/allpost',async(req,res)=>
         console.log("Error hai",err);
         res.status(401).json("Invalid Details",err)
     }
+})
+
+
+router.put("/:id/like",protect,async(req,res)=>
+{
+    var postid=req.params.id;
+    var userid=req.userAuth._id;
+    
+    // console.log("LIKEPost, user ",typeof(userid));
+
+    var isLiked=req.userAuth.likes && req.userAuth.likes.includes(postid);
+
+    var option= isLiked ? "$pull" : "$addToSet" ;
+    const yo=await RegisterDb.findByIdAndUpdate(userid,{ [option]:{likes:postid} },{new:true})
+    .then(res.status(201).json("Success put "+ isLiked))
+    .catch(err=>res.status(401).json("POST ka Error is "+err)) 
+
+    console.log("LIKE ",isLiked , req.userAuth.likes ,req.userAuth.likes.includes(postid), option);
+    console.log("YO",yo);
+
+    // res.status(200).json("Success put"+ isLiked);
 })
 
 module.exports=router;

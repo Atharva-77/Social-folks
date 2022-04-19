@@ -25,7 +25,7 @@ router.post('/add',async(req,res)=>
                 res.send
                 (
                     {
-                        ids:userDetails[0]._id,
+                        id:userDetails[0]._id,
                         name:userDetails[0].Name,
                         email:email,
                         isAdmin:userDetails[0].isAdmin,
@@ -54,7 +54,7 @@ router.post('/add',async(req,res)=>
 
 router.get('/profile',protect,(req,res)=>
 {
-    console.log("Profile mai",req.userAuth);
+    console.log("Profile mai",req.userAuth,"\nHI",hi);
 
     res.status(201).json(req.userAuth)
 })

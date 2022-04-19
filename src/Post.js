@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './Post.css'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
@@ -10,11 +10,24 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
    
     // console.log("js.POST",displayName,username);
     var timestamp=timeDifference(new Date(),new Date(createdAt))
+    const [likeCounter, setlikeCounter] = useState(0)
+    var x=1;
 
     const like_clicked=()=>
     {
-        console.log("clicked",displayName,"POSTID:-",id,username);
+        x=likeCounter;
+        console.log("YO1",likeCounter,x);
+        setlikeCounter(previous=>previous+1)
+        console.log("YO2",likeCounter,x);
+
+        console.log("clicked",displayName,"POSTID:-",id,username," LIKE:-",likeCounter);
+
+        if(likeCounter%2==0)
+            console.log("LIKE KARO",likeCounter);
+        else
+            console.log("Dislike Kyu kiya",likeCounter);
     }
+    console.log("Like val",likeCounter,x);
    
     return (
         <div className="Post">
