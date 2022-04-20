@@ -6,17 +6,18 @@ import Right_sidebar from './Right_Sidebar';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
+import { Provider } from 'react-redux';
+import store from './Store';
 
 function App() {
   return (
+    <Provider store={store}>
     <div className="App">
        
      
       <Router >
-      <Switch >
-        
+         <Switch >
        
-            
             <Route path="/register">
                <Register/>
             </Route>
@@ -26,6 +27,7 @@ function App() {
             </Route> 
 
             <Route path="/">
+              
               <div className="sidebar">
                  
                   <Sidebar />
@@ -33,12 +35,14 @@ function App() {
                   <Right_sidebar />
 
                </div>
-           </Route>
 
-      </ Switch>
+            </Route>
+
+         </ Switch>
       </ Router>
      
     </div>
+    </Provider> 
   );
 }
 

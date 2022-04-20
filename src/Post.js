@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch,useSelector } from 'react-redux';
 import './Post.css'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
@@ -13,7 +14,11 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     var timestamp=timeDifference(new Date(),new Date(createdAt))
     // const [likeCounter, setlikeCounter] = useState(0)
     const [data, setdata] = useState(likeslength);
-    var x=1;
+    // var x=1;
+
+    const userLoginData = useSelector(state => state.userLogin)
+    console.log("UserLOgin DATA",typeof(userLoginData)=='undefined');
+    // const {userInfo} =userLoginData
 
     const like_clicked=()=>
     {
@@ -34,7 +39,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
             headers:
             {
                 'Content-Type':"application/json",
-                Authorization:`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGZlZTMwOGNkMzhhY2NkYWZkMDgzNyIsImlhdCI6MTY1MDI4NTU5OSwiZXhwIjoxNjUyODc3NTk5fQ.kwMETGPwM47QTmHZXE-9_BoA-yCRVWZVuitC_veg2ro`
+                // Authorization:`Bearer ${userInfo.token}`
             }
         }
         console.log("POST ID",id);

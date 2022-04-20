@@ -2,12 +2,16 @@ import { Avatar } from '@material-ui/core'
 import React, { useState } from 'react'
 import './Tweetbox.css';
 import axios from 'axios';
+import { useSelector } from 'react-redux';
 
 function Tweetbox(props) {
 
     const [content, setcontent] = useState('')
     const [content2, setcontent2] = useState('')
-    
+
+    const userLoginData = useSelector(state => state.userLogin)
+    // const {userInfo} =userLoginData
+
     // console.log("TweetBox",content,typeof(undefined)=='undefined');
     
     const handleKeyDown = (event) => {
@@ -40,7 +44,7 @@ function Tweetbox(props) {
             headers:
             {
                 'Content-Type':"application/json",
-                Authorization:`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyNGZlZDdlOGNkMzhhY2NkYWZkMDgyNiIsImlhdCI6MTY0OTQwNTM0NiwiZXhwIjoxNjUxOTk3MzQ2fQ.TUcvRXEKqNPrlZUOPAtcgFZFg3tNmg8dgk7u_tgnir8`
+                // Authorization:`Bearer ${userInfo.token}`
             }
         }
        

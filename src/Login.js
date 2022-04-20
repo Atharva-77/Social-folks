@@ -1,6 +1,8 @@
 import React,{useState} from 'react'
 import './Login.css' ;
-
+import { useDispatch,useSelector } from 'react-redux';
+import { userAction_details } from './Reducers/actions/userActions';
+import { Link } from 'react-router-dom';
 
 
 
@@ -10,17 +12,29 @@ function Login() {
   const [password, setpassword] = useState('');
   // console.log(email);
 
+  const dispatch = useDispatch();
+  const userLoginData=useSelector(state=>state.userLoginKey)
+
+  const {loading, userInfo, error}=userLoginData
+  console.log("USE-SELECTOR",userLoginData, userInfo);
+  
   const submit_form=(e)=>
   {
-    // e.preventDefault() // use or no????????????????????????
+    e.preventDefault() // use or no????????????????????????
     console.log('Submit form', email, password);
+
+    dispatch(userAction_details(email,password));
+    // setemail('')
+    // setpassword('')
   }
 
   return (
     <div className='login_header'>
        
-       <img className="logo" src="https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg" />
-     
+       <Link to="/">
+            <img className="logo" src="https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg" />
+       </Link>
+
       <div className='login_details'>
            
         

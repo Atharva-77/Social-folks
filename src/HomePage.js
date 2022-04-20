@@ -94,7 +94,7 @@ function HomePage() {
                   verified="True"/> */}
         
         {/* <div className="home__row"> */}
-            {(typeof(result)!='undefined')?
+            {/* {(typeof(result)!='undefined')?
                 // {
                     result.map((i)=>(
                         <Post 
@@ -115,7 +115,7 @@ function HomePage() {
                 // }
             :
             console.log("ELSE MAP")
-            }
+            } */}
                                     
              {/* </div> */}
 
