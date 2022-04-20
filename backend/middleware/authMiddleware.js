@@ -25,7 +25,8 @@ const protect = async(req,res,next)=> {
 
         catch(err)
         {
-            res.status(401).send("Fail. No token", err)
+            console.log("AuthMiddleware ERR ");
+            res.status(401).send("Fail. No token")
         }
     }
         

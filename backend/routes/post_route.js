@@ -30,7 +30,7 @@ router.post('/add',protect,(req,res)=>
     catch(err)
     {
         console.log("Error hai",err);
-        res.status(401).json("Invalid Details",err)
+        // res.status(401).json("Invalid Details",err)
     }
 })
 
@@ -52,39 +52,50 @@ router.get('/allpost',async(req,res)=>
     }
     catch(err)
     {
-        console.log("Error hai",err);
-        res.status(401).json("Invalid Details",err)
+        console.log("Error hai");
+        // res.status(401).json("Invalid Details",err)
     }
 })
 
 
 router.put("/:id/like",protect,async(req,res)=>
 {
-    var postid=req.params.id || req.body.postid;
-    var userid=req.userAuth._id;
-    
-    // console.log("LIKEPost, user ",req.body.postid);
+    try 
+    {
+        var postid=req.params.id || req.body.postid;
+        console.log("PUT",postid);
 
-    var isLiked=req.userAuth.likes && req.userAuth.likes.includes(postid);
+        var userid=req.userAuth._id;//ERR if user not logged in and this route is accessed, err is thrown
+        
+        // console.log("LIKEPost, user ",req.body.postid);
 
-    var option= isLiked ? "$pull" : "$addToSet" ;
-    
-    //Insert like in Register db
-    const updatedUser=await RegisterDb.findByIdAndUpdate(userid,{ [option]:{likes:postid} },{new:true})
-    // .then(res.status(201).json("Success put "+ isLiked))
-    .catch(err=>res.status(401).json("POST ka Error is "+err)) 
+        var isLiked=req.userAuth.likes && req.userAuth.likes.includes(postid);
 
-    //Insert like in Post db
-    const updatedPost=await PostDb.findByIdAndUpdate(postid,{ [option]:{likes:userid} },{new:true})
-    // .then(res.status(201).json("Success put "+ isLiked))
-    .catch(err=>res.status(401).json("POST ka Error is "+err)) 
+        var option= isLiked ? "$pull" : "$addToSet" ;
+        
+        //Insert like in Register db
+        const updatedUser=await RegisterDb.findByIdAndUpdate(userid,{ [option]:{likes:postid} },{new:true})
+        // .then(res.status(201).json("Success put "+ isLiked))
+        .catch(err=>res.status(401).json("POST ka Error is "+err)) 
 
-    console.log("LIKE ",isLiked , req.userAuth.likes ,req.userAuth.likes.includes(postid), option);
-    console.log("UpdatedUser",updatedUser);
-    console.log("UpdatedPost",updatedPost);
+        //Insert like in Post db
+        const updatedPost=await PostDb.findByIdAndUpdate(postid,{ [option]:{likes:userid} },{new:true})
+        // .then(res.status(201).json("Success put "+ isLiked))
+        .catch(err=>res.status(401).json("POST ka Error is "+err)) 
 
-    res.status(200).json(updatedPost);
-    // res.status(200).json("SUCCESS");
+        console.log("LIKE ",isLiked , req.userAuth.likes ,req.userAuth.likes.includes(postid), option);
+        console.log("UpdatedUser",updatedUser);
+        console.log("UpdatedPost",updatedPost);
+
+        res.status(200).json(updatedPost);
+        // res.status(200).json("SUCCESS");
+
+    }
+    catch(err)
+    {
+        console.log("Error hai");
+        // res.status(401).send("Invalid Details");...as data already send to client
+    }
 })
 
 module.exports=router;

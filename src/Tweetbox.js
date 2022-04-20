@@ -9,9 +9,10 @@ function Tweetbox(props) {
     const [content, setcontent] = useState('')
     const [content2, setcontent2] = useState('')
 
-    const userLoginData = useSelector(state => state.userLogin)
-    // const {userInfo} =userLoginData
+    const userLoginData = useSelector(state => state.userLoginKey)
+    const {userInfo} =userLoginData //....undefined
 
+    console.log("TweetBox",userLoginData,typeof(userLoginData)=='undefined');
     // console.log("TweetBox",content,typeof(undefined)=='undefined');
     
     const handleKeyDown = (event) => {
@@ -44,7 +45,7 @@ function Tweetbox(props) {
             headers:
             {
                 'Content-Type':"application/json",
-                // Authorization:`Bearer ${userInfo.token}`
+                Authorization:`Bearer ${userInfo.token}`
             }
         }
        

@@ -14,7 +14,7 @@ function HomePage() {
         axios.get(`http://localhost:4000/post/allpost`)
         .then(res=>
             {
-                // console.log("HomePg RES.DATA ",(res.data));
+                // console.log("HomePg RES.DATA ",(res.data), res.data[1]._id);
                 setdata(res.data);
                 setreload(0)
                 
@@ -25,7 +25,7 @@ function HomePage() {
 
         { 
             var result = Object.keys(data).map((key) => [data[key]]);
-            console.log("RESULT",result,typeof(result));
+            // console.log("RESULT",result,typeof(result),"\nDATA",data);
         }
 
         // {console.log("data", data[0].content,typeof(data),Object.keys(data).length,Object.keys(data));}
@@ -65,37 +65,35 @@ function HomePage() {
                   imageUrl="https://media.giphy.com/media/FdRnTOHG0qP0eur2fA/giphy.gif"
                   verified="True"/> */}
 
-{/* <Post 
-                  Icon={Avatar}  
-                  displayName="Atharva Shirode"
-                  username="@atharva123"
-                  postText="The early stage VC community is so tight, if founders exaggerate / over represent their company while fundraising it usually comes back to bite them quick.
+        {/* {data!==''?
+                    // data.map((i)=>
+                    //     (
+                    //         console.log("DATA_MAP ",i.content)
+                    //     )
+                    //     )
+                        data.map((i)=>(
+                            <Post 
+                                key={i._id}
+                                id={i._id}
+                                Icon={Avatar}  
+                                displayName={i.postedBy.Name}
+                                username={i.postedBy.username}
+                                postText={i.content}
+                                createdAt={i.createdAt}
+                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                 verified="True"
+                                 parentHandler={()=>parentFunc()}
+                                 likeslength={i.likes.length}
+                            />
+                            // console.log("i=",i[0].likes.length,i[0])
+                            ))
+                
+                 :
+                 console.log("ELSE-DATA-MAP")} */}
 
-                  syndicate leads on angel list though… seem to have a much looser feedback mechanism with fewer consequences"
-                  imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                  verified="True"/>
-<Post 
-                  Icon={Avatar}  
-                  displayName="Atharva Shirode"
-                  username="@atharva123"
-                  postText="The early stage VC community is so tight, if founders exaggerate / over represent their company while fundraising it usually comes back to bite them quick.
-
-                  syndicate leads on angel list though… seem to have a much looser feedback mechanism with fewer consequences"
-                  imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                  verified="True"/>
-<Post 
-                  Icon={Avatar}  
-                  displayName="Atharva Shirode"
-                  username="@atharva123"
-                  postText="The early stage VC community is so tight, if founders exaggerate / over represent their company while fundraising it usually comes back to bite them quick.
-
-                  syndicate leads on angel list though… seem to have a much looser feedback mechanism with fewer consequences"
-                  imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                  verified="True"/> */}
-        
         {/* <div className="home__row"> */}
-            {/* {(typeof(result)!='undefined')?
-                // {
+            {/* {(typeof(result)!='undefined')? */}
+                 {
                     result.map((i)=>(
                         <Post 
                             key={i[0]._id}
@@ -109,13 +107,14 @@ function HomePage() {
                              verified="True"
                              parentHandler={()=>parentFunc()}
                              likeslength={i[0].likes.length}
+                             likesData={i[0].likes}
                         />
                         // console.log("i=",i[0].likes.length,i[0])
                         ))
-                // }
-            :
-            console.log("ELSE MAP")
-            } */}
+                 }
+            {/* // :
+            // console.log("ELSE MAP")
+            // } */}
                                     
              {/* </div> */}
 

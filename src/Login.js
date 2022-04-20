@@ -23,7 +23,7 @@ function Login() {
     e.preventDefault() // use or no????????????????????????
     console.log('Submit form', email, password);
 
-    dispatch(userAction_details(email,password));
+    dispatch(userAction_details(email,password));  console.log("2.USE-SELECTOR",userLoginData, userInfo);
     // setemail('')
     // setpassword('')
   }

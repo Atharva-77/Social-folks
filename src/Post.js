@@ -1,24 +1,68 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { useDispatch,useSelector } from 'react-redux';
 import './Post.css'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
 
-function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,likeslength}) {
+function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,likeslength,likesData}) {
    
     // console.log("js.POST",displayName,username);
     var timestamp=timeDifference(new Date(),new Date(createdAt))
     // const [likeCounter, setlikeCounter] = useState(0)
-    const [data, setdata] = useState(likeslength);
-    // var x=1;
+    const [dataLen_Likes, setdataLen_Likes] = useState(likeslength);
+    const [data_Likes,setdata_Likes] = useState(likesData);
 
-    const userLoginData = useSelector(state => state.userLogin)
-    console.log("UserLOgin DATA",typeof(userLoginData)=='undefined');
-    // const {userInfo} =userLoginData
+    const [btnCls,setbtnCls] = useState("");
+    // const [x,setx] = useState(0);
+    // console.log("LIKES DATA",data_Likes,postText);
+    var x=0;
+
+    // useEffect(() => {
+    //      if(x==1)
+    //      {
+    //          console.log("X=",x);
+    //          setbtnCls("red")
+    //      }
+        
+    //     else
+    //     setbtnCls("")
+     
+      
+    // }, [x])
+    
+
+    const userLoginData = useSelector(state => state.userLoginKey)
+    const {userInfo} =userLoginData
+
+    // console.log("UserLOgin DATA",userInfo.id,id);
+    
+    if(data_Likes.includes(userInfo.id))
+    {
+        // setx(1);
+        console.log("TRUEs ", data_Likes,postText,x);
+        // setx(1);
+        x=1;
+        // button.addClass("active");
+    }
+   
+    else
+    {
+        // setx(0);
+        console.log("False",data_Likes,userInfo.id,postText,x);
+        // setx(0);
+        x=0;
+        // button.removeClass("active");
+    }
+
+    // if(x==1)
+    // setbtnCls("red")
+    // else
+    // setbtnCls("")
 
     const like_clicked=()=>
     {
@@ -39,10 +83,10 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
             headers:
             {
                 'Content-Type':"application/json",
-                // Authorization:`Bearer ${userInfo.token}`
+                Authorization:`Bearer ${userInfo.token}`
             }
         }
-        console.log("POST ID",id);
+        // console.log("POST ID",id);
        
         const postData=
          {
@@ -52,18 +96,19 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
         axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
         .then( res =>
                 {
-                    console.log("POST-LIKE-AXIOS:-",res.data, res.data.likes.length);
-                    setdata(res.data.likes.length);
-                    // console.log("data",data); 
+                    console.log("POST-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
+                    setdataLen_Likes(res.data.likes.length);
+                    setdata_Likes(res.data.likes);
+                    // console.log("dataLen_Likes",dataLen_Likes); 
                 }
             )
             // parentHandler();
     }
-    console.log("data56",data); 
+    // console.log("dataLen_Likes56",dataLen_Likes); 
     // console.log("Like val",likeCounter,x);
    
     return (
-        <div className="Post">
+        <div className="Post" id={id}>
 
               <div className="Post_header">
                     <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
@@ -107,9 +152,21 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
                     </button>
 
                     <button className='Post_icon_button' onClick={()=>like_clicked(displayName)}>
-                        <FavoriteBorderIcon fontSize="small" className='icon-like'/>
-                        <span>{data || ""}</span>
+                        {/* <FavoriteBorderIcon fontSize="small" className={'icon-like-'+btnCls}/> */}
+
+                        {/* If you use setx() in useeffect then lot of re-rendering was happening. Also using it in if-else before console.log causes re-rendering. Thus used terneary operator. */}
+                        <div className='icon-div-like-number'> 
+                           {x==1?<FavoriteIcon fontSize="small" className={'icon-like-red'}/>
+                            :<FavoriteBorderIcon fontSize="small" className={'icon-like'}/>}
+                       
+                           {/* {x==1?<FavoriteIcon fontSize="small" className={'icon-like-red'}/>
+                             :<FavoriteBorderIcon fontSize="small" className={'icon-like'}/>} */}
+
+                             <span className='icon-like-number'>{dataLen_Likes || ""}</span>
+                        </div>
+
                         {/* In JavaScript, undefined, null, empty string and 0 all evaluate to false in a boolean context. Using || in an assignment is a way of saying "if defined, otherwise use this". */}
+
                     </button>
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
