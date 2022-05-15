@@ -106,6 +106,44 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     }
     // console.log("dataLen_Likes56",dataLen_Likes); 
     // console.log("Like val",likeCounter,x);
+
+    const retweet_clicked=()=>
+    {
+
+        console.log("RETWEET clicked",displayName,"POSTID:-",id,username);
+
+        // if(likeCounter%2==0)
+        //     console.log("LIKE KARO",likeCounter);
+        // else
+        //     console.log("Dislike Kyu kiya",likeCounter);
+
+        // const config=
+        // {
+        //     headers:
+        //     {
+        //         'Content-Type':"application/json",
+        //         Authorization:`Bearer ${userInfo.token}`
+        //     }
+        // }
+        // // console.log("POST ID",id);
+       
+        // const postData=
+        //  {
+        //     "postid":id
+        //  }
+
+        // axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
+        // .then( res =>
+        //         {
+        //             console.log("POST-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
+        //             setdataLen_Likes(res.data.likes.length);
+        //             setdata_Likes(res.data.likes);
+        //             // console.log("dataLen_Likes",dataLen_Likes); 
+        //         }
+        //     )
+            // parentHandler();
+    }
+
    
     return (
         <div className="Post" id={id}>
@@ -147,15 +185,16 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
                     </button>
 
-                    <button className='Post_icon_button'>
+                    <button className='Post_icon_button' onClick={()=>retweet_clicked()}>
                         <RepeatIcon fontSize="small" className='icon-retweet'/>
                     </button>
 
-                    <button className='Post_icon_button' onClick={()=>like_clicked(displayName)}>
+                    <button className='Post_icon_button' onClick={()=>like_clicked()}>
                         {/* <FavoriteBorderIcon fontSize="small" className={'icon-like-'+btnCls}/> */}
 
                         {/* If you use setx() in useeffect then lot of re-rendering was happening. Also using it in if-else before console.log causes re-rendering. Thus used terneary operator. */}
                         <div className='icon-div-like-number'> 
+
                            {x==1?<FavoriteIcon fontSize="small" className={'icon-like-red'}/>
                             :<FavoriteBorderIcon fontSize="small" className={'icon-like'}/>}
                        
@@ -163,11 +202,12 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
                              :<FavoriteBorderIcon fontSize="small" className={'icon-like'}/>} */}
 
                              <span className='icon-like-number'>{dataLen_Likes || ""}</span>
+
                         </div>
 
                         {/* In JavaScript, undefined, null, empty string and 0 all evaluate to false in a boolean context. Using || in an assignment is a way of saying "if defined, otherwise use this". */}
-
                     </button>
+
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
 

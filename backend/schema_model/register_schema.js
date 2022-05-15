@@ -30,8 +30,14 @@ const RegisterSchema = new mongoose.Schema({
         type: Boolean,
         default:false
     },
-    //POn profile pg
+    //For profile pg
     likes:
+    [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Post'
+    }]
+    ,
+    retweets:
     [{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Post'

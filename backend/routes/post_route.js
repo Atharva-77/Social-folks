@@ -98,4 +98,65 @@ router.put("/:id/like",protect,async(req,res)=>
     }
 })
 
+
+
+//RETWEET 
+router.post("/:id/retweet",protect,async(req,res)=>
+{
+    
+    try 
+    {
+        var postid=req.params.id || req.body.postid;        
+        var userid=req.userAuth._id;//ERR if user not logged in and this route is accessed, err is thrown
+
+        //Delete the post and see. If deleted then retweet existed so unretweet it. If not exist, add the retweet.
+        const deletedPost=await PostDb.findOneAndDelete({postedBy:userid, retweetDataId: postid})
+        .catch(err=>res.status(401).json("Delete RETWEET ka Error is "+err)) 
+
+        // var isLiked=req.userAuth.likes && req.userAuth.likes.includes(postid);
+
+        var option= deletedPost!=null ? "$pull" : "$addToSet" ;
+        console.log("RETWEET ",deletedPost);
+
+        //Create a new post. Retweet is the data via PostId
+        var repost=deletedPost;
+        if(deletedPost==null)
+        {
+            repost=await PostDb.create({postedBy: userid, retweetDataId: postid})
+            // .then(console.log("REPOST",x))
+            .catch(err=>res.status(401).json("Retweet Error is "+err))
+        }
+
+        console.log("REPOST",deletedPost);
+        // res.status(200).send("Retweet"+option+repost);
+        // return
+
+
+        //Insert retweet in Register db
+        const updatedUser=await RegisterDb.findByIdAndUpdate(userid,{ [option]:{retweets : repost._id} },{new:true})
+        // .then(res.status(201).json("Success put "+ isLiked))
+        .catch(err=>res.status(401).json("Retweet UserUpdate Error is "+err)) 
+
+        //Insert retweet in Post db
+        const updatedPost=await PostDb.findByIdAndUpdate(postid,{ [option]:{ retweetUserList : userid} },{new:true})
+        // .then(res.status(201).json("Success put "+ isLiked))
+        .catch(err=>res.status(401).json("Retweet Post Update Error is "+err)) 
+
+        // console.log("LIKE ",isLiked , req.userAuth.likes ,req.userAuth.likes.includes(postid), option);
+        console.log("UpdatedUser",updatedUser);
+        console.log("UpdatedPost",updatedPost);
+
+        res.status(200).json(updatedPost);
+        // else
+        // res.status(200).send("Retweet"+option+repost);
+
+    }
+    catch(err)
+    {
+        console.log("Error hai Retweet",err);
+        // res.status(401).send("Invalid Details");...as data already send to client
+    }
+})
+
+
 module.exports=router;

@@ -27,14 +27,17 @@ const protect = async(req,res,next)=> {
         {
             console.log("AuthMiddleware ERR ");
             res.status(401).send("Fail. No token")
+            return;
         }
     }
         
     else
     {
+        console.log("Not found");
         res.status(401).send("Fail.NOt auth")
         // throw new Error("NOt auth re baba")
-        // console.log("Not found");
+        
+        return;
     }
 
     next();

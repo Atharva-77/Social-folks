@@ -21,12 +21,26 @@ const PostSchema=new mongoose.Schema({
     {
         type:Boolean
     },
+    
     //like a tweet
     likes:
     [{
         type:mongoose.Schema.Types.ObjectId,
         ref:'Register'
     }],
+
+    //list of retweet users
+    retweetUserList:
+    [{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Register'
+    }],
+
+    retweetDataId:
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Post'
+    },
 
 
  },
