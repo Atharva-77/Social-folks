@@ -9,18 +9,25 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
 
-function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,likeslength,likesData}) {
+function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,likeslength,likesData,retweetUserList}) {
    
-    // console.log("js.POST",displayName,username);
+    // console.log("js.POST",postText,retweetUserList.length);
     var timestamp=timeDifference(new Date(),new Date(createdAt))
     // const [likeCounter, setlikeCounter] = useState(0)
     const [dataLen_Likes, setdataLen_Likes] = useState(likeslength);
     const [data_Likes,setdata_Likes] = useState(likesData);
 
+    const [retweetLen, setretweetLen] = useState(retweetUserList.length);
+    const [retweetId_data, setretweetId_data] = useState(retweetUserList);
+    
+
+
+
     const [btnCls,setbtnCls] = useState("");
     // const [x,setx] = useState(0);
     // console.log("LIKES DATA",data_Likes,postText);
     var x=0;
+    var reteweetColor=0
 
     // useEffect(() => {
     //      if(x==1)
@@ -44,7 +51,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     if(data_Likes.includes(userInfo.id))
     {
         // setx(1);
-        console.log("TRUEs ", data_Likes,postText,x);
+        // console.log("TRUEs ", data_Likes,postText,x);
         // setx(1);
         x=1;
         // button.addClass("active");
@@ -53,9 +60,27 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     else
     {
         // setx(0);
-        console.log("False",data_Likes,userInfo.id,postText,x);
+        // console.log("False",data_Likes,userInfo.id,postText,x);
         // setx(0);
         x=0;
+        // button.removeClass("active");
+    }
+
+    if(retweetId_data.includes(userInfo.id))
+    {
+        // setx(1);
+        console.log("RTTRUEs ", reteweetColor,retweetId_data,userInfo.id);
+        // setx(1);
+        reteweetColor=1;
+        // button.addClass("active");
+    }
+   
+    else
+    {
+        // setx(0);
+        console.log("RTFalse",reteweetColor,retweetUserList,userInfo.id);
+        // setx(0);
+        reteweetColor=0;
         // button.removeClass("active");
     }
 
@@ -107,40 +132,38 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     // console.log("dataLen_Likes56",dataLen_Likes); 
     // console.log("Like val",likeCounter,x);
 
+
+
     const retweet_clicked=()=>
     {
 
         console.log("RETWEET clicked",displayName,"POSTID:-",id,username);
 
-        // if(likeCounter%2==0)
-        //     console.log("LIKE KARO",likeCounter);
-        // else
-        //     console.log("Dislike Kyu kiya",likeCounter);
-
-        // const config=
-        // {
-        //     headers:
-        //     {
-        //         'Content-Type':"application/json",
-        //         Authorization:`Bearer ${userInfo.token}`
-        //     }
-        // }
-        // // console.log("POST ID",id);
+        const config=
+        {
+            headers:
+            {
+                'Content-Type':"application/json",
+                Authorization:`Bearer ${userInfo.token}`
+            }
+        }
+        // console.log("POST ID",id);
        
-        // const postData=
-        //  {
-        //     "postid":id
-        //  }
+        const postData=
+         {
+            "postid":id
+         }
 
-        // axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
-        // .then( res =>
-        //         {
-        //             console.log("POST-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
-        //             setdataLen_Likes(res.data.likes.length);
-        //             setdata_Likes(res.data.likes);
-        //             // console.log("dataLen_Likes",dataLen_Likes); 
-        //         }
-        //     )
+        axios.post(`http://localhost:4000/post/${id}/retweet`,postData,config)
+        .then( res =>
+                {
+                    console.log("POST-RETWEET-AXIOS:-",res.data.content, res.data.retweetUserList.length,res.data.retweetUserList);
+                    setretweetLen(res.data.retweetUserList.length);
+                    setretweetId_data(res.data.retweetUserList)
+                    // setdata_Likes(res.data.likes);
+                    // console.log("dataLen_Likes",dataLen_Likes); 
+                }
+            )
             // parentHandler();
     }
 
@@ -185,23 +208,45 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
                     </button>
 
+                    {/* Retweet  */}
                     <button className='Post_icon_button' onClick={()=>retweet_clicked()}>
-                        <RepeatIcon fontSize="small" className='icon-retweet'/>
+    
+                        <div className='icon-div-like-number'> 
+
+                        {reteweetColor==1?<RepeatIcon fontSize="small" className={'icon-retweet-green'}/>
+                            :<RepeatIcon fontSize="small" className={'icon-retweet'}/>}
+
+                         {reteweetColor==1?<span className='icon-retweet-number'>{retweetLen || ""}</span>
+                            :<span className='icon-number'>{retweetLen || ""}</span>}
+
+                            {/* <span className='icon-like-number'>{retweetLen || ""}</span> */}
+
+                        </div>
+                        
                     </button>
 
+                   {/* Likes Part */}
                     <button className='Post_icon_button' onClick={()=>like_clicked()}>
                         {/* <FavoriteBorderIcon fontSize="small" className={'icon-like-'+btnCls}/> */}
 
                         {/* If you use setx() in useeffect then lot of re-rendering was happening. Also using it in if-else before console.log causes re-rendering. Thus used terneary operator. */}
                         <div className='icon-div-like-number'> 
 
-                           {x==1?<FavoriteIcon fontSize="small" className={'icon-like-red'}/>
-                            :<FavoriteBorderIcon fontSize="small" className={'icon-like'}/>}
+                           {x==1?<div>
+                                    <FavoriteIcon fontSize="small" className={'icon-like-red'}/>
+                                    {/* <span className='icon-like-number'>{dataLen_Likes || ""}</span> */}
+                               </div>
+                             :
+                              <div>
+                                    <FavoriteBorderIcon fontSize="small" className={'icon-like'}/>
+                                    {/* <span className='icon-number'>{dataLen_Likes || ""}</span> */}
+                              </div>
+                            }
                        
-                           {/* {x==1?<FavoriteIcon fontSize="small" className={'icon-like-red'}/>
-                             :<FavoriteBorderIcon fontSize="small" className={'icon-like'}/>} */}
+                           {x==1?<span className='icon-like-number'>{dataLen_Likes || ""}</span>
+                             :<span className='icon-number'>{dataLen_Likes || ""}</span>}
 
-                             <span className='icon-like-number'>{dataLen_Likes || ""}</span>
+                             {/* <span className='icon-like-number'>{dataLen_Likes || ""}</span> */}
 
                         </div>
 

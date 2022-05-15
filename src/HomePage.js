@@ -14,7 +14,7 @@ function HomePage() {
         axios.get(`http://localhost:4000/post/allpost`)
         .then(res=>
             {
-                // console.log("HomePg RES.DATA ",(res.data), res.data[1]._id);
+                console.log("HomePg RES.DATA ",(res.data),(res.data[2].content), res.data[2].retweetUserList);
                 setdata(res.data);
                 setreload(0)
                 
@@ -108,6 +108,7 @@ function HomePage() {
                              parentHandler={()=>parentFunc()}
                              likeslength={i[0].likes.length}
                              likesData={i[0].likes}
+                             retweetUserList={i[0].retweetUserList}
                         />
                         // console.log("i=",i[0].likes.length,i[0])
                         ))
