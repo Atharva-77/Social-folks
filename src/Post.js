@@ -9,9 +9,21 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
 
-function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,likeslength,likesData,retweetUserList}) {
+function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,likeslength,likesData,retweetUserList, retweetData}) {
    
-    // console.log("js.POST",postText,retweetUserList.length);
+    // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
+    console.log("Content",retweetData);
+    var displayname_retweet=displayName;
+    if (typeof(retweetData)!='undefined') {
+
+        console.log("2.Content",retweetData.content,retweetData.retweetContent);
+        postText=retweetData.content || retweetData.retweetContent;
+        displayName=retweetData.postedBy.Name;
+        username=retweetData.postedBy.username;
+
+
+    }
+    
     var timestamp=timeDifference(new Date(),new Date(createdAt))
     // const [likeCounter, setlikeCounter] = useState(0)
     const [dataLen_Likes, setdataLen_Likes] = useState(likeslength);
@@ -20,6 +32,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     const [retweetLen, setretweetLen] = useState(retweetUserList.length);
     const [retweetId_data, setretweetId_data] = useState(retweetUserList);
     
+
 
 
 
@@ -69,7 +82,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     if(retweetId_data.includes(userInfo.id))
     {
         // setx(1);
-        console.log("RTTRUEs ", reteweetColor,retweetId_data,userInfo.id);
+        // console.log("RTTRUEs ", reteweetColor,retweetId_data,userInfo.id);
         // setx(1);
         reteweetColor=1;
         // button.addClass("active");
@@ -78,7 +91,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     else
     {
         // setx(0);
-        console.log("RTFalse",reteweetColor,retweetUserList,userInfo.id);
+        // console.log("RTFalse",reteweetColor,retweetUserList,userInfo.id);
         // setx(0);
         reteweetColor=0;
         // button.removeClass("active");
@@ -164,15 +177,31 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
                     // console.log("dataLen_Likes",dataLen_Likes); 
                 }
             )
-            // parentHandler();
+            parentHandler();
     }
 
    
     return (
         <div className="Post" id={id}>
 
+                {typeof(retweetData)!='undefined'
+                            ?
+                            <div className='icon-div-like-number'>
+                                {/* <div className="icon-div-like-number"> */}
+                                    <RepeatIcon fontSize="small"  className={'icon-above-avator'}/>
+                                {/* </div>   */}
+                                <p className="Post_retweetText">Retweeted by <a href="/profile">{displayname_retweet}</a></p>
+                            </div>
+                            :
+                             null
+                }
+
               <div className="Post_header">
+                   
+
                     <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
+                    
+                  
 
                     <div className="Post_displayName">
                         {displayName}
@@ -189,11 +218,15 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
                     <div className='Post_date'>{timestamp}</div>
                 
               </div>
-
-              <div className="Post_text_img">
-                    <p className="Post_postText">{postText}</p>
-                    {/* <img className="Post_img" src={imageUrl} /> */}
-              </div>
+            
+            
+                <div className="Post_text_img">
+                        <p className="Post_postText">{postText}</p>
+                        {/* <img className="Post_img" src={imageUrl} /> */}
+                </div>
+                                          
+             
+             
                 
                 {/* <div>
                     <button>

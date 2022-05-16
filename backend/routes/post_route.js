@@ -39,9 +39,11 @@ router.get('/allpost',async(req,res)=>
     try
     {   
         // console.log("All Poste mai",req.userAuth);
-        const data=await PostDb.find({}).populate('postedBy','Name username email').sort({"createdAt":-1})
+        const data=await PostDb.find({}).populate('postedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
+        // console.log("DATA",data);
+        const data1=await RegisterDb.populate(data,{path:'retweetDataId.postedBy'})
         try{
-            res.status(200).json(data)
+            res.status(200).json(data1)
         }
        
         catch(err)
@@ -122,7 +124,10 @@ router.post("/:id/retweet",protect,async(req,res)=>
         var repost=deletedPost;
         if(deletedPost==null)
         {
-            repost=await PostDb.create({postedBy: userid, retweetDataId: postid})
+            var data=await PostDb.findById(postid);
+            console.log("RETWEET-CONTENT",data.content);
+
+            repost=await PostDb.create({postedBy: userid, retweetDataId: postid, retweetContent:data.content})
             // .then(console.log("REPOST",x))
             .catch(err=>res.status(401).json("Retweet Error is "+err))
         }
@@ -138,6 +143,8 @@ router.post("/:id/retweet",protect,async(req,res)=>
         .catch(err=>res.status(401).json("Retweet UserUpdate Error is "+err)) 
 
         //Insert retweet in Post db
+        
+
         const updatedPost=await PostDb.findByIdAndUpdate(postid,{ [option]:{ retweetUserList : userid} },{new:true})
         // .then(res.status(201).json("Success put "+ isLiked))
         .catch(err=>res.status(401).json("Retweet Post Update Error is "+err)) 

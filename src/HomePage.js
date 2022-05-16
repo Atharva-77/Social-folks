@@ -109,6 +109,8 @@ function HomePage() {
                              likeslength={i[0].likes.length}
                              likesData={i[0].likes}
                              retweetUserList={i[0].retweetUserList}
+                             retweetData={i[0].retweetDataId}
+                            //  retweetContent={i[0].retweetContent}
                         />
                         // console.log("i=",i[0].likes.length,i[0])
                         ))

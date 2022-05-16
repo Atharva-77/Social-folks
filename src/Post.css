@@ -68,6 +68,12 @@
 {
     color:#7c7f80;
 }
+.Post_retweetText
+{
+
+    color:#5c5d5e ;
+    margin-left: 10px;
+}
 
 .Post_text_img
 {
@@ -90,6 +96,7 @@
     height: 10%; */
 
 }
+/* -------------------------------------------------- */
 .Post_icon_button
 {
     background-color: transparent;
@@ -202,4 +209,10 @@
 .icon-retweet-number
 {
     color: rgb(32, 174, 32);
+}
+/* -------------------------------- */
+.icon-above-avator
+{
+    color:#5c5d5e ;
+    padding-left: 36px;
 }
