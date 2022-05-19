@@ -14,7 +14,7 @@ function HomePage() {
         axios.get(`http://localhost:4000/post/allpost`)
         .then(res=>
             {
-                console.log("HomePg RES.DATA ",(res.data),(res.data[2].content), res.data[2].retweetUserList);
+                // console.log("HomePg RES.DATA ",(res.data),(res.data[2].content), res.data[2].retweetUserList);
                 setdata(res.data);
                 setreload(0)
                 
@@ -45,13 +45,24 @@ function HomePage() {
             setreload(1);
             // alert("Button clicked")
         }
+        const replyFunc=(hi)=>
+        {
+            console.log(`clicked ${hi}`);
+           
+            // alert(`clicked ${hi}`)
+        }
 
+        const [count, setCount] = useState(0);
+        const increment = () => 
+        {
+            setCount(count + 1)
+        }
 
 
     return (
         <div className="HomePage">
             <div className="HomePage_title">
-                <h2>Home</h2>
+                <h2>Home</h2><h2>{count}</h2>
             </div>
 
             <Tweetbox parentHandler={()=>parentFunc()}/>
@@ -105,7 +116,13 @@ function HomePage() {
                             createdAt={i[0].createdAt}
                             // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
                              verified="True"
-                             parentHandler={()=>parentFunc()}
+                             parentHandler={()=>parentFunc()}   
+
+                            //  replyHandler={()=>replyFunc(i[0].content)}
+                            replyHandler={()=>replyFunc()}
+                            onClick={increment} 
+                            count={count} 
+
                              likeslength={i[0].likes.length}
                              likesData={i[0].likes}
                              retweetUserList={i[0].retweetUserList}

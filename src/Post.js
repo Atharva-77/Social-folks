@@ -9,14 +9,14 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
 
-function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,likeslength,likesData,retweetUserList, retweetData}) {
+function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData}) {
    
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
-    console.log("Content",retweetData);
+    // console.log("Content",setname);
     var displayname_retweet=displayName;
     if (typeof(retweetData)!='undefined') {
 
-        console.log("2.Content",retweetData.content,retweetData.retweetContent);
+        // console.log("2.Content",retweetData.content,retweetData.retweetContent);
         postText=retweetData.content || retweetData.retweetContent;
         displayName=retweetData.postedBy.Name;
         username=retweetData.postedBy.username;
@@ -32,7 +32,9 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     const [retweetLen, setretweetLen] = useState(retweetUserList.length);
     const [retweetId_data, setretweetId_data] = useState(retweetUserList);
     
-
+    const [store, setstore] = useState("Nope");
+    const [cnt, setcnt] = useState(0);
+    // var cnt=0;
 
 
 
@@ -180,6 +182,104 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
             parentHandler();
     }
 
+
+    const reply_clicked=(myCloseFunction=false,myFunction=false,spanFunc=false)=>
+    {
+        if(cnt==0)
+            setcnt(1);
+        else
+        setcnt(0);
+
+        // console.log("REPLy_CNT", cnt);
+
+        var chor="NO";
+        var hi;
+        var modal = document.getElementById("myModal");
+        var span = document.getElementsByClassName("close")[0];
+        if(myCloseFunction==false && myFunction==false)
+       
+        {
+            chor="OK";
+            hi="2";
+            setstore(chor);
+            // var modal = document.getElementById("myModal");
+            console.log("Clicked here",modal,postText,username,id,chor,store,hi,cnt);
+
+         // Get the button that opens the modal
+         var btn = document.getElementById("myBtn");
+         console.log("Btn",btn);
+         
+    console.log("LOD",span);
+         // When the user clicks on the button, open the modal
+        //  btn.onClick = function() {
+        //  modal.style.display = "block";      
+        //  }
+        // modal.style.display = "block"; 
+        // params.replyHandler("Child"); 
+        replyHandler("gg") ;
+        }
+
+    
+        // if(cnt==1)
+        // {
+            //  console.log("HELLO",span);
+             
+            //  span.onclick = function() {
+            // console.log("SPAN");
+            //document.getElementById("myTextarea").value ="---";
+            // modal.style.display = "none";
+            // setcnt(0);
+        //   }  
+        // }
+        // }
+
+        if(spanFunc==true)
+        {
+            document.getElementById("myTextarea").value ="--";
+            // document.getElementById("yo").innerHTML="-";
+            // modal.style.display = "none"; 
+            setcnt(0);
+        }
+
+        if(myFunction==true)
+         {
+            var x=document.getElementById("myTextarea").value ;
+            // document.getElementById("yo").innerHTML=x;
+            console.log("x=",x,postText,chor,store,hi,cnt);
+            document.getElementById("myTextarea").value="-MyFunc";
+            // modal.style.display = "none"; 
+            setcnt(0);
+
+        }
+
+         if(myCloseFunction==true)
+         {
+            document.getElementById("myTextarea").value ="--";
+            // document.getElementById("yo").innerHTML="-";
+            // modal.style.display = "none"; 
+            setcnt(0);
+
+         }
+            
+console.log("WINDOWS",window.onclick);
+         window.onclick = function(event) {
+            if (event.target == modal) {
+                console.log("2.WINDOWS");
+                //document.getElementById("myTextarea").value ="Nan";
+                modal.style.display = "none"; 
+                // setcnt(0);
+            }
+            }
+    
+    // const myCloseFunction=()=>
+    // {
+    //     var modal = document.getElementById("myModal");
+    //     modal.style.display = "none";
+    // }
+    
+}
+console.log("COunt",cnt);
+
    
     return (
         <div className="Post" id={id}>
@@ -235,11 +335,51 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
                 </div> */}
                 {/* <FontAwesomeIcon icon="fa-regular fa-comment" /> */}
 
+{/* *************************************************************************************** */}
               <div className="Post_bottomIcons">
+              <button onClick={onClick}> Click me {count} </button>
 
-                    <button className='Post_icon_button'> 
+                    <button id="myBtn" className='Post_icon_button' onClick={()=>reply_clicked()}> 
                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
                     </button>
+
+                    {/* {id} */}
+ {/* /////////////////////////////////////////////////////////////////////////////// */}                  
+                    {/* <div id="myModal" className="modal"> */}
+{/* {id} */}
+                    {/* <div className="modal-content">
+                        
+                        <span className="close">&times;</span>
+                        <textarea id="myTextarea">{postText}</textarea>
+
+                        <p>Some text in the Modal..</p>
+                        <button id="postBtn" onClick={()=>reply_clicked(false,true)}>POst</button>
+                        <button id="closeBtn" onClick={()=>reply_clicked(true,false)}>Close</button>
+                    </div> 
+                </div> */}
+{/* *************************************************************************************** */}
+{/* ############################################################################################## */}
+{/* <div>YESS</div> */}
+{cnt==1?
+
+            <div id="myModal" className="modal">
+                 <div className="modal-content">
+                        
+                        <button id="close" onClick={()=>reply_clicked(false,true,true)}>X</button>
+                        {/* <textarea id="myTextarea" value={postText}/>   */}
+                        <textarea id="myTextarea">{postText}</textarea>
+
+                        <p>Some text in the Modal..</p>
+                        <button id="postBtn" onClick={()=>reply_clicked(false,true)}>POst</button>
+                        <button id="closeBtn" onClick={()=>reply_clicked(true,false)}>Close</button>
+                    </div> 
+             </div>
+                    :
+<div><span className="close">&times;</span>NOO{cnt}</div>}
+
+{/* ********************************************************************************************* */}
+
+
 
                     {/* Retweet  */}
                     <button className='Post_icon_button' onClick={()=>retweet_clicked()}>
@@ -288,9 +428,12 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
 
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
+ 
 
         </div>
+        
     )
+    
 }
 
 
