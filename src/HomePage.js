@@ -2,6 +2,10 @@ import { Avatar } from '@material-ui/core';
 import React, { useState,useEffect } from 'react'
 import './HomePage.css';
 import Post from './Post';
+import Post2 from './Post2';
+import Post3 from './Post3';
+
+
 import Tweetbox from './Tweetbox';
 import axios from 'axios';
 
@@ -14,7 +18,7 @@ function HomePage() {
         axios.get(`http://localhost:4000/post/allpost`)
         .then(res=>
             {
-                // console.log("HomePg RES.DATA ",(res.data),(res.data[2].content), res.data[2].retweetUserList);
+                console.log("HomePg RES.DATA ",(res.data),(res.data[2].content), res.data[2].retweetUserList);
                 setdata(res.data);
                 setreload(0)
                 
@@ -106,7 +110,7 @@ function HomePage() {
             {/* {(typeof(result)!='undefined')? */}
                  {
                     result.map((i)=>(
-                        <Post 
+                        <Post3 
                             key={i[0]._id}
                             id={i[0]._id}
                             Icon={Avatar}  
@@ -132,6 +136,33 @@ function HomePage() {
                         // console.log("i=",i[0].likes.length,i[0])
                         ))
                  }
+
+
+                {/* {
+                    result.map((i)=>(
+                        <Post2
+                            key={i[0]._id}
+                            id={i[0]._id}
+                            Icon={Avatar}  
+                            displayName={i[0].postedBy.Name}
+                            username={i[0].postedBy.username}
+                            postText={i[0].content}
+                            createdAt={i[0].createdAt}
+
+                            verified="True"
+                             parentHandler={()=>parentFunc()}   
+
+                            replyHandler={()=>replyFunc()}
+                            onClick={increment} 
+                            count={count} 
+
+                             likeslength={i[0].likes.length}
+                             likesData={i[0].likes}
+                             retweetUserList={i[0].retweetUserList}
+                             retweetData={i[0].retweetDataId}
+                        />
+                        ))
+                 } */}
             {/* // :
             // console.log("ELSE MAP")
             // } */}

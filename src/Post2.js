@@ -1,6 +1,6 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState,useEffect,useRef } from 'react'
 import { useDispatch,useSelector } from 'react-redux';
-import './Post.css'
+import './Post2.css'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import RepeatIcon from '@material-ui/icons/Repeat';
@@ -23,6 +23,27 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
 
 
     }
+    const windowSizeRef = useRef(window.innerHeight);
+
+    const [alert, setAlert] = useState(false);
+    useEffect(() => {
+        // run code when anything in the array changes
+        const handleWindowClick = () => setAlert(false); 
+        // console.log("1.ALERT CAL",alert);
+       
+        if(alert) {
+            // console.log("2.ALERT CAL",alert);
+            window.addEventListener('click', handleWindowClick);
+          } 
+          else {
+            // console.log("3.ALERT CAL",alert);
+            window.removeEventListener('click', handleWindowClick);
+          }
+          return () => {
+            //   console.log("4.ALERT CAL",alert);
+          window.removeEventListener('click', handleWindowClick);
+        }
+       }, [alert, setAlert])
     
     var timestamp=timeDifference(new Date(),new Date(createdAt))
     // const [likeCounter, setlikeCounter] = useState(0)
@@ -34,6 +55,8 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     
     const [store, setstore] = useState("Nope");
     const [cnt, setcnt] = useState(0);
+
+
     // var cnt=0;
 
 
@@ -190,7 +213,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
         else
         setcnt(0);
 
-        // console.log("REPLy_CNT", cnt);
+        console.log("REPLy_CNT", windowSizeRef);
 
         var chor="NO";
         var hi;
@@ -214,7 +237,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
         //  btn.onClick = function() {
         //  modal.style.display = "block";      
         //  }
-        // modal.style.display = "block"; 
+        modal.style.display = "block"; 
         // params.replyHandler("Child"); 
         replyHandler("gg") ;
         }
@@ -237,7 +260,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
         {
             document.getElementById("myTextarea").value ="--";
             // document.getElementById("yo").innerHTML="-";
-            // modal.style.display = "none"; 
+            modal.style.display = "none"; 
             setcnt(0);
         }
 
@@ -247,7 +270,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
             // document.getElementById("yo").innerHTML=x;
             console.log("x=",x,postText,chor,store,hi,cnt);
             document.getElementById("myTextarea").value="-MyFunc";
-            // modal.style.display = "none"; 
+            modal.style.display = "none"; 
             setcnt(0);
 
         }
@@ -256,7 +279,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
          {
             document.getElementById("myTextarea").value ="--";
             // document.getElementById("yo").innerHTML="-";
-            // modal.style.display = "none"; 
+            modal.style.display = "none"; 
             setcnt(0);
 
          }
@@ -277,6 +300,10 @@ console.log("WINDOWS",window.onclick,document);
     //     modal.style.display = "none";
     // }
     
+}
+const divfun=()=>
+{
+    console.log("IN DIV");
 }
 console.log("COunt",cnt);
 
@@ -313,7 +340,7 @@ console.log("COunt",cnt);
                     <VerifiedUserIcon className="Post_verified"/>
                     {/* </div> */}
                     
-                    <div className="Post_username">@{username} </div>
+                    <div className="Post_username">Post2@{username} </div>
                     <div className='Post_dot'>.</div>
                     <div className='Post_date'>{timestamp}</div>
                 
@@ -345,9 +372,9 @@ console.log("COunt",cnt);
 
                     {/* {id} */}
  {/* /////////////////////////////////////////////////////////////////////////////// */}                  
-                    {/* <div id="myModal" className="modal"> */}
+                    <div id="myModal" className="modal2"  onClick={() => divfun()}>
 {/* {id} */}
-                    {/* <div className="modal-content">
+                    <div className="modal-content">
                         
                         <span className="close">&times;</span>
                         <textarea id="myTextarea">{postText}</textarea>
@@ -356,16 +383,32 @@ console.log("COunt",cnt);
                         <button id="postBtn" onClick={()=>reply_clicked(false,true)}>POst</button>
                         <button id="closeBtn" onClick={()=>reply_clicked(true,false)}>Close</button>
                     </div> 
-                </div> */}
+                </div>
+                
 {/* *************************************************************************************** */}
+<div className="information-wrapper">
+          <button
+            className="information"
+            onClick={() => setAlert(true)}
+            type="button"
+          >
+            more information
+          </button>
+         {alert &&
+           <div className="popup">
+             <span role="img" aria-label="allowed">✅</span> Alphanumeric Characters
+             <br />
+             <span role="img" aria-label="not allowed">⛔️</span> *
+           </div>
+         }
+        </div>
 {/* ############################################################################################## */}
 {/* <div>YESS</div> */}
-{cnt==1?
+{/* {cnt==1?
 
-            <div id="myModal" className="modal1">
+            <div id="myModal" className="modal">
                  <div className="modal-content">
                         
-                       
                        
                         <textarea id="myTextarea">{postText}</textarea>
                         <button id="close" onClick={()=>reply_clicked(false,true,true)}>X</button>
@@ -377,7 +420,7 @@ console.log("COunt",cnt);
                     </div> 
              </div>
                     :
-<div><span className="close">&times;</span>NOO{cnt}</div>}
+<div><span className="close">&times;</span>NOO{cnt}</div>} */}
 
 {/* ********************************************************************************************* */}
 

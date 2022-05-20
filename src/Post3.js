@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { useDispatch,useSelector } from 'react-redux';
-import './Post.css'
+import './Post3.css'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import RepeatIcon from '@material-ui/icons/Repeat';
@@ -36,7 +36,10 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     const [cnt, setcnt] = useState(0);
     // var cnt=0;
 
-
+// const [divclick, setdivclick] = useState(1);
+var div1=0;
+var div2=0;//https://stackoverflow.com/questions/58252454/react-hooks-using-usestate-vs-just-variables
+var flag=false;
 
     const [btnCls,setbtnCls] = useState("");
     // const [x,setx] = useState(0);
@@ -206,10 +209,10 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
             console.log("Clicked here",modal,postText,username,id,chor,store,hi,cnt);
 
          // Get the button that opens the modal
-         var btn = document.getElementById("myBtn");
-         console.log("Btn",btn);
+            var btn = document.getElementById("myBtn");
+             console.log("Btn",btn);
          
-    console.log("LOD",span);
+            // console.log("LOD",span,document.getElementById("myTextarea").value);
          // When the user clicks on the button, open the modal
         //  btn.onClick = function() {
         //  modal.style.display = "block";      
@@ -235,7 +238,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
 
         if(spanFunc==true)
         {
-            document.getElementById("myTextarea").value ="--";
+            // document.getElementById("myTextarea").value ="--";
             // document.getElementById("yo").innerHTML="-";
             // modal.style.display = "none"; 
             setcnt(0);
@@ -243,10 +246,12 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
 
         if(myFunction==true)
          {
-            var x=document.getElementById("myTextarea").value ;
+
+            // var x=document.getElementById("myTextarea").value ;
             // document.getElementById("yo").innerHTML=x;
-            console.log("x=",x,postText,chor,store,hi,cnt);
-            document.getElementById("myTextarea").value="-MyFunc";
+            // console.log("x=",x,postText,chor,store,hi,cnt,document.getElementById("myTextarea").value);
+            // document.getElementById("myTextarea").value="-MyFunc";
+            console.log("After x=",document.getElementById("myTextarea").value);
             // modal.style.display = "none"; 
             setcnt(0);
 
@@ -254,14 +259,14 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
 
          if(myCloseFunction==true)
          {
-            document.getElementById("myTextarea").value ="--";
+            // document.getElementById("myTextarea").value ="--";
             // document.getElementById("yo").innerHTML="-";
             // modal.style.display = "none"; 
             setcnt(0);
 
          }
             
-console.log("WINDOWS",window.onclick,document);
+// console.log("WINDOWS",window.onclick,document);
          window.onclick = function(event) {
             if (event.target == modal) {
                 console.log("2.WINDOWS",event);
@@ -279,8 +284,65 @@ console.log("WINDOWS",window.onclick,document);
     
 }
 console.log("COunt",cnt);
+    const divfun1=()=>
+    {
+        div1++;
+        // if()
+        // directly out...div1=1, div2=0
+        //2nd clicked....div2=1, div1=1
 
-   
+        console.log("IN DIV1",div1,div2);
+        // if(flag==false)
+        // alert('Close?');
+        // else
+        // flag=false;
+
+        if(flag==false)
+        {
+            var val = window.confirm("Do you want to Delete Data? Click Ok.");
+            if (val == false) 
+            {
+            // alert("You pressed OK.");
+            } 
+            else 
+            {
+                var val_again = window.confirm("Confirm Delete Data? Click Ok.");
+                if(val_again==true)
+                {
+                    alert("Deleted");
+                    setcnt(0);
+                }
+                // else
+                    // alert("No delete");
+             }
+        }
+        else
+        flag=false;
+
+        // var val = window.confirm("Type your text here.");
+        // if (val == true) 
+        // {
+        // // alert("You pressed OK.");
+        // } 
+        // else 
+        // {
+        //     var val_again = window.confirm("Delete Data? Click Ok.");
+        //     if(val_again==true)
+        //     {
+        //         alert("Deleted");
+        //         setcnt(0);
+        //     }
+        //     // else
+        //         // alert("No delete");
+        //  }
+    }
+    const divfun2=()=>
+    {
+        div2++;
+        flag=true;
+        console.log("IN DIV2",div1,div2);
+    }
+    
     return (
         <div className="Post" id={id}>
 
@@ -362,15 +424,22 @@ console.log("COunt",cnt);
 {/* <div>YESS</div> */}
 {cnt==1?
 
-            <div id="myModal" className="modal1">
-                 <div className="modal-content">
+            <div id="myModal" className="modal3" onClick={() => divfun1()}>
+                 <div className="modal-content" onClick={() => divfun2()}>
+                        
+                        <div>
+                              <button className="closeArrowBtn" onClick={()=>reply_clicked(false,true,true)}>X</button>
+                        </div>
+
+                        {/* <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
+                        <div className='modal-closeArrow-textarea'>
+                            <p className="modal_postText">{postText}</p>
+                            {/* <</p> */}
+                            <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply'></textarea>
+                        </div>
+                        
                         
                        
-                       
-                        <textarea id="myTextarea">{postText}</textarea>
-                        <button id="close" onClick={()=>reply_clicked(false,true,true)}>X</button>
-                        
-                        <p>Some text in the Modal..</p>
                         <button id="postBtn" onClick={()=>reply_clicked(false,true)}>POst</button>
                         <button id="closeBtn" onClick={()=>reply_clicked(true,false)}>Close</button>
                         
