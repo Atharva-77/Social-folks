@@ -4,6 +4,7 @@ import './HomePage.css';
 import Post from './Post';
 import Post2 from './Post2';
 import Post3 from './Post3';
+import Post4 from './Post4';
 
 
 import Tweetbox from './Tweetbox';
@@ -110,7 +111,7 @@ function HomePage() {
             {/* {(typeof(result)!='undefined')? */}
                  {
                     result.map((i)=>(
-                        <Post3 
+                        <Post4 
                             key={i[0]._id}
                             id={i[0]._id}
                             Icon={Avatar}  

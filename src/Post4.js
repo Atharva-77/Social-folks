@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react'
 import { useDispatch,useSelector } from 'react-redux';
-import './Post3.css'
+import './Post4.css'
 import VerifiedUserIcon from '@material-ui/icons/VerifiedUser';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import RepeatIcon from '@material-ui/icons/Repeat';
@@ -36,7 +36,9 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
     const [cnt, setcnt] = useState(0);
 
     const [reply, setreply] = useState("");
+    const [replycontent, setreplycontent] = useState("");
     var rep="";
+
     // var cnt=0;
 
 // const [divclick, setdivclick] = useState(1);
@@ -239,54 +241,23 @@ var flag=false;
         // }
         // }
 
-        if(spanFunc==true)
-        {
-            // document.getElementById("myTextarea").value ="--";
-            // document.getElementById("yo").innerHTML="-";
-            // modal.style.display = "none"; 
-            setcnt(0);
-        }
+        // if(spanFunc==true)
+        // {
+        //     // document.getElementById("myTextarea").value ="--";
+        //     // document.getElementById("yo").innerHTML="-";
+        //     // modal.style.display = "none"; 
+        //     setcnt(0);
+        // }
 
-        if(myFunction==true)
-         {
-
-            // var x=document.getElementById("myTextarea").value ;
-            // document.getElementById("yo").innerHTML=x;
-            // console.log("x=",x,postText,chor,store,hi,cnt,document.getElementById("myTextarea").value);
-            // document.getElementById("myTextarea").value="-MyFunc";
-            setreply(document.getElementById("myTextarea").value);
-            rep=document.getElementById("myTextarea").value;
-            console.log("After x=",document.getElementById("myTextarea").value,reply.length,rep.length);
-           
-            // modal.style.display = "none"; 
-            setcnt(0);
-
-        }
-
-         if(myCloseFunction==true)
-         {
-            // document.getElementById("myTextarea").value ="--";
-            // document.getElementById("yo").innerHTML="-";
-            // modal.style.display = "none"; 
-            setcnt(0);
-
-         }
-            
-// console.log("WINDOWS",window.onclick,document);
-         window.onclick = function(event) {
-            if (event.target == modal) {
-                console.log("2.WINDOWS",event);
-                //document.getElementById("myTextarea").value ="Nan";
-                modal.style.display = "none"; 
-                // setcnt(0);
-            }
-            }
-    
-    // const myCloseFunction=()=>
-    // {
-    //     var modal = document.getElementById("myModal");
-    //     modal.style.display = "none";
-    // }
+      
+        //  window.onclick = function(event) {
+        //     if (event.target == modal) {
+        //         console.log("2.WINDOWS",event);
+        //         //document.getElementById("myTextarea").value ="Nan";
+        //         modal.style.display = "none"; 
+        //         // setcnt(0);
+        //     }
+        //     }
     
 }
 console.log("COunt",cnt);
@@ -318,6 +289,7 @@ console.log("COunt",cnt);
                 if(val_again==true)
                 {
                     alert("Deleted");
+                    setreplycontent('');
                     setcnt(0);
                 }
                 // else
@@ -351,6 +323,21 @@ console.log("COunt",cnt);
         div2++;
         flag=true;
         console.log("IN DIV2",div1,div2);
+    }
+    
+    // console.log("REPLY CONTENT",replycontent);
+
+    const reply_submit_clicked=()=>
+    {
+        console.log("Submitted",replycontent.trim().length);
+        setcnt(0);
+        setreplycontent('');
+    }
+    const reply_close_clicked=()=>
+    {
+        console.log("Closed",replycontent);
+        setcnt(0);
+        setreplycontent('');
     }
     
     return (
@@ -415,30 +402,13 @@ console.log("COunt",cnt);
                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
                     </button>
 
-                    {/* {id} */}
- {/* /////////////////////////////////////////////////////////////////////////////// */}                  
-                    {/* <div id="myModal" className="modal"> */}
-{/* {id} */}
-                    {/* <div className="modal-content">
-                        
-                        <span className="close">&times;</span>
-                        <textarea id="myTextarea">{postText}</textarea>
-
-                        <p>Some text in the Modal..</p>
-                        <button id="postBtn" onClick={()=>reply_clicked(false,true)}>POst</button>
-                        <button id="closeBtn" onClick={()=>reply_clicked(true,false)}>Close</button>
-                    </div> 
-                </div> */}
-{/* *************************************************************************************** */}
-{/* ############################################################################################## */}
-{/* <div>YESS</div> */}
 {cnt==1?
 
             <div id="myModal" className="modal3" onClick={() => divfun1()}>
                  <div className="modal-content" onClick={() => divfun2()}>
                         
                         <div>
-                              <button className="closeArrowBtn" onClick={()=>reply_clicked(false,true,true)}>X</button>
+                              <button className="closeArrowBtn" onClick={()=>reply_close_clicked()}>X</button>
                         </div>
 
                         {/* <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
@@ -460,22 +430,25 @@ console.log("COunt",cnt);
 
                             <p className="modal_postText">{postText}</p>
                             {/* <</p> */}
-                            <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply'></textarea>
+                            <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)}></textarea>
+
                         </div>
                         
                         
-                       
-                        {/* {rep.length!=0?  */}
-                            <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_clicked(false,true)}>Post</button>
-                            {/* : */}
-                            {/* <button id="postBtn" disabled className='modal_Post_reply' onClick={()=>reply_clicked(false,true)}>Pqost</button> */}
-                        {/* } */}
-                        <button id="closeBtn" className='modal_Close_reply' onClick={()=>reply_clicked(true,false)}>Close</button>
+                        {/* <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button> */}
+                  
+                        {replycontent.trim().length!=0? 
+                            <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button>
+                            :
+                            <button id="postBtn" disabled className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button>
+                        }
+
+                        <button id="closeBtn" className='modal_Close_reply' onClick={()=>reply_close_clicked()}>Close</button>
                         
                     </div> 
              </div>
                     :
-<div><span className="close">&times;</span>NOO{cnt}</div>}
+null}
 
 {/* ********************************************************************************************* */}
 
