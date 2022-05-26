@@ -166,4 +166,28 @@ router.post("/:id/retweet",protect,async(req,res)=>
 })
 
 
+//GET post via id
+router.get("/:id",async(req,res)=>
+{
+    try 
+    {
+        var postid=req.params.id ;
+        console.log("GET",postid);
+
+        PostDb.findById(postid)       //find method returns a promise.So result returened in json format
+        .then(i=> res.status(200).json(i)) 
+        .catch(err=> res.status(400).json('Error: '+err))        
+       
+        // res.status(200).json(updatedPost);
+        // res.status(200).json("SUCCESS");
+
+    }
+    catch(err)
+    {
+        console.log("Error hai");
+        res.status(401).send("Invalid Details");//...as data already send to client
+    }
+})
+
+
 module.exports=router;

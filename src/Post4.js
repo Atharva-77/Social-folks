@@ -430,7 +430,7 @@ console.log("COunt",cnt);
 
                             <p className="modal_postText">{postText}</p>
                             {/* <</p> */}
-                            <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)}></textarea>
+                            <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
 
                         </div>
                         
@@ -440,7 +440,7 @@ console.log("COunt",cnt);
                         {replycontent.trim().length!=0? 
                             <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button>
                             :
-                            <button id="postBtn" disabled className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button>
+                            <button id="postBtn" className='modal_Post_reply_disable' >Post</button>
                         }
 
                         <button id="closeBtn" className='modal_Close_reply' onClick={()=>reply_close_clicked()}>Close</button>
