@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
+import { Avatar } from '@material-ui/core';
 
 function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData}) {
    
@@ -69,7 +70,16 @@ var flag=false;
     const userLoginData = useSelector(state => state.userLoginKey)
     const {userInfo} =userLoginData
 
-    // console.log("UserLOgin DATA",userInfo.id,id);
+    console.log("UserLOgin DATA",typeof(userInfo.id)!='undefined');
+    if(typeof(userInfo.id)!='undefined')
+    {
+        // loggedIn=true;
+        console.log(userInfo.name,userInfo.username);
+    }
+    else
+    {
+        // loggedIn=false;
+    }
     
     if(data_Likes.includes(userInfo.id))
     {
@@ -401,13 +411,15 @@ console.log("COunt",cnt);
                     <button id="myBtn" className='Post_icon_button' onClick={()=>reply_clicked()}> 
                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
                     </button>
-
-{cnt==1?
+ {typeof(userInfo.id)!='undefined'?
+   <div>
+    {cnt==1?
 
             <div id="myModal" className="modal3" onClick={() => divfun1()}>
                  <div className="modal-content" onClick={() => divfun2()}>
                         
-                        <div>
+                        <div className='reply-closeArrowBtn'>
+                              <div className='modal-reply-heading'>Reply</div>
                               <button className="closeArrowBtn" onClick={()=>reply_close_clicked()}>X</button>
                         </div>
 
@@ -415,23 +427,27 @@ console.log("COunt",cnt);
                         <div className='modal-closeArrow-textarea'>
                             
                             <div className='Post_header'>
-                            <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
+                                <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
                             
-                            <div className="Post_displayName">
-                                {displayName}
-                            </div>
-                           
-                            <VerifiedUserIcon className="Post_verified"/>
-                                       
-                            <div className="Post_username">@{username} </div>
-                            <div className='Post_dot'>.</div>
-                            <div className='Post_date'>{timestamp}</div>
+                                <div className="Post_displayName">
+                                    {displayName}
+                                </div>
+                            
+                                <VerifiedUserIcon className="Post_verified"/>
+                                        
+                                <div className="Post_username">@{username} </div>
+                                <div className='Post_dot'>.</div>
+                                <div className='Post_date'>{timestamp}</div>
                             </ div>
 
                             <p className="modal_postText">{postText}</p>
+                            {/* <hr className="bottom-border"/> */}
+                            <div className="bottom-border"></div>
                             {/* <</p> */}
-                            <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
-
+                            <div className='modal-reply_header'>
+                                <Icon className="modal_Post_avator" />
+                                <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
+                            </div>
                         </div>
                         
                         
@@ -448,7 +464,11 @@ console.log("COunt",cnt);
                     </div> 
              </div>
                     :
-null}
+     null}
+    </div>
+    :
+                    
+    null}
 
 {/* ********************************************************************************************* */}
 

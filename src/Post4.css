@@ -272,16 +272,37 @@
     /* text-align: center; */
     
     /* display: block; */
+    /* border: 2px solid black; */
+    /* border-top: 1px solid lightgray; */
    
 
   }
-.closeArrowBtn
+
+.reply-closeArrowBtn
+{
+    display: flex;
+    padding-bottom: 8px;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 10px;
+}
+.modal-reply-heading
+{
+    /* padding-right: 20px; */
+    color: black;
+    font-weight: bold;
+    font-size: large;
+}
+.reply-closeArrowBtn .closeArrowBtn
 {
     background-color: transparent;
     border:none;
+    /* padding-left: 100px; */
     /* color: #5c5d5e; */
-    float: right;
+    margin-left: auto;
+    /* float: right; */
+  
 }
+
 .modal_postText
 {
     /* display: block; */
@@ -291,10 +312,23 @@
     margin-bottom: 1.5rem;
     font-size: 1.2rem;
 
+
+}
+.bottom-border
+{
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 10px;
+    /* padding-bottom: 2px; */
+
 }
 
+.modal_Post_avator
+{
+margin-top: 5px;
+}
 .modal-textarea
 {  
+    /* margin-top: 5%; */
     margin-left: 3rem;
     margin-right: 3rem;
     margin-bottom: 1.3rem;

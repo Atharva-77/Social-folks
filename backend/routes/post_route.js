@@ -60,6 +60,39 @@ router.get('/allpost',async(req,res)=>
 })
 
 
+
+//GET post via id
+router.get("/:id",async(req,res)=>
+{
+    try 
+    {
+        var postid=req.params.id ;
+        console.log("GET",postid);
+
+        const postDetail=await PostDb.findById(postid).populate('postedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
+        
+        const full_postDetail=await RegisterDb.populate(postDetail,{path:'retweetDataId.postedBy'})
+        try{
+            res.status(200).json(full_postDetail)
+        }
+       
+        catch(err)
+        {
+            res.status(401).json("All err "+err)
+        } 
+    }
+    catch(err)
+    {
+        console.log("Error hai");
+        res.status(401).send("Invalid Details");//...as data already send to client
+    }
+})
+
+
+
+
+
+
 router.put("/:id/like",protect,async(req,res)=>
 {
     try 
@@ -165,29 +198,6 @@ router.post("/:id/retweet",protect,async(req,res)=>
     }
 })
 
-
-//GET post via id
-router.get("/:id",async(req,res)=>
-{
-    try 
-    {
-        var postid=req.params.id ;
-        console.log("GET",postid);
-
-        PostDb.findById(postid)       //find method returns a promise.So result returened in json format
-        .then(i=> res.status(200).json(i)) 
-        .catch(err=> res.status(400).json('Error: '+err))        
-       
-        // res.status(200).json(updatedPost);
-        // res.status(200).json("SUCCESS");
-
-    }
-    catch(err)
-    {
-        console.log("Error hai");
-        res.status(401).send("Invalid Details");//...as data already send to client
-    }
-})
 
 
 module.exports=router;
