@@ -19,7 +19,7 @@ function HomePage() {
         axios.get(`http://localhost:4000/post/allpost`)
         .then(res=>
             {
-                console.log("HomePg RES.DATA ",(res.data),(res.data[2].content), res.data[2].retweetUserList);
+                console.log("HomePg RES.DATA ",(res.data));
                 setdata(res.data);
                 setreload(0)
                 
@@ -110,8 +110,71 @@ function HomePage() {
         {/* <div className="home__row"> */}
             {/* {(typeof(result)!='undefined')? */}
                  {
-                    result.map((i)=>(
+                    result.map(i=>{
+                        // if(typeof(i[0].replyDataId)!='undefined')
+                      
+                     return typeof(i[0].originalPostedBy)=='undefined'?
+                        //  return 
+                         <Post4 
+                            key={i[0]._id}
+                            id={i[0]._id}
+                            Icon={Avatar}  
+                            displayName={i[0].postedBy.Name}
+                            username={i[0].postedBy.username}
+                            originalData='GG'
+                            postText={i[0].content}
+                            createdAt={i[0].createdAt}
+                            // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                             verified="True"
+                             parentHandler={()=>parentFunc()}   
+
+                            //  replyHandler={()=>replyFunc(i[0].content)}
+                            replyHandler={()=>replyFunc()}
+                            onClick={increment} 
+                            count={count} 
+
+                             likeslength={i[0].likes.length}
+                             likesData={i[0].likes}
+                             retweetUserList={i[0].retweetUserList}
+                             retweetData={i[0].retweetDataId}
+                            //  retweetContent={i[0].retweetContent}
+                            replyDataId={i[0].replyDataId}
+                          />
+                          :
+                        
+                        // null
+                        // <h1>Hi</h1>
                         <Post4 
+                        key={i[0]._id}
+                        id={i[0]._id}
+                        Icon={Avatar}  
+                        displayName={i[0].postedBy.Name}
+                        username={i[0].postedBy.username}
+                        originalData={i[0].originalPostedBy}
+                        postText={i[0].content}
+                        createdAt={i[0].createdAt}
+                        // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                         verified="True"
+                         parentHandler={()=>parentFunc()}   
+
+                        //  replyHandler={()=>replyFunc(i[0].content)}
+                        replyHandler={()=>replyFunc()}
+                        onClick={increment} 
+                        count={count} 
+
+                         likeslength={i[0].likes.length}
+                         likesData={i[0].likes}
+                         retweetUserList={i[0].retweetUserList}
+                         retweetData={i[0].retweetDataId}
+                        //  retweetContent={i[0].retweetContent}
+                        replyDataId={i[0].replyDataId}
+                      />
+                        // console.log("i=",i[0].likes.length,i[0])
+                    })
+                 }
+                    {/* return typeof(i[0].originalPostedBy)=='undefined'?
+                        //  return 
+                         <Post4 
                             key={i[0]._id}
                             id={i[0]._id}
                             Icon={Avatar}  
@@ -133,10 +196,43 @@ function HomePage() {
                              retweetUserList={i[0].retweetUserList}
                              retweetData={i[0].retweetDataId}
                             //  retweetContent={i[0].retweetContent}
-                        />
-                        // console.log("i=",i[0].likes.length,i[0])
-                        ))
-                 }
+                            replyDataId={i[0].replyDataId}
+                          />
+                          :
+                        
+                        // null
+                        // <h1>Hi</h1>
+                    //     <div>
+                        <Post4 
+                        key={i[0]._id}
+                        id={i[0]._id}
+                        Icon={Avatar}  
+                        displayName={i[0].originalPostedBy.Name}
+                        username={i[0].originalPostedBy.username}
+
+                        originalData={i[0].originalPostedBy}
+                        // org={i[0].originalPostedBy.Name}
+
+                        postText={i[0].content}
+                        createdAt={i[0].createdAt}
+                        // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                         verified="True"
+                         parentHandler={()=>parentFunc()}   
+
+                        //  replyHandler={()=>replyFunc(i[0].content)}
+                        replyHandler={()=>replyFunc()}
+                        onClick={increment} 
+                        count={count} 
+
+                         likeslength={i[0].likes.length}
+                         likesData={i[0].likes}
+                         retweetUserList={i[0].retweetUserList}
+                         retweetData={i[0].retweetDataId}
+                        //  retweetContent={i[0].retweetContent}
+                        replyDataId={i[0].replyDataId}
+                      />
+                    //   </div>
+                    }) */}
 
 
                 {/* {

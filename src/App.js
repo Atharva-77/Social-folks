@@ -8,6 +8,7 @@ import Login from './Login';
 import Register from './Register';
 import { Provider } from 'react-redux';
 import store from './Store';
+import PostDetails from './PostDetails';
 
 function App() {
   return (
@@ -26,8 +27,15 @@ function App() {
                <Login/>
             </Route> 
 
+            <Route path="/post/:id">
+               <div className="sidebar">
+                  <Sidebar />
+                  <PostDetails/>
+                  <Right_sidebar />
+                  </div>
+            </Route> 
+
             <Route path="/">
-              
               <div className="sidebar">
                  
                   <Sidebar />
@@ -35,7 +43,6 @@ function App() {
                   <Right_sidebar />
 
                </div>
-
             </Route>
 
          </ Switch>

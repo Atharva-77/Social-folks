@@ -9,18 +9,28 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
 import { Avatar } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
-function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData}) {
+
+function Post({id,Icon,displayName, username,originalData,postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId}) {
    
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
-    // console.log("Content",setname);
+    console.log("1.Yo",originalData,id)
+     console.log("2.",retweetData);
     var displayname_retweet=displayName;
+
     if (typeof(retweetData)!='undefined') {
 
-        // console.log("2.Content",retweetData.content,retweetData.retweetContent);
+        // console.log("2.Ho",retweetData.content,retweetData.retweetContent,displayName);
         postText=retweetData.content || retweetData.retweetContent;
-        displayName=retweetData.postedBy.Name;
-        username=retweetData.postedBy.username;
+
+        console.log("3.",originalData)
+        console.log("4.",retweetData);
+
+        displayName=originalData.Name;
+        username=originalData.username;
+        // displayName='YO'
+        // username='HI'
 
 
     }
@@ -46,6 +56,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
 var div1=0;
 var div2=0;//https://stackoverflow.com/questions/58252454/react-hooks-using-usestate-vs-just-variables
 var flag=false;
+// var link_flag=true;
 
     const [btnCls,setbtnCls] = useState("");
     // const [x,setx] = useState(0);
@@ -70,11 +81,11 @@ var flag=false;
     const userLoginData = useSelector(state => state.userLoginKey)
     const {userInfo} =userLoginData
 
-    console.log("UserLOgin DATA",typeof(userInfo.id)!='undefined');
+    // console.log("UserLOgin DATA",typeof(userInfo.id)!='undefined');
     if(typeof(userInfo.id)!='undefined')
     {
         // loggedIn=true;
-        console.log(userInfo.name,userInfo.username);
+        // console.log(userInfo.name,userInfo.username);
     }
     else
     {
@@ -124,6 +135,13 @@ var flag=false;
 
     const like_clicked=()=>
     {
+        // link_flag=false;
+        // var btn = document.getElementById("like_button");
+        // console.log("btn",btn);
+        // btn.onclick = function() {
+        //     console.log("LIKE CLICKED");      
+        //      }
+
         // x=likeCounter;
         // console.log("B4",likeCounter,x);
         // setlikeCounter(previous=>previous+1)
@@ -194,10 +212,11 @@ var flag=false;
                     setretweetLen(res.data.retweetUserList.length);
                     setretweetId_data(res.data.retweetUserList)
                     // setdata_Likes(res.data.likes);
-                    // console.log("dataLen_Likes",dataLen_Likes); 
+                    console.log("RETWEET",res.data); 
+                    parentHandler();
                 }
             )
-            parentHandler();
+            // parentHandler();
     }
 
 
@@ -270,7 +289,7 @@ var flag=false;
         //     }
     
 }
-console.log("COunt",cnt);
+// console.log("COunt",cnt);
     const divfun1=()=>
     {
         div1++;
@@ -339,7 +358,33 @@ console.log("COunt",cnt);
 
     const reply_submit_clicked=()=>
     {
-        console.log("Submitted",replycontent.trim().length);
+        console.log("Submitted",replycontent,replycontent.trim().length);
+        
+        const config=
+        {
+            headers:
+            {
+                'Content-Type':"application/json",
+                Authorization:`Bearer ${userInfo.token}`
+            }
+        }
+       
+        const replycontent_data=
+        {
+            "content":replycontent.trim(),
+            "replyTo":id
+        }
+
+        axios.post(`http://localhost:4000/post/add`,replycontent_data,config)
+        .then( res =>
+                {
+                    console.log("AXIOS:-",res.data); 
+                    // console.log("PROPS.parentHandler",props.parentHandler); 
+                    // props.parentHandler();
+                }
+            )
+
+
         setcnt(0);
         setreplycontent('');
     }
@@ -352,7 +397,8 @@ console.log("COunt",cnt);
     
     return (
         <div className="Post" id={id}>
-
+ {/* {true && <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}}> */}
+ <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}}>
                 {typeof(retweetData)!='undefined'
                             ?
                             <div className='icon-div-like-number'>
@@ -366,9 +412,9 @@ console.log("COunt",cnt);
                 }
 
               <div className="Post_header">
-                   
+                   {/* {console.log("LIKE FLAG",link_flag)} */}
 
-                    <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
+                    <Icon className="Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
                     
                   
 
@@ -394,7 +440,8 @@ console.log("COunt",cnt);
                         {/* <img className="Post_img" src={imageUrl} /> */}
                 </div>
                                           
-             
+                {/* </Link>} */}
+                </Link>
              
                 
                 {/* <div>
@@ -406,6 +453,7 @@ console.log("COunt",cnt);
 
 {/* *************************************************************************************** */}
               <div className="Post_bottomIcons">
+
               <button onClick={onClick}> Click me {count} </button>
 
                     <button id="myBtn" className='Post_icon_button' onClick={()=>reply_clicked()}> 
@@ -427,7 +475,7 @@ console.log("COunt",cnt);
                         <div className='modal-closeArrow-textarea'>
                             
                             <div className='Post_header'>
-                                <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
+                                <Icon className="Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
                             
                                 <div className="Post_displayName">
                                     {displayName}
@@ -492,7 +540,7 @@ console.log("COunt",cnt);
                     </button>
 
                    {/* Likes Part */}
-                    <button className='Post_icon_button' onClick={()=>like_clicked()}>
+                    <button id='like_button' className='Post_icon_button' onClick={()=>like_clicked()}>
                         {/* <FavoriteBorderIcon fontSize="small" className={'icon-like-'+btnCls}/> */}
 
                         {/* If you use setx() in useeffect then lot of re-rendering was happening. Also using it in if-else before console.log causes re-rendering. Thus used terneary operator. */}
@@ -522,7 +570,7 @@ console.log("COunt",cnt);
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
  
-
+              {/* </Link> */}
         </div>
         
     )

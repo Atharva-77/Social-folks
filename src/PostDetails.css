@@ -1,0 +1,420 @@
+.PostDetail_HomePage_top{
+    flex:0.60;
+    /* border:2px solid rgb(233, 33, 33); */
+    border-right: 1px solid lightgray;
+}
+
+.PostDetail
+{
+    /* display: flex; */
+    /* margin:1rem; */
+
+    border-bottom: 1px solid lightgray;
+    /* margin-top:1rem; */
+    /* margin-left: 1rem; */
+    /* margin-right: 1rem; */
+    /* margin-bottom: 0rem; */
+    padding-bottom: 0rem;
+    cursor: pointer;
+    /* line-height: 30px;
+    height: 40px; */
+    /* color:#7c7f80; */
+
+}
+
+.PostDetail_HomePage_title
+{
+    position: sticky;
+    top:0;
+    /* z-index: 100; */
+    border-bottom: 1px solid lightgray;
+    padding-top: 1rem;
+}
+.PostDetail:hover
+{
+    background-color:rgb(243, 243, 243,0.4);
+    /* margin: 1rem; */
+    /* margin-bottom: 0rem; */
+    /* line-height: 29px; */
+}
+.PostDetail_header
+{
+    display: flex;
+
+    align-items: center;
+    padding-top: 1rem;
+    padding-left: 1rem;
+}
+
+.PostDetail_avator
+{
+    margin-right: 10px;
+    /* margin-bottom: 10px; */
+}
+.PostDetail_displayName
+{
+    font-weight: 800;
+    margin-right: 2px;
+}
+
+.PostDetail_displayName:hover
+{
+    text-decoration: underline;
+    /* color: red; */
+}
+.PostDetail_verified
+{
+    color:#1da1f2;
+    font-size: 1.1rem !important;
+    margin-right: 6px;
+}
+.PostDetail_username
+{
+    color:#7c7f80;
+    padding-right: 8px;
+}
+.PostDetail_dot
+{
+    color:#7c7f80;
+    padding-right: 5px;
+    padding-bottom: 7px;
+    /* font-size: large;     */
+    font-weight: 650;
+}
+
+.PostDetail_date
+{
+    color:#7c7f80;
+}
+.PostDetail_retweetText
+{
+
+    color:#5c5d5e ;
+    margin-left: 10px;
+}
+
+.PostDetail_text_img
+{
+    /* display: block; */
+    margin-left: 3rem;
+    margin-right: 1rem;
+    margin-bottom: 1.3rem;
+
+}
+
+.PostDetail_img
+{
+    /* display: block; */
+    margin-top: 1rem;
+    border-radius: 20px;
+    height:300px;
+    width:100%;
+    /* flex:1; */
+    /* width: 100%;
+    height: 10%; */
+
+}
+
+.PostDetail_postText
+{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+/* -------------------------------------------------- */
+.PostDetail_icon_button
+{
+    background-color: transparent;
+    border:none;
+    color: #5c5d5e;
+}
+.PostDetail_bottomIcons
+{
+    display: flex;
+    justify-content: space-evenly;
+    color: #5c5d5e;
+    margin-bottom: 0.5rem;
+    /* font-size: large !important; */
+    /* padding: 0 10px; */
+    /* margin: 5px; */
+   
+}
+
+/* Icons hovering */
+.PostDetail_bottomIcons .icon-like
+{
+    padding: 6px 6px 6px 6px;
+}
+
+.PostDetail_bottomIcons .icon-like:hover
+{
+    color: red;
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 50%;
+  
+}
+
+
+/* ----------------------------------------------- */
+
+.PostDetail_bottomIcons .icon-like-red
+{
+    color: rgb(255, 0, 0);
+    border-radius: 50%;
+    padding: 6px;
+}
+.PostDetail_bottomIcons .icon-like-red:hover
+{
+   
+    color: red;
+    background-color: rgba(255, 0, 0, 0.1);
+    border-radius: 50%;
+  
+}
+/* --------------------------------------------------- */
+
+.PostDetail_bottomIcons .icon-comment
+{
+    padding: 6px;
+}
+
+.PostDetail_bottomIcons .icon-comment:hover
+{
+    color: #138bd6;
+    background-color: rgba(44,167,242,0.2);
+    border-radius: 40%;
+  
+}
+
+/* ------------------------------------------------------- */
+
+.PostDetail_bottomIcons .icon-retweet
+{
+    padding: 6px;
+}
+
+.PostDetail_bottomIcons .icon-retweet:hover
+{
+    color: rgb(32, 174, 32);
+    background-color: rgb(34, 192, 34, 0.1);
+    border-radius: 50%;
+  
+}
+/* ------------------------------------------ */
+.PostDetail_bottomIcons .icon-retweet-green
+{
+    color: rgb(32, 174, 32);
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.PostDetail_bottomIcons .icon-retweet-green:hover
+{
+    color: rgb(32, 174, 32);
+    background-color: rgba(0, 255, 26, 0.1);
+    border-radius: 50%;
+}
+
+/* ------------------------------------- */
+
+.icon-div-like-number
+{
+    display: flex;
+    align-items: center;
+}
+/* .icon-number
+{
+    padding-top: 5px;
+} */
+.icon-like-number
+{
+    
+    color: red;
+}
+.icon-retweet-number
+{
+    color: rgb(32, 174, 32);
+}
+/* -------------------------------- */
+.icon-above-avator
+{
+    color:#5c5d5e ;
+    padding-left: 36px;
+}
+
+
+
+
+
+/* ************************************************************************ */
+.modal3 {
+    display: block; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    /* background-color: rgb(213, 29, 29);  */
+    background-color: rgb(0, 0, 0,0.4);    
+    cursor:cell;
+
+  }
+  
+  /* Modal Content/Box */
+ .modal-content {
+    background-color: rgb(247, 247, 247);
+    /* background-color: rgb(241, 241, 241); */
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Could be more or less, depending on screen size */
+    min-height:40%;
+    /* cursor:all-scroll; */
+    /* align-items: center; */
+  }
+  
+  /* The Close Button */
+  .close {
+    color: rgb(220, 16, 16);
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+
+  .modal-closeArrow-textarea
+  {
+    /* display: flex; */
+    /* text-align: center; */
+    
+    /* display: block; */
+    /* border: 2px solid black; */
+    /* border-top: 1px solid lightgray; */
+   
+
+  }
+
+.reply-closeArrowBtn
+{
+    display: flex;
+    padding-bottom: 8px;
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 10px;
+}
+.modal-reply-heading
+{
+    /* padding-right: 20px; */
+    color: black;
+    font-weight: bold;
+    font-size: large;
+}
+.reply-closeArrowBtn .closeArrowBtn
+{
+    background-color: transparent;
+    border:none;
+    /* padding-left: 100px; */
+    /* color: #5c5d5e; */
+    margin-left: auto;
+    /* float: right; */
+  
+}
+
+.modal_postText
+{
+    /* display: block; */
+    /* margin-top: 5%; */
+     margin-left: 3rem;
+    margin-right: 3rem;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+
+
+}
+.bottom-border
+{
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 10px;
+    /* padding-bottom: 2px; */
+
+}
+
+.modal_PostDetail_avator
+{
+margin-top: 5px;
+}
+.modal-textarea
+{  
+    /* margin-top: 5%; */
+    margin-left: 3rem;
+    margin-right: 3rem;
+    margin-bottom: 1.3rem;
+
+    height:80px;
+    width:80%;
+    border: none;
+    border: 0.8px solid black;
+    font-size: 1.2rem;
+    background-color: rgb(247, 247, 247);
+  
+
+}
+
+.modal-textarea::placeholder 
+{
+    color: #1da1f2;
+    font-size: 1.2rem;
+  }
+
+  .modal_PostDetail_reply
+  {
+      /* padding-left: 20px; */
+    margin-left: 38px;
+
+    color: white;
+    background-color: #1da1f2;
+    font-size:larger;
+    border:none;
+    border-radius: 12px;
+    cursor:pointer;
+    font-weight: 500;
+
+    padding: 5px 17px;
+  }
+  .modal_PostDetail_reply_disable
+  {
+      /* padding-left: 20px; */
+    margin-left: 38px;
+
+    color: white;
+    background-color: rgb(138, 199, 237);
+    /* rgb(110, 190, 240,1); */
+    font-size:larger;
+    border:none;
+    border-radius: 12px;
+    cursor:pointer;
+    font-weight: 500;
+
+    padding: 5px 17px;
+  }
+
+  .modal_Close_reply
+  {
+    margin-left: 18px;
+    color: white;
+    background-color: #636e75;
+    font-size:larger;
+    border:none;
+    border-radius: 12px;
+    cursor:pointer;
+
+    font-weight: 500;
+    padding: 5px 14px;
+  }

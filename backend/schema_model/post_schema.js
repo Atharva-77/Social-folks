@@ -12,6 +12,11 @@ const PostSchema=new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Register'
     },
+    originalPostedBy:
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Register'
+    },
 
     Replies:
     {
@@ -44,6 +49,13 @@ const PostSchema=new mongoose.Schema({
     retweetContent:
     {
         type:String
+    },
+    replyDataId:
+    {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Post'
+        // ,
+        // required:true,
     }
 
 

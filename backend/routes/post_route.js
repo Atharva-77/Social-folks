@@ -5,20 +5,37 @@ const router=exp.Router()
 let PostDb=require('../schema_model/post_schema');
 let RegisterDb=require('../schema_model/register_schema')
 
-router.post('/add',protect,(req,res)=>
+router.post('/add',protect,async(req,res)=>
 {
     try
     {    console.log("Poste mai",req.userAuth);
+         console.log("POST replyTo",req.body.replyTo);
 
-        const content=req.body.content
+        var content=req.body.content
         const postedBy=req.userAuth
-
-        const postUser=new PostDb({content, postedBy})
-        console.log(req.body);  
-        // res.status(401).json("SUCCESs POST")
-        postUser.save()
-        .then(res.status(201).json("send success"))
-        .catch(err=>res.status(401).json("POST ka Error is "+err)) 
+        var replyDataId;
+        
+        if(req.body.replyTo)
+        {
+            console.log("hi");
+            replyDataId=req.body.replyTo;
+            console.log("ReplyData",replyDataId);
+        }
+        // const postUser=new PostDb({content:"haha", replyDataId:"yoo"})
+        const postUser=await PostDb.create({content, postedBy ,replyDataId});
+        console.log("Yo1",postUser);  
+       
+        try{
+            res.status(201).json(postUser)
+        }
+       
+        catch(err)
+        {
+            res.status(401).json("All err "+err)
+        } 
+        // postUser.save()
+        // .then(res.status(201).json("send success"))
+        // .catch(err=>res.status(401).json("POST ka Error is "+err)) 
 
        //OR
        
@@ -39,9 +56,10 @@ router.get('/allpost',async(req,res)=>
     try
     {   
         // console.log("All Poste mai",req.userAuth);
-        const data=await PostDb.find({}).populate('postedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
+        const data=await PostDb.find({}).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
         // console.log("DATA",data);
         const data1=await RegisterDb.populate(data,{path:'retweetDataId.postedBy'})
+        console.log("\n\nALLPOST\n\n",data1);
         try{
             res.status(200).json(data1)
         }
@@ -67,11 +85,27 @@ router.get("/:id",async(req,res)=>
     try 
     {
         var postid=req.params.id ;
-        console.log("GET",postid);
+        console.log("GET",RegisterDb,PostDb);
+
+        // const postDetail1=await PostDb.populate('postedBy','Name username email').populate('retweetDataId')
+        // //.populate('retweetDataId')
+        // console.log("PD1",(postDetail1));
+
+        // const postDetail=await RegisterDb.populate(postDetail1,{path:'retweetDataId'})
+        // console.log("\n RPD",postDetail);
 
         const postDetail=await PostDb.findById(postid).populate('postedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
         
+        // console.log("PD1",postDetail);
+        // const full_postDetail=await RegisterDb.populate(postDetail,{path:'retweetDataId'})
+
         const full_postDetail=await RegisterDb.populate(postDetail,{path:'retweetDataId.postedBy'})
+        // console.log("FD2",full_postDetail,"\nPD2",postDetail);
+        // const full_postDetail=await PostDb.populate('624fed7e8cd38accdafd0826')
+
+        // const replies=await PostDb.find({replyDataId:postid});
+        // const replies=await PostDb.find({replyDataId:postid}).populate('replyDataId');
+        // console.log(replies[0]);
         try{
             res.status(200).json(full_postDetail)
         }
@@ -83,7 +117,7 @@ router.get("/:id",async(req,res)=>
     }
     catch(err)
     {
-        console.log("Error hai");
+        console.log("Error hai"+err);
         res.status(401).send("Invalid Details");//...as data already send to client
     }
 })
@@ -157,10 +191,15 @@ router.post("/:id/retweet",protect,async(req,res)=>
         var repost=deletedPost;
         if(deletedPost==null)
         {
-            var data=await PostDb.findById(postid);
-            console.log("RETWEET-CONTENT",data.content);
-
-            repost=await PostDb.create({postedBy: userid, retweetDataId: postid, retweetContent:data.content})
+            var data=await PostDb.findById(postid).populate('postedBy','Name username email');
+            
+            console.log("RETWEET-CONTENT",data,"\nData POSTEDBY ",data.originalPostedBy,data.originalPostedBy!=undefined);
+            
+            var finalPostedBy = data.originalPostedBy!=undefined? data.originalPostedBy._id : data.postedBy._id
+            
+            console.log("\n\nFINAL-POSTED",finalPostedBy);
+            
+            repost=await PostDb.create({postedBy: userid, retweetDataId: postid, retweetContent:data.content, originalPostedBy:finalPostedBy})
             // .then(console.log("REPOST",x))
             .catch(err=>res.status(401).json("Retweet Error is "+err))
         }
