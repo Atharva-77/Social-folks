@@ -94,18 +94,14 @@ router.get("/:id",async(req,res)=>
         // const postDetail=await RegisterDb.populate(postDetail1,{path:'retweetDataId'})
         // console.log("\n RPD",postDetail);
 
-        const postDetail=await PostDb.findById(postid).populate('postedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
+        const postDetail=await PostDb.findById(postid).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
         
         // console.log("PD1",postDetail);
         // const full_postDetail=await RegisterDb.populate(postDetail,{path:'retweetDataId'})
 
         const full_postDetail=await RegisterDb.populate(postDetail,{path:'retweetDataId.postedBy'})
         // console.log("FD2",full_postDetail,"\nPD2",postDetail);
-        // const full_postDetail=await PostDb.populate('624fed7e8cd38accdafd0826')
-
-        // const replies=await PostDb.find({replyDataId:postid});
-        // const replies=await PostDb.find({replyDataId:postid}).populate('replyDataId');
-        // console.log(replies[0]);
+        // const full_postDetail=await PostDb.populate('624fed7e8cd38accdafd0826')        
         try{
             res.status(200).json(full_postDetail)
         }
@@ -122,6 +118,36 @@ router.get("/:id",async(req,res)=>
     }
 })
 
+
+//Get Replies
+router.get("/reply/:id",async(req,res)=>
+{
+    try 
+    {
+        var postid=req.params.id ;
+
+        const replies=await PostDb.find({replyDataId:postid}).populate('postedBy','Name username email').populate('replyDataId');
+        console.log(Object.keys(replies).length);
+
+        for (const item in replies) {
+            console.log("HRERE- ",replies[item])
+          }
+
+        try{
+            res.status(200).json(replies)
+        }
+       
+        catch(err)
+        {
+            res.status(401).json("All err "+err)
+        } 
+    }
+    catch(err)
+    {
+        console.log("Error hai"+err);
+        res.status(401).send("Invalid Details");//...as data already send to client
+    }
+})
 
 
 

@@ -50,6 +50,7 @@ const PostSchema=new mongoose.Schema({
     {
         type:String
     },
+    //Parent post Id to whom reply is given
     replyDataId:
     {
         type:mongoose.Schema.Types.ObjectId,

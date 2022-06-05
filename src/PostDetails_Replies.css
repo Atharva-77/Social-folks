@@ -1,14 +1,8 @@
-.PostDetail_HomePage_top{
-    flex:0.60;
-    /* border:2px solid rgb(233, 33, 33); */
-    border-right: 1px solid lightgray;
-}
-
-.PostDetail
+.PostDetails_Replies
 {
     /* display: flex; */
     /* margin:1rem; */
-
+    padding: 1rem;
     border-bottom: 1px solid lightgray;
     /* margin-top:1rem; */
     /* margin-left: 1rem; */
@@ -21,82 +15,47 @@
     /* color:#7c7f80; */
 
 }
-
-.PostDetail_HomePage_title
-{
-    position: sticky;
-    top:0;
-    /* z-index: 100; */
-    border-bottom: 1px solid lightgray;
-    padding-top: 1rem;
-}
-.PostDetail:hover
+.PostDetails_Replies:hover
 {
     background-color:rgb(243, 243, 243,0.4);
     /* margin: 1rem; */
     /* margin-bottom: 0rem; */
     /* line-height: 29px; */
 }
-.PostDetail_header
+.PostDetails_Replies_header
 {
     display: flex;
 
     align-items: center;
-    padding-top: 1rem;
-    padding-left: 1rem;
 }
 
-.PostDetail_avator
+.PostDetails_Replies_avator
 {
     margin-right: 10px;
-    /* margin-bottom: 10px; */
 }
-
-#PostDetail-largesize
-{
-    font-size: large;
-    /* color: red; */
-
-}
-#PostDetail-postText-largesize
-{
-    font-size: 20px;
-    font-weight: 650;
-    /* color: red; */
-
-}
-
-#PostDetail_header-largesize
-{
-    /* font-size: large; */
-    /* color: red; */
-    padding: 20px 0px;
-
-}
-.PostDetail_displayName
+.PostDetails_Replies_displayName
 {
     font-weight: 800;
     margin-right: 2px;
 }
 
-
-.PostDetail_displayName:hover
+.PostDetails_Replies_displayName:hover
 {
     text-decoration: underline;
     /* color: red; */
 }
-.PostDetail_verified
+.PostDetails_Replies_verified
 {
     color:#1da1f2;
     font-size: 1.1rem !important;
     margin-right: 6px;
 }
-.PostDetail_username
+.PostDetails_Replies_username
 {
     color:#7c7f80;
     padding-right: 8px;
 }
-.PostDetail_dot
+.PostDetails_Replies_dot
 {
     color:#7c7f80;
     padding-right: 5px;
@@ -105,18 +64,18 @@
     font-weight: 650;
 }
 
-.PostDetail_date
+.PostDetails_Replies_date
 {
     color:#7c7f80;
 }
-.PostDetail_retweetText
+.PostDetails_Replies_retweetText
 {
 
     color:#5c5d5e ;
     margin-left: 10px;
 }
 
-.PostDetail_text_img
+.PostDetails_Replies_text_img
 {
     /* display: block; */
     margin-left: 3rem;
@@ -125,7 +84,7 @@
 
 }
 
-.PostDetail_img
+.PostDetails_Replies_img
 {
     /* display: block; */
     margin-top: 1rem;
@@ -137,20 +96,14 @@
     height: 10%; */
 
 }
-
-.PostDetail_postText
-{
-    margin-left: 1rem;
-    margin-right: 1rem;
-}
 /* -------------------------------------------------- */
-.PostDetail_icon_button
+.PostDetails_Replies_icon_button
 {
     background-color: transparent;
     border:none;
     color: #5c5d5e;
 }
-.PostDetail_bottomIcons
+.PostDetails_Replies_bottomIcons
 {
     display: flex;
     justify-content: space-evenly;
@@ -163,12 +116,12 @@
 }
 
 /* Icons hovering */
-.PostDetail_bottomIcons .icon-like
+.PostDetails_Replies_bottomIcons .icon-like
 {
     padding: 6px 6px 6px 6px;
 }
 
-.PostDetail_bottomIcons .icon-like:hover
+.PostDetails_Replies_bottomIcons .icon-like:hover
 {
     color: red;
     background-color: rgba(255, 0, 0, 0.1);
@@ -179,13 +132,13 @@
 
 /* ----------------------------------------------- */
 
-.PostDetail_bottomIcons .icon-like-red
+.PostDetails_Replies_bottomIcons .icon-like-red
 {
     color: rgb(255, 0, 0);
     border-radius: 50%;
     padding: 6px;
 }
-.PostDetail_bottomIcons .icon-like-red:hover
+.PostDetails_Replies_bottomIcons .icon-like-red:hover
 {
    
     color: red;
@@ -195,12 +148,12 @@
 }
 /* --------------------------------------------------- */
 
-.PostDetail_bottomIcons .icon-comment
+.PostDetails_Replies_bottomIcons .icon-comment
 {
     padding: 6px;
 }
 
-.PostDetail_bottomIcons .icon-comment:hover
+.PostDetails_Replies_bottomIcons .icon-comment:hover
 {
     color: #138bd6;
     background-color: rgba(44,167,242,0.2);
@@ -210,12 +163,12 @@
 
 /* ------------------------------------------------------- */
 
-.PostDetail_bottomIcons .icon-retweet
+.PostDetails_Replies_bottomIcons .icon-retweet
 {
     padding: 6px;
 }
 
-.PostDetail_bottomIcons .icon-retweet:hover
+.PostDetails_Replies_bottomIcons .icon-retweet:hover
 {
     color: rgb(32, 174, 32);
     background-color: rgb(34, 192, 34, 0.1);
@@ -223,14 +176,14 @@
   
 }
 /* ------------------------------------------ */
-.PostDetail_bottomIcons .icon-retweet-green
+.PostDetails_Replies_bottomIcons .icon-retweet-green
 {
     color: rgb(32, 174, 32);
     border-radius: 50%;
     padding: 6px;
 }
 
-.PostDetail_bottomIcons .icon-retweet-green:hover
+.PostDetails_Replies_bottomIcons .icon-retweet-green:hover
 {
     color: rgb(32, 174, 32);
     background-color: rgba(0, 255, 26, 0.1);
@@ -369,7 +322,7 @@
 
 }
 
-.modal_PostDetail_avator
+.modal_PostDetails_Replies_avator
 {
 margin-top: 5px;
 }
@@ -396,7 +349,7 @@ margin-top: 5px;
     font-size: 1.2rem;
   }
 
-  .modal_PostDetail_reply
+  .modal_PostDetails_Replies_reply
   {
       /* padding-left: 20px; */
     margin-left: 38px;
@@ -411,7 +364,7 @@ margin-top: 5px;
 
     padding: 5px 17px;
   }
-  .modal_PostDetail_reply_disable
+  .modal_PostDetails_Replies_reply_disable
   {
       /* padding-left: 20px; */
     margin-left: 38px;

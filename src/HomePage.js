@@ -70,7 +70,7 @@ function HomePage() {
                 <h2>Home</h2><h2>{count}</h2>
             </div>
 
-            <Tweetbox parentHandler={()=>parentFunc()}/>
+            {/* <Tweetbox parentHandler={()=>parentFunc()}/> */}
             {/* <Post 
                   Icon={Avatar}  
                   displayName="Atharva Shirode"
@@ -121,7 +121,7 @@ function HomePage() {
                             Icon={Avatar}  
                             displayName={i[0].postedBy.Name}
                             username={i[0].postedBy.username}
-                            originalData='GG'
+                            originalData=''
                             postText={i[0].content}
                             createdAt={i[0].createdAt}
                             // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
