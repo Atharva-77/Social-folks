@@ -12,17 +12,17 @@ import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 
-function Post({id,Icon,displayName, username,originalData,postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId}) {
+function Post({id,Icon,displayName, username,originalData,postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser}) {
    
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
     // console.log("1.Yo",originalData,id)
     //  console.log("2.",retweetData);
-    // console.log("ON POST");
+    console.log("ON POST",postText,replyDataId==undefined);
     var displayname_retweet=displayName;
 
     if (typeof(retweetData)!='undefined') {
 
-        // console.log("2.Ho",retweetData.content,retweetData.retweetContent,displayName);
+        // console.log("2.Ho",postText,retweetData);
         postText=retweetData.content || retweetData.retweetContent;
 
         // console.log("3.",originalData)
@@ -214,7 +214,10 @@ var flag=false;
                     setretweetId_data(res.data.retweetUserList)
                     // setdata_Likes(res.data.likes);
                     console.log("RETWEET",res.data); 
-                    parentHandler();
+                    console.log("PARENTHANDLER",parentHandler==undefined);
+                    var yo=(parentHandler==undefined)?null:parentHandler();
+
+                    // parentHandler();
                 }
             )
             // parentHandler();
@@ -254,7 +257,7 @@ var flag=false;
         //  }
         // modal.style.display = "block"; 
         // params.replyHandler("Child"); 
-        replyHandler("gg") ;
+        // replyHandler("gg") ;
         }
 
     
@@ -399,6 +402,7 @@ var flag=false;
     return (
         <div className="Post" id={id}>
  {/* {true && <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}}> */}
+
  <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}}>
                 {typeof(retweetData)!='undefined'
                             ?
@@ -410,6 +414,39 @@ var flag=false;
                             </div>
                             :
                              null
+                }
+
+                {replyDataId!=undefined && 
+                    
+                    <div className='Post_replyingTo_header'>
+                        
+                        <span className='Post_replyingTo-title'>Replying to</span> 
+                        <span className='Post_replyingTo-name'>@{replyDataId.postedBy.Name}</span>
+                        
+                        <div className='Post_fullTweet_header'>
+                            <span className='Post_fullTweet-title'>Link to Full Tweet <Link to={`/post/${replyDataId._id}`} > here </Link></span>
+                        </div>
+                            
+                    </div>
+                }
+
+                {postDetails_boolean && 
+                    
+                    <div className='Post_replyingTo_header'>
+
+                        <span className='Post_replyingTo-title'>Replying to</span> 
+                        <span className='Post_replyingTo-name'>@{postDetails_RootUser}</span>
+                        
+                        {postDetails_RootUser!=postDetails_CurrentUser
+                          ? 
+                            <>
+                                and <span className='Post_replyingTo-name'>@{postDetails_CurrentUser}</span>
+                            </>
+
+                          :
+                          null
+                        }
+                    </div>
                 }
 
               <div className="Post_header">

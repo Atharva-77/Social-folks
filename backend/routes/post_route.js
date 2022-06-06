@@ -56,12 +56,14 @@ router.get('/allpost',async(req,res)=>
     try
     {   
         // console.log("All Poste mai",req.userAuth);
-        const data=await PostDb.find({}).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
+        const data=await PostDb.find({}).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
         // console.log("DATA",data);
+        // const data
         const data1=await RegisterDb.populate(data,{path:'retweetDataId.postedBy'})
-        console.log("\n\nALLPOST\n\n",data1);
+        // console.log("\n\nALLPOST\n\n",data1);
+        const data2=await RegisterDb.populate(data1,{path:'replyDataId.postedBy'})
         try{
-            res.status(200).json(data1)
+            res.status(200).json(data2)
         }
        
         catch(err)
@@ -129,9 +131,9 @@ router.get("/reply/:id",async(req,res)=>
         const replies=await PostDb.find({replyDataId:postid}).populate('postedBy','Name username email').populate('replyDataId');
         console.log(Object.keys(replies).length);
 
-        for (const item in replies) {
-            console.log("HRERE- ",replies[item])
-          }
+        // for (const item in replies) {
+        //     console.log("HRERE- ",replies[item])
+        //   }
 
         try{
             res.status(200).json(replies)
@@ -198,7 +200,7 @@ router.put("/:id/like",protect,async(req,res)=>
 //RETWEET 
 router.post("/:id/retweet",protect,async(req,res)=>
 {
-    
+    console.log("in retweet");
     try 
     {
         var postid=req.params.id || req.body.postid;        
@@ -211,7 +213,7 @@ router.post("/:id/retweet",protect,async(req,res)=>
         // var isLiked=req.userAuth.likes && req.userAuth.likes.includes(postid);
 
         var option= deletedPost!=null ? "$pull" : "$addToSet" ;
-        console.log("RETWEET ",deletedPost);
+        console.log("RETWEET -deletedPost",deletedPost);
 
         //Create a new post. Retweet is the data via PostId
         var repost=deletedPost;
@@ -219,11 +221,11 @@ router.post("/:id/retweet",protect,async(req,res)=>
         {
             var data=await PostDb.findById(postid).populate('postedBy','Name username email');
             
-            console.log("RETWEET-CONTENT",data,"\nData POSTEDBY ",data.originalPostedBy,data.originalPostedBy!=undefined);
+            // console.log("RETWEET-CONTENT",data,"\nData POSTEDBY ",data.originalPostedBy,data.originalPostedBy!=undefined);
             
             var finalPostedBy = data.originalPostedBy!=undefined? data.originalPostedBy._id : data.postedBy._id
             
-            console.log("\n\nFINAL-POSTED",finalPostedBy);
+            // console.log("\n\nFINAL-POSTED",finalPostedBy);
             
             repost=await PostDb.create({postedBy: userid, retweetDataId: postid, retweetContent:data.content, originalPostedBy:finalPostedBy})
             // .then(console.log("REPOST",x))
@@ -248,8 +250,8 @@ router.post("/:id/retweet",protect,async(req,res)=>
         .catch(err=>res.status(401).json("Retweet Post Update Error is "+err)) 
 
         // console.log("LIKE ",isLiked , req.userAuth.likes ,req.userAuth.likes.includes(postid), option);
-        console.log("UpdatedUser",updatedUser);
-        console.log("UpdatedPost",updatedPost);
+        console.log("Retweet-UpdatedUser",updatedUser);
+        console.log("Retweet-UpdatedPost",updatedPost);
 
         res.status(200).json(updatedPost);
         // else

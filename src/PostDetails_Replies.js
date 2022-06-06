@@ -327,74 +327,74 @@ var flag=false;
                 
                
 
-{/* *************************************************************************************** */}
-              <div className="PostDetails_Replies_bottomIcons">
+                {/* *************************************************************************************** */}
+        <div className="PostDetails_Replies_bottomIcons">
 
               <button onClick={onClick}> Click me {count} </button>
 
                     <button id="myBtn" className='PostDetails_Replies_icon_button' onClick={()=>reply_clicked()}> 
                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
                     </button>
- {typeof(userInfo.id)!='undefined'?
-   <div>
-    {cnt==1?
+                
+                {typeof(userInfo.id)!='undefined'
+                 ?
+                       <div>
+                            {cnt==1?
 
-            <div id="myModal" className="modal3" onClick={() => divfun1()}>
-                 <div className="modal-content" onClick={() => divfun2()}>
-                        
-                        <div className='reply-closeArrowBtn'>
-                              <div className='modal-reply-heading'>Reply</div>
-                              <button className="closeArrowBtn" onClick={()=>reply_close_clicked()}>X</button>
-                        </div>
+                                <div id="myModal" className="modal3" onClick={() => divfun1()}>
+                                        <div className="modal-content" onClick={() => divfun2()}>
+                                            
+                                                <div className='reply-closeArrowBtn'>
+                                                    <div className='modal-reply-heading'>Reply</div>
+                                                    <button className="closeArrowBtn" onClick={()=>reply_close_clicked()}>X</button>
+                                                </div>
 
-                        {/* <Icon className="PostDetails_Replies_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
-                        <div className='modal-closeArrow-textarea'>
-                            
-                            <div className='PostDetails_Replies_header'>
-                                <Icon className="PostDetails_Replies_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
-                            
-                                <div className="PostDetails_Replies_displayName">
-                                    {displayName}
-                                </div>
-                            
-                                <VerifiedUserIcon className="PostDetails_Replies_verified"/>
+                                                {/* <Icon className="PostDetails_Replies_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
+                                                <div className='modal-closeArrow-textarea'>
+                                                    
+                                                        <div className='PostDetails_Replies_header'>
+                                                                <Icon className="PostDetails_Replies_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                                            
+                                                                <div className="PostDetails_Replies_displayName">
+                                                                    {displayName}
+                                                                </div>
+                                                            
+                                                                <VerifiedUserIcon className="PostDetails_Replies_verified"/>
+                                                                        
+                                                                <div className="PostDetails_Replies_username">@{username} </div>
+                                                                <div className='PostDetails_Replies_dot'>.</div>
+                                                                <div className='PostDetails_Replies_date'>{timestamp}</div>
+                                                        </ div>
+
+                                                        <p className="modal_postText">{postText}</p>
+
+                                                        <div className="bottom-border"></div>
+                                                    
+                                                        <div className='modal-reply_header'>
+                                                            <Icon className="modal_PostDetails_Replies_avator" />
+                                                            <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
+                                                        </div>
+                                                </div>
+                                            
+                                            
                                         
-                                <div className="PostDetails_Replies_username">@{username} </div>
-                                <div className='PostDetails_Replies_dot'>.</div>
-                                <div className='PostDetails_Replies_date'>{timestamp}</div>
-                            </ div>
+                                                {replycontent.trim().length!=0? 
+                                                    <button id="postBtn" className='modal_PostDetails_Replies_reply' onClick={()=>reply_submit_clicked()}>Post</button>
+                                                    :
+                                                    <button id="postBtn" className='modal_PostDetails_Replies_reply_disable' >Post</button>
+                                                }
 
-                            <p className="modal_postText">{postText}</p>
-                            {/* <hr className="bottom-border"/> */}
-                            <div className="bottom-border"></div>
-                            {/* <</p> */}
-                            <div className='modal-reply_header'>
-                                <Icon className="modal_PostDetails_Replies_avator" />
-                                <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
-                            </div>
-                        </div>
-                        
-                        
-                        {/* <button id="postBtn" className='modal_PostDetails_Replies_reply' onClick={()=>reply_submit_clicked()}>PostDetails_Replies</button> */}
-                  
-                        {replycontent.trim().length!=0? 
-                            <button id="postBtn" className='modal_PostDetails_Replies_reply' onClick={()=>reply_submit_clicked()}>Post</button>
+                                                <button id="closeBtn" className='modal_Close_reply' onClick={()=>reply_close_clicked()}>Close</button>
+                                            
+                                        </div> 
+                                </div>
                             :
-                            <button id="postBtn" className='modal_PostDetails_Replies_reply_disable' >Post</button>
-                        }
+                            null}
+                       </div>
+                :    
+                null}
 
-                        <button id="closeBtn" className='modal_Close_reply' onClick={()=>reply_close_clicked()}>Close</button>
-                        
-                    </div> 
-             </div>
-                    :
-     null}
-    </div>
-    :
-                    
-    null}
-
-{/* ********************************************************************************************* */}
+                    {/* ********************************************************************************************* */}
 
 
 
@@ -403,13 +403,20 @@ var flag=false;
     
                         <div className='icon-div-like-number'> 
 
-                        {reteweetColor==1?<RepeatIcon fontSize="small" className={'icon-retweet-green'}/>
-                            :<RepeatIcon fontSize="small" className={'icon-retweet'}/>}
+                            {reteweetColor==1
+                             ?
+                                <RepeatIcon fontSize="small" className={'icon-retweet-green'}/>
+                             :
+                                <RepeatIcon fontSize="small" className={'icon-retweet'}/>
+                            }
 
-                         {reteweetColor==1?<span className='icon-retweet-number'>{retweetLen || ""}</span>
-                            :<span className='icon-number'>{retweetLen || ""}</span>}
+                            {reteweetColor==1
+                             ?
+                               <span className='icon-retweet-number'>{retweetLen || ""}</span>
+                             :
+                               <span className='icon-number'>{retweetLen || ""}</span>
+                            }
 
-                            {/* <span className='icon-like-number'>{retweetLen || ""}</span> */}
 
                         </div>
                         
@@ -417,39 +424,37 @@ var flag=false;
 
                    {/* Likes Part */}
                     <button id='like_button' className='PostDetails_Replies_icon_button' onClick={()=>like_clicked()}>
-                        {/* <FavoriteBorderIcon fontSize="small" className={'icon-like-'+btnCls}/> */}
+                        
 
                         {/* If you use setx() in useeffect then lot of re-rendering was happening. Also using it in if-else before console.log causes re-rendering. Thus used terneary operator. */}
                         <div className='icon-div-like-number'> 
 
-                           {x==1?<div>
-                                    <FavoriteIcon fontSize="small" className={'icon-like-red'}/>
-                                    {/* <span className='icon-like-number'>{dataLen_Likes || ""}</span> */}
-                               </div>
-                             :
-                              <div>
-                                    <FavoriteBorderIcon fontSize="small" className={'icon-like'}/>
-                                    {/* <span className='icon-number'>{dataLen_Likes || ""}</span> */}
-                              </div>
+                            {x==1?
+                                <div>
+                                        <FavoriteIcon fontSize="small" className={'icon-like-red'}/>
+                                </div>
+                                :
+                                <div>
+                                        <FavoriteBorderIcon fontSize="small" className={'icon-like'}/>
+                                </div>
                             }
                        
-                           {x==1?<span className='icon-like-number'>{dataLen_Likes || ""}</span>
-                             :<span className='icon-number'>{dataLen_Likes || ""}</span>}
+                            {x==1?
+                                <span className='icon-like-number'>{dataLen_Likes || ""}</span>
+                                :
+                                <span className='icon-number'>{dataLen_Likes || ""}</span>
+                            }
 
-                             {/* <span className='icon-like-number'>{dataLen_Likes || ""}</span> */}
 
                         </div>
 
-                        {/* In JavaScript, undefined, null, empty string and 0 all evaluate to false in a boolean context. Using || in an assignment is a way of saying "if defined, otherwise use this". */}
                     </button>
 
-                    {/* <PublishIcon fontSize="small" /> */}
-              </div>
- 
-              {/* </Link> */}
         </div>
+ 
+    </div>
         
-    )
+)
     
 }
 

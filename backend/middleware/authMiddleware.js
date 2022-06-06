@@ -20,7 +20,7 @@ const protect = async(req,res,next)=> {
 
             hi=await RegisterDb.findById(decode.id)
 
-            console.log("Auth REQ.USER HI ",req.userAuth,hi);
+            // console.log("Auth REQ.USER HI ",req.userAuth,hi);
         }
 
         catch(err)

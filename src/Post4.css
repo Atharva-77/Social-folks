@@ -74,6 +74,37 @@
     color:#5c5d5e ;
     margin-left: 10px;
 }
+/* .................................... */
+.Post_replyingTo_header
+{
+    padding-bottom: 12px;
+}
+
+.Post_replyingTo-title
+{
+    font-weight: 500;
+    color: #636e75;
+}
+
+.Post_replyingTo-name
+{
+    color: #1da1f2;
+    padding-right: 7px;
+    font-weight: 500;
+}
+
+/* .................................... */
+.Post_fullTweet_header
+{
+    padding: 2px 0px;
+}
+
+.Post_fullTweet-title
+{
+    font-weight: 500;
+    color: #636e75;
+}
+/* .................................... */
 
 .Post_text_img
 {
