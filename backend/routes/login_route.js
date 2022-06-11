@@ -30,6 +30,8 @@ router.post('/add',async(req,res)=>
                         email:email,
                         username:userDetails[0].username,
                         isAdmin:userDetails[0].isAdmin,
+                        likes:userDetails[0].likes,
+                        retweets:userDetails[0].retweets,
                         token:generateToken(userDetails[0]._id)                      
                     }
                 )

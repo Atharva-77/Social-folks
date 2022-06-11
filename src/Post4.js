@@ -17,7 +17,7 @@ function Post({id,Icon,displayName, username,originalData,postText, imageUrl, ve
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
     // console.log("1.Yo",originalData,id)
     //  console.log("2.",retweetData);
-    console.log("ON POST",postText,replyDataId==undefined);
+    // console.log("ON POST",postText,replyDataId==undefined);
     var displayname_retweet=displayName;
 
     if (typeof(retweetData)!='undefined') {
@@ -455,10 +455,13 @@ var flag=false;
                     <Icon className="Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
                     
                   
+                    <Link to={`/profile/${username}`} style={{ textDecoration: 'none',color:'#374151'}}>
 
-                    <div className="Post_displayName">
-                        {displayName}
-                    </div>
+                        <div className="Post_displayName">
+                            {displayName}
+                        </div>
+                    </Link>
+
                     {/* {console.log("post mai hu ",{verified},{verified}=="True")} */}
 
                     {/* <div className=""> */}

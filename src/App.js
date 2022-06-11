@@ -9,6 +9,7 @@ import Register from './Register';
 import { Provider } from 'react-redux';
 import store from './Store';
 import PostDetails from './PostDetails';
+import Profile from './Profile';
 
 function App() {
   return (
@@ -27,12 +28,20 @@ function App() {
                <Login/>
             </Route> 
 
+            <Route path="/profile/:id">
+               <div className="sidebar">
+                  <Sidebar />
+                  <Profile />
+                  <Right_sidebar />
+               </div>
+            </Route> 
+
             <Route path="/post/:id">
                <div className="sidebar">
                   <Sidebar />
                   <PostDetails/>
                   <Right_sidebar />
-                  </div>
+               </div>
             </Route> 
 
             <Route path="/">

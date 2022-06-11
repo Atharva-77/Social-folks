@@ -18,6 +18,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 function PostDetails() {
 
     const {id}=useParams();
+    console.log("ID in PD.js",id);
     var timestamp;//=timeDifference(new Date(),new Date(data.createdAt))
     const [rootId, setrootId] = useState(0); 
     const [rootData, setrootData] = useState(0); 

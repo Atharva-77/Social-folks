@@ -26,6 +26,8 @@ connectDatabase()
 app.use('/register',require('./routes/register_route'))
 app.use('/login',require('./routes/login_route'))
 app.use('/post',require('./routes/post_route'))
+app.use('/profile',require('./routes/profile_route'))
+
 
 //brad
 // app.use('/login_brad',require('./routes/login_brad'))
