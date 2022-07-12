@@ -1,4 +1,4 @@
-.Profile_HomePage_top1{
+.Profile_top{
     flex:0.60;
     /* border:2px solid rgb(233, 33, 33); */
     border-right: 1px solid lightgray;
@@ -11,3 +11,173 @@
     height:180px;
     background-color: #1da1f2;
 }
+
+.Profile_avatar
+{
+    height: 132px !important;
+    width: 132px !important;
+    margin-left: 30px;
+
+    margin-top: 92px;
+    border: 4px solid white;
+   
+
+}
+
+.Profile_avatar_header
+{
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+.Profile_follow_button
+{
+    /* float: right; */
+    /* height: 25px; */
+    margin-top: 180px;
+    margin-right: 22px;
+
+    /* color: white;
+    background-color: #1da1f2;
+    font-size:medium;
+    border:none;
+    border-radius: 12px;
+    cursor:pointer;
+    font-weight: 550;
+    padding: 6px 12px; */
+
+
+    color: #1da1f2 ;
+    background-color: white;
+    font-size:medium;
+    /* border:none; */
+    border: 2px solid #1da1f2;
+    border-radius: 20px;
+    cursor:pointer;
+    font-weight: 550;
+    padding: 2px 12px;
+}
+
+.Profile_following_button
+{
+    /* float: right; */
+    /* height: 25px; */
+    margin-top: 180px;
+    margin-right: 22px;
+
+    /* color: white;
+    background-color: #1da1f2;
+    font-size:medium;
+    border:none;
+    border-radius: 12px;
+    cursor:pointer;
+    font-weight: 550;
+    padding: 6px 12px; */
+
+
+    color: white;
+    background-color: #1da1f2;
+    font-size:medium;
+    /* border:none; */
+    border: 2px solid #1da1f2;
+    border-radius: 20px;
+    cursor:pointer;
+    font-weight: 550;
+    padding: 2px 12px;
+}
+
+.Profile_displayName
+{
+    margin: 5px;
+    margin-left:15px; 
+    margin-top: 10px;
+    margin-bottom: 0px;
+
+    font-weight: 700;
+    font-size: large;
+}
+.Profile_username
+{
+    margin-left:15px; 
+    color:  #728787;
+    margin-bottom: 10px;
+}
+
+.Profile_description
+{
+    margin-left:15px; 
+    margin-bottom: 10px;
+}
+
+.Profile_followers_following
+{
+    margin-left:15px; 
+}
+
+.Profile_follow
+{
+    font-weight: 600;
+}
+
+.Profile_follow_text
+{
+    color:  #677676;
+}
+
+/* ------------------------------------------- */
+.Profile_post_reply_tab
+{
+    margin-top: 20px;
+    /* padding-bottom: 10px; */
+    
+    display: flex;
+    /* justify-content: space-evenly; */
+    /* flex-shrink: 0; */
+
+    border-bottom: 1px solid rgb(140,157,157,0.7);
+    cursor: pointer;
+}
+
+
+.Profile_tab
+{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  
+  padding-bottom: 6px;
+  padding-top: 6px;
+
+  border: none;
+  font-size: 16px;
+}
+.Profile_tab:hover
+{
+    background-color:   #ececec;
+}
+
+/* --------------------------------------------------- */
+.Profile_tab_underline
+{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+
+  padding-bottom: 6px;
+  padding-top: 6px;
+
+  border-bottom: 3px solid rgb(29,161,242);
+  
+  font-size: 16px;
+  font-weight: 700;
+  color:rgb(29,161,242);
+}
+
+.Profile_tab_underline:hover
+{
+    background-color:   #ececec;
+    /* rgb(29,161,242,0.5); */
+}
+
+
+/* ------------------------------------------------------ */

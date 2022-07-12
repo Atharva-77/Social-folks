@@ -19,7 +19,10 @@ function Left_Sidebar() {
     return (
         <div className="Left_Sidebar">
             {/* <h1>Sidebar left</h1> */}
-             <TwitterIcon className="main_icon"/> 
+            <Link to="/">
+                    <TwitterIcon className="main_icon"/>
+            </Link>
+             
             <Left_Sidebar_Icons name="Home" Icons={HomeIcon} />
             <Left_Sidebar_Icons name="Explore" Icons={SearchIcon} />
             <Left_Sidebar_Icons name="Bookmark" Icons={BookmarkIcon } />
