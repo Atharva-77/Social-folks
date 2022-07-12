@@ -5,6 +5,8 @@ import axios from 'axios';
 import { Avatar } from '@material-ui/core';
 import './Profile.css'
 
+import Post4 from './Post4';
+
 
 function Profile() {
   
@@ -13,6 +15,10 @@ function Profile() {
 
     const [profileData, setprofileData] = useState('');
     const [postTabclicked, setpostTabclicked] = useState(1);
+    const [replyTabclicked, setreplyTabclicked] = useState(0);
+    const [data, setdata] = useState('');
+    const [likesdata, setlikesdata] = useState('');
+    
 
     const dispatch = useDispatch();
     const userLoginData=useSelector(state=>state.userLoginKey)
@@ -22,45 +28,18 @@ function Profile() {
    
     // console.log("PROFILE USE-SELECTOR",userInfo,userInfo.username);
    
-    console.log("PROFILE Data ",profileData,profileData=="No Such User",Object.keys(profileData).length,"Userinfo",Object.keys(userInfo).length);
+    // console.log("PROFILE Data ",profileData,profileData=="No Such User",Object.keys(profileData).length,"Userinfo",Object.keys(userInfo).length);
 
     useEffect(() => 
     {
-            if(id==userInfo.username)
-            {
-                    console.log("LOGGED In user");
-                    const config=
-                    {
-                        headers:
-                        {
-                            'Content-Type':"application/json",
-                            Authorization:`Bearer ${userInfo.token}`
-                        }
-                    }
-                
-                    const userData=
-                    {
-                        "username":id
-                    }
-                
-
-                    axios.post(`http://localhost:4000/profile/loggedin/${id}`,userData,config)
-                    .then(res=>
-                        {
-                            console.log("Profile RES.DATA ",(res.data));         
-                            setprofileData(res.data);       
-                            
-                        })
-
-            }
-            else if(id==typeof(undefined))
+            if(id==typeof(undefined))
             {
                 console.log("ID Undefined");
                 setprofileData("No Such User")
             }
             else
             {
-                console.log("NOT LOGGED IN");
+                console.log("YES/NOT LOGGED IN");
                 
                 const userData=
                 {
@@ -70,32 +49,79 @@ function Profile() {
                 axios.post(`http://localhost:4000/profile/${id}`,userData)
                 .then(res=>
                     {
-                        console.log("Profile RES.DATA ",(res.data));         
+                        // console.log("Profile RES.DATA ",(res.data));         
                         setprofileData(res.data);       
                         
                     })
 
+                axios.get(`http://localhost:4000/post/postedBy/${id}`)
+                .then(res=>
+                    {
+                        // console.log("Posts all  RES.DATA ",(res.data));         
+                        // setprofileData(res.data);   
+                        setdata(res.data);    
+                        
+                    })
+
+                axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+                .then(res=>
+                    {
+                        console.log("Likes  RES.DATA ",(res.data));         
+                        // setprofileData(res.data);   
+                        setlikesdata(res.data);    
+                        
+                    })
             }
         
 
     }, [])
 
-    const postsTab_clicked=()=>
+    const postsTab_clicked_func=()=>
     {
         console.log("Posts tab clicked");
         setpostTabclicked(1);
+        setreplyTabclicked(0);
     }
 
-    const replyTab_clicked=()=>
+    const replyTab_clicked_func=()=>
     {
         console.log("Replies tab clicked");
         setpostTabclicked(0);
+        setreplyTabclicked(1);
+    }
+
+    const likeTab_clicked_func=()=>
+    {
+        console.log("Like tab clicked");
+        setpostTabclicked(0);
+        setreplyTabclicked(0);
+        axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+                .then(res=>
+                    {
+                        console.log("Likes  RES.DATA ",(res.data));         
+                        // setprofileData(res.data);   
+                        setlikesdata(res.data);    
+                        
+                    })
+    }
+
+    {
+        
+            var result = Object.keys(data).map((key) => [data[key]]);
+            // console.log("RESULTss",result,typeof(result),"\nDATA",data);
+        
+    }
+    {
+        
+        var likesresult = Object.keys(likesdata).map((key) => [likesdata[key]]);
+        console.log("LikeRESULTss",likesresult,typeof(likesresult),"\nDATA",likesdata);
+    
     }
 
   return (
     <div className='Profile_top'>
         {/* Profile pg */}
-        {!loading && Object.keys(profileData).length>0
+        {!loading && Object.keys(profileData).length>0 && Object.keys(data).length>0
         ?
             <div>
                     {profileData!="No Such User"
@@ -111,10 +137,14 @@ function Profile() {
                                                  src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
 
                                                  {/* <div className='Profile_follow_div'> */}
-                                                 {/* {Object.keys(userinfo)==0?} */}
-                                                 
+                                                 {Object.keys(userInfo)==0?
                                                   <button className='Profile_follow_button'>Follow</button>
-                                                  <button className='Profile_following_button'>Following</button>
+                                                 :
+                                                    null
+                                                 }
+                                                 
+                                                  {/* <button className='Profile_follow_button'>Follow</button>
+                                                  <button className='Profile_following_button'>Following</button> */}
                                                  {/* </div> */}
                                         </div>
 
@@ -141,26 +171,232 @@ function Profile() {
                                         {/* <button className='1Profile_follow_button'>Follow</button> */}
 
                                         {/* <div className='Profile_post_reply_tab'>
-                                            <div className='Profile_post_tab' onClick={()=>postsTab_clicked()}> Posts </div>
-                                            <div className='Profile_reply_tab' onClick={()=>replyTab_clicked()}> Replies </div>
+                                            <div className='Profile_post_tab' onClick={()=>postsTab_clicked_func()}> Posts </div>
+                                            <div className='Profile_reply_tab' onClick={()=>replyTab_clicked_func()}> Replies </div>
                                         </div> */}
                                         <div className='Profile_post_reply_tab'>
                                             
                                             {postTabclicked==1?
                                                 <>
-                                                    <div className='Profile_tab_underline' onClick={()=>postsTab_clicked()}> Posts </div>
-                                                    <div className='Profile_tab' onClick={()=>replyTab_clicked()}> Replies </div>
+                                                    <div className='Profile_tab_underline' onClick={()=>postsTab_clicked_func()}> Posts </div>
+                                                    <div className='Profile_tab' onClick={()=>replyTab_clicked_func()}> Replies </div>
+                                                    <div className='Profile_tab' onClick={()=>likeTab_clicked_func()}> Likes </div>
                                                 </>
                                             :
                                                 <>
-                                                    <div className='Profile_tab' onClick={()=>postsTab_clicked()}> Posts </div>
-                                                    <div className='Profile_tab_underline' onClick={()=>replyTab_clicked()}> Replies </div>
+                                                    {replyTabclicked==1?
+                                                       <>
+                                                            <div className='Profile_tab' onClick={()=>postsTab_clicked_func()}> Posts </div>
+                                                            <div className='Profile_tab_underline' onClick={()=>replyTab_clicked_func()}> Replies </div>
+                                                            <div className='Profile_tab' onClick={()=>likeTab_clicked_func()}> Likes </div>
+                                                       </>
+                                                    :
+                                                        <>
+                                                            <div className='Profile_tab' onClick={()=>postsTab_clicked_func()}> Posts </div>
+                                                            <div className='Profile_tab' onClick={()=>replyTab_clicked_func()}> Replies </div>
+                                                            <div className='Profile_tab_underline' onClick={()=>likeTab_clicked_func()}> Likes </div>
+                                                        </>
+                                                   }
+                                                    
                                                 </>
                                             }
 
-                                        </div>   
+                                        </div>
+                                            {/* If post part clicked */}
+                                            {postTabclicked==1?
+                                            
+                                                result.map(i=>{
+                                                    // console.log(typeof(i[0].replyDataId)=='undefined',i[0].content);
+                                                
+                                                     return typeof(i[0].replyDataId)=='undefined'?
+                                                      
+                                               
+                                                        <Post4 
+                                                                key={i[0]._id}
+                                                                id={i[0]._id}
+                                                                Icon={Avatar}  
+                                                                displayName={i[0].postedBy.Name}
+                                                                username={i[0].postedBy.username}
+
+                                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+
+                                                                postText={i[0].content}
+                                                                createdAt={i[0].createdAt}
+                                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                                verified="True"
+
+                                                                likeslength={i[0].likes.length}
+                                                                likesData={i[0].likes}
+                                                                retweetUserList={i[0].retweetUserList}
+                                                                retweetData={i[0].retweetDataId}
+                                                                replyDataId={i[0].replyDataId}
+                                                            />
+                                                    :
+                                                      null
+   
+                                                })
+                                            
+                                              :
+                                                <>
+                                                {/* If replies part clicked */}
+                                                    {
+                                                        replyTabclicked==1?
+
+
+                                                                result.map(i=>{
+                                                                    console.log(replyTabclicked);
+                                                                
+                                                                    return typeof(i[0].replyDataId)!='undefined'?
+                                                                    
+                                                            
+                                                                        <Post4 
+                                                                                key={i[0]._id}
+                                                                                id={i[0]._id}
+                                                                                Icon={Avatar}  
+                                                                                displayName={i[0].postedBy.Name}
+                                                                                username={i[0].postedBy.username}
+                
+                                                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+                
+                                                                                postText={i[0].content}
+                                                                                createdAt={i[0].createdAt}
+                                                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                                                verified="True"
+                
+                                                                                likeslength={i[0].likes.length}
+                                                                                likesData={i[0].likes}
+                                                                                retweetUserList={i[0].retweetUserList}
+                                                                                retweetData={i[0].retweetDataId}
+                                                                                replyDataId={i[0].replyDataId}
+                                                                            />
+                                                                    :
+                                                                    null
+                
+                                                                })
+
+                                                        :
+                                                          // else like is clicked
+                                                        <>
+                                                            {
+                                                                likesresult.map(i=>{
+                                                                    console.log(i[0]); 
+                            
+                                                                     return <Post4 
+                                                                                key={i[0]._id}
+                                                                                id={i[0]._id}
+                                                                                Icon={Avatar}  
+                                                                                displayName={i[0].postedBy.Name}
+                                                                                username={i[0].postedBy.username}
+                
+                                                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+                
+                                                                                postText={i[0].content}
+                                                                                createdAt={i[0].createdAt}
+                                                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                                                verified="True"
+                
+                                                                                likeslength={i[0].likes.length}
+                                                                                likesData={i[0].likes}
+                                                                                retweetUserList={i[0].retweetUserList}
+                                                                                retweetData={i[0].retweetDataId}
+                                                                                replyDataId={i[0].replyDataId}
+                                                                            />                                                         
+                
+                                                                })
+                                                            }
+                                                        </>
+                                                    }
+                                                </>
+                                             }
+                                                
+                                                {/* result.map(i=>{
+                                                    console.log(replyTabclicked);
+                                                
+                                                     return typeof(i[0].replyDataId)!='undefined'?
+                                                    
+                                            
+                                                        <Post4 
+                                                                key={i[0]._id}
+                                                                id={i[0]._id}
+                                                                Icon={Avatar}  
+                                                                displayName={i[0].postedBy.Name}
+                                                                username={i[0].postedBy.username}
+
+                                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+
+                                                                postText={i[0].content}
+                                                                createdAt={i[0].createdAt}
+                                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                                verified="True"
+
+                                                                likeslength={i[0].likes.length}
+                                                                likesData={i[0].likes}
+                                                                retweetUserList={i[0].retweetUserList}
+                                                                retweetData={i[0].retweetDataId}
+                                                                replyDataId={i[0].replyDataId}
+                                                            />
+                                                    :
+                                                       null
+
+                                                }) */}
+                                         
+                                            
+
+                                             {/* {
+                                                result.map(i=>{
+                                                    console.log(typeof(i[0].replyDataId)=='undefined',i[0].content);
+                                                return typeof(i[0].replyDataId)=='undefined'?
+                                                      
+                                                // return 
+                                                <Post4 
+                                                        key={i[0]._id}
+                                                        id={i[0]._id}
+                                                        Icon={Avatar}  
+                                                        displayName={i[0].postedBy.Name}
+                                                        username={i[0].postedBy.username}
+
+                                                        originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+
+                                                        postText={i[0].content}
+                                                        createdAt={i[0].createdAt}
+                                                        // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                        verified="True"
+
+                                                        likeslength={i[0].likes.length}
+                                                        likesData={i[0].likes}
+                                                        retweetUserList={i[0].retweetUserList}
+                                                        retweetData={i[0].retweetDataId}
+                                                        replyDataId={i[0].replyDataId}
+                                                    />
+                                                    :
+                                                    null
+                                                    //  <Post4 
+                                                    //     key={i[0]._id}
+                                                    //     id={i[0]._id}
+                                                    //     Icon={Avatar}  
+                                                    //     displayName={i[0].postedBy.Name}
+                                                    //     username={i[0].postedBy.username}
+
+                                                    //     originalData={i[0].originalPostedBy} //ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+
+                                                    //     postText={i[0].content}
+                                                    //     createdAt={i[0].createdAt}
+                                                    //     // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                    //     verified="True"
+
+                                                    //     likeslength={i[0].likes.length}
+                                                    //     likesData={i[0].likes}
+                                                    //     retweetUserList={i[0].retweetUserList}
+                                                    //     retweetData={i[0].retweetDataId}
+                                                    //     replyDataId={i[0].replyDataId}
+                                                    ///>
+                                               
+                                                })
+                                              } */}
 
                                     </div>
+
+                                    {/* <div>YOO</div> */}
 
                         </div>
                     :

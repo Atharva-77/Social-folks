@@ -16,8 +16,8 @@ function Post({id,Icon,displayName, username,originalData,postText, imageUrl, ve
    
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
     // console.log("1.Yo",originalData,id)
-    //  console.log("2.",retweetData);
-    // console.log("ON POST",postText,replyDataId==undefined);
+    //  console.log("2.",typeof(retweetData),originalData,postText);
+    // console.log("ON POST",postText,replyDataId,replyDataId==undefined);
     var displayname_retweet=displayName;
 
     if (typeof(retweetData)!='undefined') {

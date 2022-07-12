@@ -80,8 +80,86 @@ router.get('/allpost',async(req,res)=>
 })
 
 
+//GET post via user id...postedBy
+router.get("/postedBy/:id",async(req,res)=>
+{
 
-//GET post via id
+    try 
+    {
+        var username=req.params.id ;// Tihs is sctually username
+        console.log("USERNAME", username);
+        
+        const getUser= await RegisterDb.findOne({username:username})
+        console.log("GETUser",getUser,getUser._id);
+
+        //After getting username's Id, we search by that Id in POst db..
+        const postDetail=await PostDb.find({postedBy:getUser._id}).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
+        
+        const data1=await RegisterDb.populate(postDetail,{path:'retweetDataId.postedBy'})
+        const data2=await RegisterDb.populate(data1,{path:'replyDataId.postedBy'})
+       
+        try{
+            res.status(200).json(data2)
+        }
+        
+        catch(err)
+        {
+            res.status(401).json("All err "+err)
+        } 
+    }
+    catch(err)
+    {
+        console.log("Error hai"+err);
+        res.status(401).send("Invalid Details");//...as data already send to client
+    }
+
+        
+})
+
+//Get all posts liked by a user
+router.get("/postedBy/likes/:id",async(req,res)=>
+{
+
+    try 
+    {
+        var username=req.params.id ;// Tihs is sctually username
+        console.log("USERNAME", username);
+        
+        const getUser= await RegisterDb.findOne({username:username}).populate('likes')
+       
+        const data0=await RegisterDb.populate(getUser,{path:'likes.postedBy'})
+        console.log("Likes GETUser",data0);
+
+        //After getting username's Id, we search by that Id in POst db..
+        // const postDetail=await PostDb.find({postedBy:getUser._id}).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
+        
+        const data1=await RegisterDb.populate(data0.likes,{path:'retweetDataId'})
+                console.log("\n\n1.Likes GETUser",data1);
+
+        const data2=await RegisterDb.populate(data1,{path:'replyDataId'})
+        console.log("2.Likes GETUser",data2);
+
+        try{
+            res.status(200).json(data2)
+        }
+        
+        catch(err)
+        {
+            res.status(401).json("All err "+err)
+        } 
+    }
+    catch(err)
+    {
+        console.log("Error hai"+err);
+        res.status(401).send("Invalid Details");//...as data already send to client
+    }
+
+        
+})
+
+
+
+//GET post via post id
 router.get("/:id",async(req,res)=>
 {
     try 
@@ -119,6 +197,9 @@ router.get("/:id",async(req,res)=>
         res.status(401).send("Invalid Details");//...as data already send to client
     }
 })
+
+
+
 
 
 //Get Replies

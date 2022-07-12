@@ -121,7 +121,7 @@ function HomePage() {
                             Icon={Avatar}  
                             displayName={i[0].postedBy.Name}
                             username={i[0].postedBy.username}
-                            originalData=''
+                            originalData='' //ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
                             postText={i[0].content}
                             createdAt={i[0].createdAt}
                             // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"

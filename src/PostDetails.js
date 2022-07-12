@@ -18,7 +18,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 function PostDetails() {
 
     const {id}=useParams();
-    console.log("ID in PD.js",id);
+    // console.log("ID in PD.js",id);
     var timestamp;//=timeDifference(new Date(),new Date(data.createdAt))
     const [rootId, setrootId] = useState(0); 
     const [rootData, setrootData] = useState(0); 
@@ -296,6 +296,7 @@ function PostDetails() {
                 .then( res =>
                         {
                             // console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
+                            console.log("Likes clicked axions");
                             setrootDataLen_Likes(res.data.likes.length);
                             setrootData_Likes(res.data.likes);
 
@@ -314,6 +315,7 @@ function PostDetails() {
                 .then( res =>
                         {
                             // console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
+                            console.log("2.Likes clicked axions");
                             setrootDataLen_Likes(res.data.likes.length);
                             setrootData_Likes(res.data.likes);
 
@@ -331,7 +333,7 @@ function PostDetails() {
                             // console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
                             // setrootDataLen_Likes(res.data.likes.length);
                             // setrootData_Likes(res.data.likes);
-
+                            console.log("3.Likes clicked axions");
                             setdataLen_Likes(res.data.likes.length);
                             setdata_Likes(res.data.likes);
                         }
