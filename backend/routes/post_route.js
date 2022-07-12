@@ -125,19 +125,21 @@ router.get("/postedBy/likes/:id",async(req,res)=>
         var username=req.params.id ;// Tihs is sctually username
         console.log("USERNAME", username);
         
-        const getUser= await RegisterDb.findOne({username:username}).populate('likes')
+        const getUser= await RegisterDb.findOne({username:username}).populate('likes')//.sort({"createdAt":-1})
        
+        // console.log("GETUSER",getUser);
         const data0=await RegisterDb.populate(getUser,{path:'likes.postedBy'})
         console.log("Likes GETUser",data0);
 
         //After getting username's Id, we search by that Id in POst db..
         // const postDetail=await PostDb.find({postedBy:getUser._id}).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
-        
+
         const data1=await RegisterDb.populate(data0.likes,{path:'retweetDataId'})
-                console.log("\n\n1.Likes GETUser",data1);
+                // console.log("\n\n1.Likes GETUser",data1);
 
         const data2=await RegisterDb.populate(data1,{path:'replyDataId'})
-        console.log("2.Likes GETUser",data2);
+        
+        console.log("2.Likes GETUser",typeof(data2));
 
         try{
             res.status(200).json(data2)

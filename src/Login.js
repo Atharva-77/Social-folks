@@ -8,8 +8,8 @@ import { Link } from 'react-router-dom';
 
 function Login() {
 
-  const [email, setemail] = useState('');
-  const [password, setpassword] = useState('');
+  const [email, setemail] = useState('hi@2');
+  const [password, setpassword] = useState('q1');
   // console.log(email);
 
   const dispatch = useDispatch();

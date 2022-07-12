@@ -57,7 +57,7 @@ function Profile() {
                 axios.get(`http://localhost:4000/post/postedBy/${id}`)
                 .then(res=>
                     {
-                        // console.log("Posts all  RES.DATA ",(res.data));         
+                        console.log("Posts all  RES.DATA ",(res.data));         
                         // setprofileData(res.data);   
                         setdata(res.data);    
                         
@@ -78,16 +78,48 @@ function Profile() {
 
     const postsTab_clicked_func=()=>
     {
-        console.log("Posts tab clicked");
+        console.log("Posts tab clicked",data);
         setpostTabclicked(1);
         setreplyTabclicked(0);
+
+        //To update data
+        const userData=
+        {
+            "username":id
+        }
+
+        axios.get(`http://localhost:4000/post/postedBy/${id}`)
+        .then(res=>
+            {
+                // console.log("Posts all  RES.DATA ",(res.data));         
+                // setprofileData(res.data);   
+                setdata(res.data);    
+                
+            })  
+          
     }
 
     const replyTab_clicked_func=()=>
     {
-        console.log("Replies tab clicked");
+        console.log("Replies tab clicked",data);
         setpostTabclicked(0);
         setreplyTabclicked(1);
+
+         //To update data
+         const userData=
+         {
+             "username":id
+         }
+        axios.get(`http://localhost:4000/post/postedBy/${id}`)
+        .then(res=>
+            {
+                console.log("ReplyPosts all  RES.DATA ",(res.data));         
+                // setprofileData(res.data);   
+                setdata(res.data);    
+                
+            })  
+
+        
     }
 
     const likeTab_clicked_func=()=>
@@ -95,6 +127,7 @@ function Profile() {
         console.log("Like tab clicked");
         setpostTabclicked(0);
         setreplyTabclicked(0);
+        
         axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
                 .then(res=>
                     {
@@ -103,6 +136,20 @@ function Profile() {
                         setlikesdata(res.data);    
                         
                     })
+
+        const userData=
+         {
+             "username":id
+         }
+         
+        axios.get(`http://localhost:4000/post/postedBy/${id}`)
+        .then(res=>
+            {
+                console.log("ReplyPosts all  RES.DATA ",(res.data));         
+                // setprofileData(res.data);   
+                setdata(res.data);    
+                
+            })  
     }
 
     {
@@ -114,7 +161,7 @@ function Profile() {
     {
         
         var likesresult = Object.keys(likesdata).map((key) => [likesdata[key]]);
-        console.log("LikeRESULTss",likesresult,typeof(likesresult),"\nDATA",likesdata);
+        // console.log("LikeRESULTss",likesresult,typeof(likesresult),"\nDATA",likesdata);
     
     }
 
@@ -230,6 +277,7 @@ function Profile() {
                                                                 retweetUserList={i[0].retweetUserList}
                                                                 retweetData={i[0].retweetDataId}
                                                                 replyDataId={i[0].replyDataId}
+                                                                who={1}
                                                             />
                                                     :
                                                       null
@@ -244,7 +292,7 @@ function Profile() {
 
 
                                                                 result.map(i=>{
-                                                                    console.log(replyTabclicked);
+                                                                    console.log("LIKES ARRAY B4 PASSED",i[0].likes);
                                                                 
                                                                     return typeof(i[0].replyDataId)!='undefined'?
                                                                     
@@ -268,6 +316,7 @@ function Profile() {
                                                                                 retweetUserList={i[0].retweetUserList}
                                                                                 retweetData={i[0].retweetDataId}
                                                                                 replyDataId={i[0].replyDataId}
+                                                                                who={2}
                                                                             />
                                                                     :
                                                                     null
@@ -279,7 +328,7 @@ function Profile() {
                                                         <>
                                                             {
                                                                 likesresult.map(i=>{
-                                                                    console.log(i[0]); 
+                                                                    // console.log(i[0]); 
                             
                                                                      return <Post4 
                                                                                 key={i[0]._id}
@@ -300,6 +349,7 @@ function Profile() {
                                                                                 retweetUserList={i[0].retweetUserList}
                                                                                 retweetData={i[0].retweetDataId}
                                                                                 replyDataId={i[0].replyDataId}
+                                                                                who={3}
                                                                             />                                                         
                 
                                                                 })

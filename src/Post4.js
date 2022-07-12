@@ -12,10 +12,10 @@ import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 
-function Post({id,Icon,displayName, username,originalData,postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser}) {
+function Post({id,Icon,displayName, username,originalData,postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
    
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
-    // console.log("1.Yo",originalData,id)
+    // console.log("1.Yo",likesData,postText)
     //  console.log("2.",typeof(retweetData),originalData,postText);
     // console.log("ON POST",postText,replyDataId,replyDataId==undefined);
     var displayname_retweet=displayName;
@@ -51,8 +51,9 @@ function Post({id,Icon,displayName, username,originalData,postText, imageUrl, ve
     const [replycontent, setreplycontent] = useState("");
     var rep="";
 
+    
     // var cnt=0;
-
+    console.log("1.Yo",likesData,postText,data_Likes,who)
 // const [divclick, setdivclick] = useState(1);
 var div1=0;
 var div2=0;//https://stackoverflow.com/questions/58252454/react-hooks-using-usestate-vs-just-variables
@@ -99,6 +100,7 @@ var flag=false;
         // console.log("TRUEs ", data_Likes,postText,x);
         // setx(1);
         x=1;
+        // console.log("TRUEs ", dataLen_Likes,data_Likes,x);
         // button.addClass("active");
     }
    
@@ -108,6 +110,7 @@ var flag=false;
         // console.log("False",data_Likes,userInfo.id,postText,x);
         // setx(0);
         x=0;
+        // console.log("2.TRUEs ", dataLen_Likes,data_Likes,x);
         // button.removeClass("active");
     }
 
@@ -173,15 +176,15 @@ var flag=false;
         axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
         .then( res =>
                 {
-                    console.log("POST-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
+                    // console.log("POST-LIKE-AXIOS:-",dataLen_Likes,data_Likes);
                     setdataLen_Likes(res.data.likes.length);
                     setdata_Likes(res.data.likes);
-                    // console.log("dataLen_Likes",dataLen_Likes); 
+                    // console.log("179 dataLen_Likes",dataLen_Likes,data_Likes); 
                 }
             )
             // parentHandler();
     }
-    // console.log("dataLen_Likes56",dataLen_Likes); 
+    // console.log("186:- dataLen_Likes56",dataLen_Likes,data_Likes,postText); 
     // console.log("Like val",likeCounter,x);
 
 
