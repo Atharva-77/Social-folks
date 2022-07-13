@@ -114,6 +114,7 @@
     margin-left:15px; 
 }
 
+
 .Profile_follow
 {
     font-weight: 600;
@@ -121,7 +122,13 @@
 
 .Profile_follow_text
 {
-    color:  #677676;
+    color:  #535c5c;
+}
+.Profile_follow_text:hover
+{
+    color:  #505252;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 /* ------------------------------------------- */

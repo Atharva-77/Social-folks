@@ -8,6 +8,7 @@ import './Profile.css'
 import { userAction_details } from './Reducers/actions/userActions';
 
 import Post4 from './Post4';
+import { Link } from 'react-router-dom';
 
 
 function Profile() {
@@ -276,12 +277,16 @@ function Profile() {
                                     
                                        
                                         <div className='Profile_followers_following'> 
+                                            
+                                            <Link to={`/follow/${userInfo.username}`}  style={{ textDecoration: 'none',color:'#374151'}}> 
+       
+                                                <span className='Profile_follow'> {Object.keys(profileData.followers).length } </span>  
+                                                <span className='Profile_follow_text'> Followers </span>  &nbsp; &nbsp; 
 
-                                            <span className='Profile_follow'> {Object.keys(profileData.followers).length } </span>  
-                                            <span className='Profile_follow_text'> Followers </span>  &nbsp; &nbsp; 
-
-                                            <span className='Profile_follow'> {Object.keys(profileData.following).length||0} </span>  
-                                            <span className='Profile_follow_text'> Following </span> 
+                                                <span className='Profile_follow'> {Object.keys(profileData.following).length||0} </span>  
+                                                <span className='Profile_follow_text'> Following </span> 
+                                            
+                                            </Link>
 
                                         </div>
                                         

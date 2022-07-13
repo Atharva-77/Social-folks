@@ -1,0 +1,59 @@
+.Follow_top{
+    flex:0.60;
+    /* border:2px solid rgb(233, 33, 33); */
+    border-right: 1px solid lightgray;
+}
+
+/* ---------------------------------- */
+.Follow_followers_following_tab
+{
+    margin-top: 20px;
+    /* padding-bottom: 10px; */
+    
+    display: flex;
+    /* justify-content: space-evenly; */
+    /* flex-shrink: 0; */
+
+    border-bottom: 1px solid rgb(140,157,157,0.7);
+    cursor: pointer;
+}
+
+.Follow_tab
+{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  
+  padding-bottom: 6px;
+  padding-top: 6px;
+
+  border: none;
+  font-size: 16px;
+}
+.Follow_tab:hover
+{
+    background-color:   #ececec;
+}
+
+/* --------------------------------------------------- */
+.Follow_tab_underline
+{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+
+  padding-bottom: 6px;
+  padding-top: 6px;
+
+  border-bottom: 3px solid rgb(29,161,242);
+  
+  font-size: 16px;
+  font-weight: 700;
+  color:rgb(29,161,242);
+}
+
+.Follow_tab_underline:hover
+{
+    background-color:   #ececec;
+    /* rgb(29,161,242,0.5); */
+}

@@ -10,6 +10,7 @@ import { Provider } from 'react-redux';
 import store from './Store';
 import PostDetails from './PostDetails';
 import Profile from './Profile';
+import Follow from './Follow';
 
 function App() {
   return (
@@ -32,6 +33,14 @@ function App() {
                <div className="sidebar">
                   <Sidebar />
                   <Profile />
+                  <Right_sidebar />
+               </div>
+            </Route> 
+
+            <Route path="/follow/:id">
+               <div className="sidebar">
+                  <Sidebar />
+                  <Follow />
                   <Right_sidebar />
                </div>
             </Route> 
