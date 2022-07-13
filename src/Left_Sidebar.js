@@ -28,9 +28,15 @@ function Left_Sidebar() {
             <Left_Sidebar_Icons name="Bookmark" Icons={BookmarkIcon } />
             {/* <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} /> */}
 
-            <Link to={`/profile/${userInfo.username}`}  style={{ textDecoration: 'none',color:'#374151'}}> 
-                <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} />
-            </Link>
+            {typeof(userInfo)!='undefined'?
+                
+                <Link to={`/profile/${userInfo.username}`}  style={{ textDecoration: 'none',color:'#374151'}}> 
+                    <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} />
+                </Link>
+             :
+                null
+            }
+            
             
             <button className="post_button">+ Post</button>
             

@@ -138,11 +138,12 @@ router.get("/postedBy/likes/:id",async(req,res)=>
                 // console.log("\n\n1.Likes GETUser",data1);
 
         const data2=await RegisterDb.populate(data1,{path:'replyDataId'})
+        const data3=await RegisterDb.populate(data1,{path:'replyDataId.postedBy'})
         
-        console.log("2.Likes GETUser",typeof(data2));
+        console.log("2.Likes GETUser",typeof(data3));
 
         try{
-            res.status(200).json(data2)
+            res.status(200).json(data1)
         }
         
         catch(err)

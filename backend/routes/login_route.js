@@ -32,6 +32,8 @@ router.post('/add',async(req,res)=>
                         isAdmin:userDetails[0].isAdmin,
                         likes:userDetails[0].likes,
                         retweets:userDetails[0].retweets,
+                        followers:userDetails[0].followers,
+                        following:userDetails[0].following,
                         token:generateToken(userDetails[0]._id)                      
                     }
                 )

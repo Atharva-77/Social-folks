@@ -53,7 +53,7 @@ function Post({id,Icon,displayName, username,originalData,postText, imageUrl, ve
 
     
     // var cnt=0;
-    console.log("1.Yo",likesData,postText,data_Likes,who)
+    // console.log("1.Yo",likesData,postText,data_Likes,who)
 // const [divclick, setdivclick] = useState(1);
 var div1=0;
 var div2=0;//https://stackoverflow.com/questions/58252454/react-hooks-using-usestate-vs-just-variables
@@ -176,15 +176,15 @@ var flag=false;
         axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
         .then( res =>
                 {
-                    // console.log("POST-LIKE-AXIOS:-",dataLen_Likes,data_Likes);
+                    // console.log("179 POST-LIKE-AXIOS:-",dataLen_Likes,data_Likes);
                     setdataLen_Likes(res.data.likes.length);
                     setdata_Likes(res.data.likes);
-                    // console.log("179 dataLen_Likes",dataLen_Likes,data_Likes); 
+                    // console.log("182.dataLen_Likes",dataLen_Likes,data_Likes); 
                 }
             )
             // parentHandler();
     }
-    // console.log("186:- dataLen_Likes56",dataLen_Likes,data_Likes,postText); 
+    // console.log("186:- dataLen_Likes56",dataLen_Likes,data_Likes,postText,who); 
     // console.log("Like val",likeCounter,x);
 
 
