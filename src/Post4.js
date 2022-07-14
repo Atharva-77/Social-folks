@@ -423,7 +423,7 @@ var flag=false;
                     
                     <div className='Post_replyingTo_header'>
                         
-                        <span className='Post_replyingTo-title'>Replying to</span> 
+                        <span className='Post_replyingTo-title'>Replying to </span> 
                         <span className='Post_replyingTo-name'>@{replyDataId.postedBy.Name}</span>
                         
                         <div className='Post_fullTweet_header'>

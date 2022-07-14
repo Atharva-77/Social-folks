@@ -57,3 +57,12 @@
     background-color:   #ececec;
     /* rgb(29,161,242,0.5); */
 }
+
+/* ------------------------- */
+.Follow_NoFollows {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  font-size: large;
+  font-weight: 650;
+}

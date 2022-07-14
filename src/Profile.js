@@ -89,6 +89,7 @@ function Profile() {
     const postsTab_clicked_func=()=>
     {
         console.log("Posts tab clicked",data);
+        setdata(1);
         setpostTabclicked(1);
         setreplyTabclicked(0);
 
@@ -101,25 +102,27 @@ function Profile() {
         axios.get(`http://localhost:4000/post/postedBy/${id}`)
         .then(res=>
             {
-                console.log("Posts all  RES.DATA ",(res.data));         
+                console.log("1.1.Posts all  RES.DATA ",(res.data));         
                 // setprofileData(res.data);   
                 setdata(res.data);    
                 
             })  
-            axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
-            .then(res=>
-                {
-                    console.log("Likes  RES.DATA ",(res.data));         
-                    // setprofileData(res.data);   
-                    setlikesdata(res.data);    
-                    
-                })
+
+        axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+        .then(res=>
+            {
+                console.log("Likes  RES.DATA ",(res.data));         
+                // setprofileData(res.data);   
+                setlikesdata(res.data);    
+                
+            })
                
     }
 
     const replyTab_clicked_func=()=>
     {
         console.log("Replies tab clicked",data);
+        setdata(1);
         setpostTabclicked(0);
         setreplyTabclicked(1);
 
@@ -137,14 +140,14 @@ function Profile() {
                 
             })  
 
-            axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
-            .then(res=>
-                {
-                    console.log("Likes  RES.DATA ",(res.data));         
-                    // setprofileData(res.data);   
-                    setlikesdata(res.data);    
-                    
-                })
+        axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+        .then(res=>
+            {
+                console.log("Likes  RES.DATA ",(res.data));         
+                // setprofileData(res.data);   
+                setlikesdata(res.data);    
+                
+            })
                
 
         
@@ -157,13 +160,13 @@ function Profile() {
         setreplyTabclicked(0);
         
         axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
-                .then(res=>
-                    {
-                        console.log("Likes  RES.DATA ",(res.data));         
-                        // setprofileData(res.data);   
-                        setlikesdata(res.data);    
-                        
-                    })
+            .then(res=>
+                {
+                    console.log("Likes  RES.DATA ",(res.data));         
+                    // setprofileData(res.data);   
+                    setlikesdata(res.data);    
+                    
+                })
 
         const userData=
          {
@@ -213,7 +216,7 @@ function Profile() {
     {
         
             var result = Object.keys(data).map((key) => [data[key]]);
-            // console.log("RESULTss",result);
+            console.log("RESULTss",result,typeof(result));
         
     }
     {
@@ -241,7 +244,9 @@ function Profile() {
                                             <Avatar className="Profile_avatar" style={{ textDecoration: 'none',backgroundColor:'red'}} 
                                                  src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
 
+
                                                  {/* <div className='Profile_follow_div'> */}
+
                                                  {Object.keys(userInfo)==0?
                                                   <button className='Profile_follow_button'>Follow</button>
                                                  :
@@ -278,11 +283,13 @@ function Profile() {
                                        
                                         <div className='Profile_followers_following'> 
                                             
-                                            <Link to={`/follow/${userInfo.username}`}  style={{ textDecoration: 'none',color:'#374151'}}> 
+                                            <Link to={{pathname:`/follow/${id}` ,query:1}}  style={{ textDecoration: 'none',color:'#374151'}} hi={1}> 
        
                                                 <span className='Profile_follow'> {Object.keys(profileData.followers).length } </span>  
                                                 <span className='Profile_follow_text'> Followers </span>  &nbsp; &nbsp; 
+                                            </Link>
 
+                                            <Link to={{pathname:`/follow/${id}` ,query:0}}   style={{ textDecoration: 'none',color:'#374151'}}> 
                                                 <span className='Profile_follow'> {Object.keys(profileData.following).length||0} </span>  
                                                 <span className='Profile_follow_text'> Following </span> 
                                             
@@ -299,7 +306,7 @@ function Profile() {
                                                     <div className='Profile_tab' onClick={()=>replyTab_clicked_func()}> Replies </div>
                                                     <div className='Profile_tab' onClick={()=>likeTab_clicked_func()}> Likes </div>
                                                 </>
-                                            :
+                                             :
                                                 <>
                                                     {replyTabclicked==1?
                                                        <>
@@ -433,7 +440,19 @@ function Profile() {
                             
                                                                             })
                                                                         :
-                                                                        <div className='Profile_NoTweets'>No Posts</div>
+                                                                        <>
+                                                                            {/*When it enters PostTab, daat is set to 1. At that time loading is required untilldata gets updated by axios.Else:- If no posts have been tweeted, then 'No Posts' is shown..  */}
+                                                                            {data==1?
+
+                                                                                <div className='Profile_NoTweets'>Loading...</div>
+                                                                                :
+                                                                            
+                                                                                <div className='Profile_NoTweets'>1.2No Posts</div>
+                                                                           
+                                                                            }
+                                                                            
+                                                                        </>
+                                                                        
                                                                     }
                                                                     
                                                                 </>
@@ -441,7 +460,7 @@ function Profile() {
                                                         </> /* ⬆️ Reply tab closing bracket */
                                                     }
                                                  </> /* ⬆️ Post tab closing bracket */
-                                                :   
+                                              :   
                                                     /* ⬆️ If No Post && Likes data */
                                                     <>
                                                         {
@@ -545,7 +564,7 @@ function Profile() {
                                     {/* <div>YOO</div> */}
 
                         </div>
-                    :
+                     :
                         <div className='Profile_Homepage_top'>
                             <h2>No Such User</h2>
                         </div>

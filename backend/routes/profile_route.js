@@ -80,8 +80,8 @@ router.put('/followRoute/:username',async(req,res)=>
 })
 
 
-
-router.post('/:username',async(req,res)=>
+// All followers of a user
+router.get('/allFollowers/:username',async(req,res)=>
 {
     try
     {    
@@ -91,11 +91,12 @@ router.post('/:username',async(req,res)=>
         
         console.log("PROFILE Route ",username,req.params.username);
 
-        const getUser= await RegisterDb.findOne({username:username})
-        // console.log("\n\nPROF DB",getUser);
-        
+        const getUser= await RegisterDb.findOne({username:username}).populate('followers','-password -followers -following').populate('following','-password -followers -following').select('-password -likes -retweets')
+       
+        const allDetails=getUser
+       
         if(getUser!=null)
-            res.status(201).json(getUser)
+            res.status(201).json(allDetails)
        
         else
             res.status(201).json("NO SUCH USER")
@@ -106,7 +107,7 @@ router.post('/:username',async(req,res)=>
     catch(err)
     {
         console.log("Error hai",err);
-        // res.status(401).json("Invalid Details",err)
+        res.status(400).send("Invalid Details"+err)
     }
 })
 
