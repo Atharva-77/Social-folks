@@ -26,3 +26,55 @@ h2
     border-bottom: 1px solid lightgray;
 
 }
+
+/* ---------------------------------- */
+.Homepage_Allposts_specificPost_tab {
+    margin-top: 20px;
+    /* padding-bottom: 10px; */
+
+    display: flex;
+    /* justify-content: space-evenly; */
+    /* flex-shrink: 0; */
+
+    border-bottom: 1px solid rgb(140, 157, 157, 0.7);
+    cursor: pointer;
+}
+
+/* ------------------------------------ */
+.Homepage_Post_tab {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    padding-bottom: 6px;
+    padding-top: 6px;
+
+    border: none;
+    font-size: 16px;
+}
+
+.Homepage_Post_tab:hover {
+    background-color: #ececec;
+}
+
+/* --------------------------------------------------- */
+.Homepage_Post_tab_underline {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    padding-bottom: 6px;
+    padding-top: 6px;
+
+    border-bottom: 3px solid rgb(29, 161, 242);
+
+    font-size: 16px;
+    font-weight: 700;
+    color: rgb(29, 161, 242);
+}
+
+.Homepage_Post_tab_underline:hover {
+    background-color: #ececec;
+    /* rgb(29,161,242,0.5); */
+}
+/* --------------------------------------------------- */
