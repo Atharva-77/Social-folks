@@ -24,7 +24,12 @@ function Left_Sidebar() {
             </Link>
              
             <Left_Sidebar_Icons name="Home" Icons={HomeIcon} />
-            <Left_Sidebar_Icons name="Explore" Icons={SearchIcon} />
+            
+            <Link to={`/search`} style={{ textDecoration: 'none', color: '#374151' }}>
+                <Left_Sidebar_Icons name="Search" Icons={SearchIcon} />
+            </Link>
+
+            
             <Left_Sidebar_Icons name="Bookmark" Icons={BookmarkIcon } />
             {/* <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} /> */}
 

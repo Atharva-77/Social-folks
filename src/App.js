@@ -11,6 +11,7 @@ import store from './Store';
 import PostDetails from './PostDetails';
 import Profile from './Profile';
 import Follow from './Follow';
+import Search from './Search';
 
 function App() {
   return (
@@ -49,6 +50,15 @@ function App() {
                <div className="sidebar">
                   <Sidebar />
                   <PostDetails/>
+                  <Right_sidebar />
+               </div>
+            </Route> 
+
+
+            <Route path="/search">
+               <div className="sidebar">
+                  <Sidebar />
+                  <Search />
                   <Right_sidebar />
                </div>
             </Route> 

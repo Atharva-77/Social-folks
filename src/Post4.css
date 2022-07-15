@@ -73,8 +73,14 @@
 .Post_retweetText
 {
 
-    color:#5c5d5e ;
+    color: rgb(32, 174, 32);
     margin-left: 10px;
+    font-weight: 600;
+}
+
+.Post_icon-above-avator
+{
+    color: rgb(32, 174, 32);
 }
 /* .................................... */
 .Post_replyingTo_header
@@ -84,8 +90,8 @@
 
 .Post_replyingTo-title
 {
-    font-weight: 500;
-    color: #636e75;
+        color: #3d3e40;
+        font-weight: 650;
 }
 
 .Post_replyingTo-name

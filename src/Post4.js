@@ -411,7 +411,7 @@ var flag=false;
                             ?
                             <div className='icon-div-like-number'>
                                 {/* <div className="icon-div-like-number"> */}
-                                    <RepeatIcon fontSize="small"  className={'icon-above-avator'}/>
+                                    <RepeatIcon fontSize="small"  className='Post_icon-above-avator'/>
                                 {/* </div>   */}
                                 <p className="Post_retweetText">Retweeted by <a href="/profile">{displayname_retweet}</a></p>
                             </div>

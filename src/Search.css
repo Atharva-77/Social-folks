@@ -1,0 +1,120 @@
+.Search_top {
+    flex: 0.60;
+    /* border:2px solid rgb(233, 33, 33); */
+    border-right: 1px solid lightgray;
+
+    /* padding-bottom: 15px;
+    padding-top: 2px; */
+
+    border-bottom: 1px solid lightgray;
+    
+}
+
+.Search_title {
+    position: sticky;
+    top: 0;
+    /* z-index: 100; */
+    border-bottom: 1px solid lightgray;
+
+    margin:0px;
+    padding: 9.6px 8px 10px 16px;
+
+}
+
+/* ---------------------------------- */
+/* ---------------------------------- */
+.Search_Posts_Users_tab {
+    margin-top: 20px;
+    /* padding-bottom: 10px; */
+
+    display: flex;
+    /* justify-content: space-evenly; */
+    /* flex-shrink: 0; */
+
+    border-bottom: 1px solid rgb(140, 157, 157, 0.7);
+    cursor: pointer;
+}
+
+/* ------------------------------------ */
+.Search_Post_tab {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    padding-bottom: 6px;
+    padding-top: 6px;
+
+    border: none;
+    font-size: 16px;
+}
+
+.Search_Post_tab:hover {
+    background-color: #ececec;
+}
+
+/* --------------------------------------------------- */
+.Search_Post_tab_underline {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    padding-bottom: 6px;
+    padding-top: 6px;
+
+    border-bottom: 3px solid rgb(29, 161, 242);
+
+    font-size: 16px;
+    font-weight: 700;
+    color: rgb(29, 161, 242);
+}
+
+.Search_Post_tab_underline:hover {
+    background-color: #ececec;
+    /* rgb(29,161,242,0.5); */
+}
+
+/* --------------------------------------------------- */
+/* ---------------------------------------------------- */
+
+
+.header_search {
+    padding-top: 25px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    /* flex:1; */
+    align-items: center;
+    justify-content: center;
+}
+
+.header_input {
+
+    height: 22px;
+    width: 450px;
+   
+    border-radius:2px;
+    /* border-radius:11px; */
+    border: none;
+
+    background-color: #eff3f4;
+    padding: 5px;
+}
+
+.header_searchIcon {
+    /* background-color: rgb(106, 195, 247);;
+    height: 20px !important;
+    padding: 5px; */
+
+    background-color: rgb(106, 195, 247);
+    height: 22px !important;
+    padding: 4px;
+    position: absolute;
+    margin-left: 213px;
+    border-radius: 2px;
+    
+}
+
+input:focus{
+    outline: 2px solid #1da1f2;
+    background-color: white;
+}

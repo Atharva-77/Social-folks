@@ -129,8 +129,8 @@ function HomePage() {
 
 
     return (
-        <div className="HomePage">
-            <div className="HomePage_title">
+        <div className="Homepage">
+            <div className="Homepage_title">
                 <h2>Home</h2><h2>{count}</h2>
             </div>
 
