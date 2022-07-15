@@ -61,7 +61,7 @@ router.get('/allpost',async(req,res)=>
         // console.log("DATA",data);
         // const data
         const data1=await RegisterDb.populate(data,{path:'retweetDataId.postedBy'})
-        // console.log("\n\nALLPOST\n\n",data1);
+        // console.log("\n\nALLPOST\n\n",(data1),typeof(data1));
         const data2=await RegisterDb.populate(data1,{path:'replyDataId.postedBy'})
         try{
             res.status(200).json(data2)
@@ -81,7 +81,7 @@ router.get('/allpost',async(req,res)=>
 })
 
 
-//Specific Posts
+//Specific Posts....Used in Searching
 router.get('/specificPost', async (req, res) => {
     try {
         
@@ -100,8 +100,6 @@ router.get('/specificPost', async (req, res) => {
             //     $regex: keyword,
             //     $options: 'i'
             // },
-
-            
         }
          :
         {};
@@ -122,23 +120,29 @@ router.get('/specificPost', async (req, res) => {
 
         //If {} brackets used, then spread the opertor. If not used, dont spread
         // let data_Content = await PostDb.find({...searchWord_Content}).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
-        let data_Content = await PostDb.find(searchWord_Content).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
+        const data_Content = await PostDb.find(searchWord_Content).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
 
         console.log("DATA",data_Content.length,typeof(data_Content[0]));
 
-        let dataRetweet_Content = await PostDb.find({ ...searchWord_retweetContent }).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
-        console.log("DATA.", dataRetweet_Content.length);
+        const dataRetweet_Content = await PostDb.find({ ...searchWord_retweetContent }).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
+        // console.log("DATA.", dataRetweet_Content.length);
 
-        // let data
-        data_Content = await RegisterDb.populate(data_Content, { path: 'retweetDataId.postedBy' })
-        dataRetweet_Content = await RegisterDb.populate(dataRetweet_Content, { path: 'replyDataId.postedBy' })
+        // console.log("DATA...",  (data_Content));
+
+        // const data
+        const data_Content1 = await RegisterDb.populate(data_Content,{path:'retweetDataId.postedBy'})
+        const data_Content2 = await RegisterDb.populate(data_Content1, { path: 'replyDataId.postedBy' })    
+       
+        const dataRetweet_Content1 = await RegisterDb.populate(dataRetweet_Content, { path: 'retweetDataId.postedBy' })
+        const dataRetweet_Content2 = await RegisterDb.populate(dataRetweet_Content1,{path:'replyDataId.postedBy'})
         
+        // console.log("DATA_Content1", data_Content1);
         // const q=[{"1":1,"2":2},{"Oneq":12,"Two":2}]
         // const q1 = { "1": 1, "2": 2 }
         // console.log("Q",q[1].Oneq, typeof(q1));
 
         //concat both results
-        const searchQuery_result = data_Content.concat(dataRetweet_Content)
+        const searchQuery_result = data_Content2.concat(dataRetweet_Content2)
 
         try {
             res.status(200).json(searchQuery_result)
@@ -151,6 +155,67 @@ router.get('/specificPost', async (req, res) => {
     }
     catch (err) {
         console.log("Error"+err);
+        res.status(401).send("Error")
+    }
+})
+
+
+
+//Specific Users...Used in Searching
+router.get('/specificUsers', async (req, res) => {
+    try {
+
+        var keyword = req.query.keyword.trim();
+        console.log("ENTERED Specific USER", keyword, keyword.length, req.query.keyword.trim().length);
+
+        const searchWord_Name = keyword ?
+            {
+                Name: {
+                    $regex: keyword,
+                    $options: 'i'
+                },
+
+            }
+            :
+            {};
+
+         //At a time only 1 query performed. Hence 2 separate queries
+        const searchWord_Username = keyword ?
+            {
+                username: {
+                    $regex: keyword,
+                    $options: 'i'
+                },
+
+            }
+            :
+            {};
+
+        console.log("Speceifc data", searchWord_Name, "\n", { ...searchWord_Username });
+
+       
+        const data_searchName = await RegisterDb.find(searchWord_Name).select('-password -followers -following')
+        const data_searchUsername = await RegisterDb.find(searchWord_Username).select('-password -followers -following')
+
+        // console.log("DATA..", data_searchName[0].username, data_searchUsername, data_searchName[0].username === data_searchUsername.username);
+        // console.log("DATA...",  (data_searchName));
+
+        // const data
+
+        //concat both results
+        const searchQuery_result = data_searchName.concat(data_searchUsername)
+
+        try {
+            res.status(200).json(searchQuery_result)
+        }
+
+        catch (err) {
+            res.status(401).json("Error" + err)
+        }
+
+    }
+    catch (err) {
+        console.log("Error" + err);
         res.status(401).send("Error")
     }
 })

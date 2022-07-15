@@ -9,6 +9,8 @@ import { userAction_details } from './Reducers/actions/userActions';
 import { Link } from 'react-router-dom';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { logDOM } from '@testing-library/react';
+import Post4 from './Post4';
+import FollowList from './FollowList';
 
 
 function Search() {
@@ -17,6 +19,8 @@ function Search() {
     const [keyword, setkeyword] = useState('')
    
     const [data, setdata] = useState('')
+    const [usersData, setusersData] = useState('')
+
 
     //Select Tab
     const PostsTab_clicked_func = () => 
@@ -52,36 +56,48 @@ function Search() {
         
         if(Post_Tab==1)
         {
+            setdata('')
             console.log("AAgaya", "Post",keyword);
+           
+            axios.get(`http://localhost:4000/post/specificPost?keyword=${keyword}`)
+                .then(res => {
+
+                    console.log("SPECIFIC POST:-", res.data);
+                    setdata(res.data);
+                }
+                )
         }
         else
         {
+            setusersData('')
             console.log("AAgaya", "User", keyword);
+           
+            axios.get(`http://localhost:4000/post/specificUsers?keyword=${keyword}`)
+                .then(res => {
+
+                    console.log("USERS:-", res.data);
+                    setusersData(res.data);
+                }
+                )
         }
 
-        // const content_data =
-        // {
-        //     "content": keyword.trim()
-        // }
-
-        axios.get(`http://localhost:4000/post/specificPost?keyword=${keyword}`)
-            .then(res => {
-
-                console.log("AXIOS:-", res.data);
-                setdata(res.data);
-            }
-            )
-
-        // console.log("PROPS.abc",props.greeted);
-        // props.greeted();
+    
     }
 
     {
 
         var result = Object.keys(data).map((key) => [data[key]]);
-        console.log("SEARCH-RESULTss", result, typeof (result));
+        console.log("POSTS-RESULTss", result, typeof (result));
 
     }
+
+    {
+
+        var usersResult = Object.keys(usersData).map((key) => [usersData[key]]);
+        console.log("USERS-RESULTss", usersResult, typeof (usersResult));
+
+    }
+
 
     // console.log("Keyword", keyword);
   return (
@@ -121,40 +137,56 @@ function Search() {
             </div>
 
             {/* <h2>UU</h2> */}
-           {Object.keys(data).length > 0 && data != "Error" ?
+          {(Object.keys(data).length || Object.keys(usersData).length ) > 0 && data != "Error" ?
               <>
                   {/* If Follower part clicked */}
-                    {Post_Tab == 1 ?
+                  {Post_Tab == 1 && Object.keys(data).length >0?
 
                       <>
                           {
-                              followerResult != '' ?
+                                result != '' ?
 
-                                  followerResult.map(i => {
-                                      console.log("FRESULT ", followerResult);
+                                  result.map(i => {
+                                        console.log("PRESULT ", result);
 
-                                      return <FollowList
-                                          key={i[0]._id}
-                                          id={i[0]._id}
-                                          Icon={Avatar}
-                                          displayName={i[0].Name}
-                                          username={i[0].username}
-                                      />
+                                    return <Post4
+                                                key={i[0]._id}
+                                                id={i[0]._id}
+                                                Icon={Avatar}
+                                                displayName={i[0].postedBy.Name}
+                                                username={i[0].postedBy.username}
 
-                                  })
-                                  :
+                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
 
-                                  <div className='Follow_NoFollows'>No Followers</div>
-                          }
+                                                postText={i[0].content}
+                                                createdAt={i[0].createdAt}
+                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                verified="True"
+
+                                                likeslength={i[0].likes.length}
+                                                likesData={i[0].likes}
+                                                retweetUserList={i[0].retweetUserList}
+                                                retweetData={i[0].retweetDataId}
+                                                replyDataId={i[0].replyDataId}
+                                                who={2}
+                                            />
+
+
+                                    })
+
+                                 :
+
+                                  <div className='Follow_NoFollows'>No Such Posts</div>
+                            }
                       </>
 
                      :
                       <>
                           {
-                              followingResult != '' ?
+                              usersResult != '' ?
 
-                                  followingResult.map(i => {
-                                      console.log("FRESULT ", followingResult);
+                                  usersResult.map(i => {
+                                      console.log("FRESULT ", usersResult);
 
                                       return <FollowList
                                           key={i[0]._id}
@@ -162,15 +194,14 @@ function Search() {
                                           Icon={Avatar}
                                           displayName={i[0].Name}
                                           username={i[0].username}
-
                                       />
 
 
-
                                   })
+                                  
                                   :
 
-                                  <div className='Follow_NoFollows'>Not Following Anyone</div>
+                                  <div className='Follow_NoFollows'>1.No Such User</div>
                           }
                       </> /* ⬆️ Following tab closing bracket */
                   }
@@ -180,9 +211,9 @@ function Search() {
               <>
                   {
                       data == "NO SUCH USER" ?
-                          <div className='Follow_NoFollows'>No Such User</div>
+                          <div className='Follow_NoFollows'>2.No Such User</div>
                           :
-                          <div className='Follow_NoFollows'>Invalid Details</div>
+                          <div className='Follow_NoFollows'>1Invalid Details</div>
                   }
 
               </>
