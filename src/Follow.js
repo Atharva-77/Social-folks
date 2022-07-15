@@ -137,7 +137,7 @@ function Follow() {
 
             </div>
 
-            {Object.keys(data).length > 0 && data != "NO SUCH USER" ?
+               {Object.keys(data).length > 0 && data != "NO SUCH USER" ?
                     <>
                         {/* If Follower part clicked */}
                         {followers_Tab == 1 ?
