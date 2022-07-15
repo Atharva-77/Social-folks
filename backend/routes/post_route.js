@@ -239,11 +239,23 @@ router.get('/specificUsers', async (req, res) => {
 
         //concat both results
         let searchQuery_result = data_searchName.concat(data_searchUsername)
-        // console.log("SEARCHQ ",searchQuery_result.length);
+        console.log("SEARCHQ ",searchQuery_result.length);
 
         if(searchQuery_result.length==0)
-        searchQuery_result="Invalid Details"
+            searchQuery_result="Invalid Details"
 
+        else
+        {
+            //Remove duplicates frm object
+            var jsonObject=searchQuery_result.map(JSON.stringify); //Convert to string....but its obj type
+            var uniqueSet = new Set(jsonObject);
+            // console.log("UNIQUE ",uniqueSet);
+
+            var uniqueArray = Array.from(uniqueSet).map(JSON.parse); //Convert from string to json type
+            // console.log("UNIQUEA",uniqueArray);
+            searchQuery_result=uniqueArray;
+
+        }
         try {
             res.status(200).json(searchQuery_result)
         }
