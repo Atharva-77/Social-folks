@@ -376,8 +376,12 @@ function PostDetails() {
     {
        
 
-        console.log("IN DIV1",document.getElementById("myTextarea").value.length);
+        console.log("IN DIV1",flag,document.getElementById("myTextarea").value.length);
        
+        if (flag == false && document.getElementById("myTextarea").value.length == 0)
+            setcnt(0);
+
+
         if(flag==false && document.getElementById("myTextarea").value.length>0 )
         {
             var val = window.confirm("Do you want to Delete Data? Click Ok.");

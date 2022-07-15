@@ -10,7 +10,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
 import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-
+import EditIcon from '@material-ui/icons/Edit';
 
 function Post({id,Icon,displayName, username,originalData,postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
    
@@ -46,9 +46,12 @@ function Post({id,Icon,displayName, username,originalData,postText, imageUrl, ve
     
     const [store, setstore] = useState("Nope");
     const [cnt, setcnt] = useState(0);
+    const [editCnt, setEditCnt] = useState(0);
 
     const [reply, setreply] = useState("");
     const [replycontent, setreplycontent] = useState("");
+    const [editContent, seteditContent] = useState("");
+
     var rep="";
 
     
@@ -58,6 +61,7 @@ function Post({id,Icon,displayName, username,originalData,postText, imageUrl, ve
 var div1=0;
 var div2=0;//https://stackoverflow.com/questions/58252454/react-hooks-using-usestate-vs-just-variables
 var flag=false;
+var editFlag=false;
 // var link_flag=true;
 
     const [btnCls,setbtnCls] = useState("");
@@ -83,7 +87,7 @@ var flag=false;
     const userLoginData = useSelector(state => state.userLoginKey)
     const {userInfo} =userLoginData
 
-    // console.log("UserLOgin DATA",typeof(userInfo.id)!='undefined');
+    // console.log("UserLOgin DATA",userInfo,typeof(userInfo.id)!='undefined');
     if(typeof(userInfo.id)!='undefined')
     {
         // loggedIn=true;
@@ -227,6 +231,10 @@ var flag=false;
     }
 
 
+    
+
+    // -------------REPLY -------------------------------------------------------------
+    // ---------------------------------------------------------------------------------
     const reply_clicked=(myCloseFunction=false,myFunction=false,spanFunc=false)=>
     {
         if(cnt==0)
@@ -295,7 +303,7 @@ var flag=false;
         //     }
         //     }
     
-}
+    }
 // console.log("COunt",cnt);
     const divfun1=()=>
     {
@@ -304,8 +312,9 @@ var flag=false;
         // directly out...div1=1, div2=0
         //2nd clicked....div2=1, div1=1
 
-        console.log("IN DIV1",div1,div2,rep.length,document.getElementById("myTextarea").value.length);
-        // if(flag==false)
+        console.log("IN DIV1",div1,div2,flag,document.getElementById("myTextarea").value.length);
+        if (flag == false && document.getElementById("myTextarea").value.length==0)
+            setcnt(0);
         // alert('Close?');
         // else
         // flag=false;
@@ -361,6 +370,9 @@ var flag=false;
         console.log("IN DIV2",div1,div2);
     }
     
+
+    
+
     // console.log("REPLY CONTENT",replycontent);
 
     const reply_submit_clicked=()=>
@@ -388,6 +400,7 @@ var flag=false;
                     console.log("AXIOS:-",res.data); 
                     // console.log("PROPS.parentHandler",props.parentHandler); 
                     // props.parentHandler();
+                    var yo = (parentHandler == undefined) ? null : parentHandler();
                 }
             )
 
@@ -395,6 +408,7 @@ var flag=false;
         setcnt(0);
         setreplycontent('');
     }
+
     const reply_close_clicked=()=>
     {
         console.log("Closed",replycontent);
@@ -402,6 +416,100 @@ var flag=false;
         setreplycontent('');
     }
     
+
+    //---------------EDIT------------------------------------------------- 
+    // --------------------------------------------------------------------
+    const edit_clicked = (myCloseFunction = false, myFunction = false, spanFunc = false) => {
+        
+        if (editCnt == 0)
+            setEditCnt(1);
+        else
+            setEditCnt(0);
+
+    }
+ 
+    // Edit DIV 1,2 FUNCS.
+    const divfun1_edit = () => {
+
+        div1++;
+
+        console.log("IN DIV1", div1, div2, editFlag, document.getElementById("editMyTextarea").value.length);
+
+        if (editFlag == false && document.getElementById("editMyTextarea").value.length == 0)
+            setEditCnt(0);
+
+
+        if (editFlag == false && document.getElementById("editMyTextarea").value.length > 0) {
+            
+            var val = window.confirm("Do you want to Delete Data? Click Ok.");
+            
+            if (val == false) {
+                // alert("You pressed OK.");
+            }
+
+            else {
+                var val_again = window.confirm("Confirm Delete Data? Click Ok.");
+                if (val_again == true) {
+                    alert("Deleted");
+                    seteditContent('');
+                    setEditCnt(0);
+                }
+
+            }
+        }
+
+        else
+            editFlag = false;
+
+    }
+
+    const divfun2_edit = () => {
+        div2++;
+        editFlag = true;
+        console.log("IN DIV2", div1, div2);
+    }
+
+
+    const edit_submit_clicked = () => {
+        console.log("EDIT Submitted", editContent, editContent.trim().length);
+
+        const config =
+        {
+            headers:
+            {
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const editContent_data =
+        {
+            "content": editContent.trim(),
+            "replyTo": id
+        }
+
+        // axios.post(`http://localhost:4000/post/add`, editContent_data, config)
+        //     .then(res => {
+        //         console.log("AXIOS:-", res.data);
+        //         // console.log("PROPS.parentHandler",props.parentHandler); 
+        //         // props.parentHandler();
+        //         var yo = (parentHandler == undefined) ? null : parentHandler();
+        //     }
+        //     )
+
+
+        setEditCnt(0);
+        seteditContent('');
+    }
+
+    const edit_close_clicked = () => {
+        console.log("Closed", editContent);
+        setEditCnt(0);
+        seteditContent('');
+    }
+
+
+
     return (
         <div className="Post" id={id}>
  {/* {true && <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}}> */}
@@ -498,13 +606,13 @@ var flag=false;
 {/* *************************************************************************************** */}
               <div className="Post_bottomIcons">
 
-              <button onClick={onClick}> Click me {count} </button>
+              {/* <button onClick={onClick}> Click me {count} </button> */}
 
                     <button id="myBtn" className='Post_icon_button' onClick={()=>reply_clicked()}> 
                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
                     </button>
  {typeof(userInfo.id)!='undefined'?
-   <div>
+   <>
     {cnt==1?
 
             <div id="myModal" className="modal3" onClick={() => divfun1()}>
@@ -557,14 +665,14 @@ var flag=false;
              </div>
                     :
      null}
-    </div>
+    </>
     :
                     
     null}
 
-{/* ********************************************************************************************* */}
+{/* ********************************END************************************************************* */}
 
-
+                    {/* <EditIcon /> */}
 
                     {/* Retweet  */}
                     <button className='Post_icon_button' onClick={()=>retweet_clicked()}>
@@ -610,6 +718,84 @@ var flag=false;
 
                         {/* In JavaScript, undefined, null, empty string and 0 all evaluate to false in a boolean context. Using || in an assignment is a way of saying "if defined, otherwise use this". */}
                     </button>
+
+
+
+
+
+
+                    {/* ---------------------------------------------------------------------- */}
+                    {/*  EDIT PART*/}
+                    {userInfo.name==displayName?
+                        <>
+
+                            <button onClick={() => edit_clicked()} className='Post_icon_button'>
+                                <EditIcon fontSize="small" className={'icon-like'} />
+                            </button>
+
+                            {editCnt == 1 ?
+
+                                <div id="myModal" className="modal3" onClick={() => divfun1_edit()}>
+                                    <div className="modal-content" onClick={() => divfun2_edit()}>
+
+                                        <div className='reply-closeArrowBtn'>
+
+                                            <div className='modal-reply-heading'>Reply</div>
+                                            <button className="closeArrowBtn" onClick={() => edit_close_clicked()}>X</button>
+
+                                        </div>
+
+                                        {/* <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
+                                        <div className='modal-closeArrow-textarea'>
+
+                                            <div className='Post_header'>
+                                                <Icon className="Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs" />
+
+                                                <div className="Post_displayName">
+                                                    {displayName}
+                                                </div>
+
+                                                <VerifiedUserIcon className="Post_verified" />
+
+                                                <div className="Post_username">@{username} </div>
+                                                <div className='Post_dot'>.</div>
+                                                <div className='Post_date'>{timestamp}</div>
+                                            </ div>
+
+                                            <p className="modal_postText">{postText}</p>
+                                            {/* <hr className="bottom-border"/> */}
+
+                                            <div className="bottom-border"></div>
+                                            {/* <</p> */}
+
+                                            <div className='modal-reply_header'>
+                                                <Icon className="modal_Post_avator" />
+                                                <textarea className='modal-textarea' id="editMyTextarea" placeholder='Tweet Your Reply' value={editContent} onChange={(e) => seteditContent(e.target.value)} ></textarea>
+                                            </div>
+
+                                        </div>
+
+
+                                        {/* <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button> */}
+
+                                        {editContent.trim().length != 0 ?
+                                            <button id="postBtn" className='modal_Post_reply' onClick={() => edit_submit_clicked()}>Modify Tweet</button>
+                                            :
+                                        <button id="postBtn" className='modal_Post_reply_disable' >Modify Tweet</button>
+                                        }
+
+                                        <button id="closeBtn" className='modal_Close_reply' onClick={() => edit_close_clicked()}>Close</button>
+
+                                    </div>
+                                </div>
+                                :
+                                null}
+                        </>
+                     :
+
+                        null
+                    
+                    }
 
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
