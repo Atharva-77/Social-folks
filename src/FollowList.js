@@ -17,7 +17,7 @@ function FollowList({ids,Icon,displayName, username , followers}) {
     const {id}=useParams();
     const { query } = useLocation(); 
 
-    console.log(id,"HI ",query);
+    console.log(id,"FOLLOWLIST ",query);
 
 
 

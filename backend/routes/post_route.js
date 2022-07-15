@@ -81,6 +81,38 @@ router.get('/allpost',async(req,res)=>
 })
 
 
+
+//Get Posts Of People Who YOU Follow i.e. All FOLLOWING Posts.
+router.get('/allpost/following/:id', protect, async (req, res) => {
+    try {
+
+        var username = req.params.id;
+        const getUser = await RegisterDb.findOne({ username: username })
+        // console.log("GET-FOLLOWING ", getUser.following[0],typeof(getUser.following))
+
+        const data = await PostDb.find({ postedBy: getUser.following }).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
+        console.log("DATA", Object.keys(data).length);
+
+        const data1 = await RegisterDb.populate(data, { path: 'retweetDataId.postedBy' })
+        const data2 = await RegisterDb.populate(data1, { path: 'replyDataId.postedBy' })
+
+        try {
+            res.status(200).json(data2)
+        }
+
+        catch (err) {
+            res.status(401).json("All err " + err)
+        }
+
+    }
+    catch (err) {
+        console.log("Error hai");
+        res.status(401).send("Invalid Details")
+    }
+})
+
+// ------------------------------------------------------------
+
 //Specific Posts....Used in Searching
 router.get('/specificPost', async (req, res) => {
     try {
@@ -142,7 +174,10 @@ router.get('/specificPost', async (req, res) => {
         // console.log("Q",q[1].Oneq, typeof(q1));
 
         //concat both results
-        const searchQuery_result = data_Content2.concat(dataRetweet_Content2)
+        let searchQuery_result = data_Content2.concat(dataRetweet_Content2)
+       
+        if (searchQuery_result.length == 0)
+            searchQuery_result = "No Such Posts"
 
         try {
             res.status(200).json(searchQuery_result)
@@ -203,7 +238,11 @@ router.get('/specificUsers', async (req, res) => {
         // const data
 
         //concat both results
-        const searchQuery_result = data_searchName.concat(data_searchUsername)
+        let searchQuery_result = data_searchName.concat(data_searchUsername)
+        // console.log("SEARCHQ ",searchQuery_result.length);
+
+        if(searchQuery_result.length==0)
+        searchQuery_result="Invalid Details"
 
         try {
             res.status(200).json(searchQuery_result)
@@ -221,35 +260,6 @@ router.get('/specificUsers', async (req, res) => {
 })
 
 
-// ----------------------------------------------------------------------
-
-router.get('/allpost/following/:id', protect,async (req, res) => {
-    try {
-
-        var username = req.params.id;
-        const getUser = await RegisterDb.findOne({ username: username })
-        // console.log("GET-FOLLOWING ", getUser.following[0],typeof(getUser.following))
-
-        const data = await PostDb.find({ postedBy: getUser.following }).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
-        console.log("DATA",Object.keys(data).length);
-        
-        const data1 = await RegisterDb.populate(data, { path: 'retweetDataId.postedBy' })
-        const data2 = await RegisterDb.populate(data1, { path: 'replyDataId.postedBy' })
-
-        try {
-            res.status(200).json(data2)
-        }
-
-        catch (err) {
-            res.status(401).json("All err " + err)
-        }
-
-    }
-    catch (err) {
-        console.log("Error hai");
-        res.status(401).send("Invalid Details")
-    }
-})
 
 // ----------------------------------------------------------------------
 
@@ -378,7 +388,7 @@ router.get("/:id",async(req,res)=>
 
 
 
-//Get Replies
+//Get Replies OF a POST
 router.get("/reply/:id",async(req,res)=>
 {
     try 
@@ -411,7 +421,7 @@ router.get("/reply/:id",async(req,res)=>
 
 
 
-
+//LIKE a POST
 router.put("/:id/like",protect,async(req,res)=>
 {
     try 

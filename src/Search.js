@@ -16,8 +16,9 @@ import FollowList from './FollowList';
 function Search() {
 
     const [Post_Tab, setPost_Tab] = useState(1);
+    const [user_Tab, setuser_Tab] = useState(0);
     const [keyword, setkeyword] = useState('')
-   
+
     const [data, setdata] = useState('')
     const [usersData, setusersData] = useState('')
 
@@ -25,15 +26,19 @@ function Search() {
     //Select Tab
     const PostsTab_clicked_func = () => 
     {
-        console.log("1.1HI");
+        console.log("1.1HI",keyword);
         setPost_Tab(1);
+        setuser_Tab(0);
+
         setkeyword('');
     }
 
     const UsersTab_clicked_func = () => 
     {
-        console.log("2.2HI");
+        console.log("2.2HI",keyword);
         setPost_Tab(0);
+        setuser_Tab(1);
+
         setkeyword('');
     }
     
@@ -52,16 +57,18 @@ function Search() {
 
     const submit_form = () => 
     {
+        setdata('')
+        setusersData('')
 
-        
         if(Post_Tab==1)
         {
-            setdata('')
+            // setdata('')
+            // setusersData('')
             console.log("AAgaya", "Post",keyword);
            
             axios.get(`http://localhost:4000/post/specificPost?keyword=${keyword}`)
                 .then(res => {
-
+                    // setdata('')
                     console.log("SPECIFIC POST:-", res.data);
                     setdata(res.data);
                 }
@@ -69,7 +76,9 @@ function Search() {
         }
         else
         {
-            setusersData('')
+
+            // setdata('')
+            // setusersData('')
             console.log("AAgaya", "User", keyword);
            
             axios.get(`http://localhost:4000/post/specificUsers?keyword=${keyword}`)
@@ -94,7 +103,7 @@ function Search() {
     {
 
         var usersResult = Object.keys(usersData).map((key) => [usersData[key]]);
-        console.log("USERS-RESULTss", usersResult, typeof (usersResult));
+        // console.log("USERS-RESULTss", usersResult, typeof (usersResult));
 
     }
 
@@ -137,56 +146,17 @@ function Search() {
             </div>
 
             {/* <h2>UU</h2> */}
-          {(Object.keys(data).length || Object.keys(usersData).length ) > 0 && data != "Error" ?
+          {(Object.keys(data).length || Object.keys(usersData).length) > 0 ?
               <>
                   {/* If Follower part clicked */}
-                  {Post_Tab == 1 && Object.keys(data).length >0?
+                  {Post_Tab == 0?
 
                       <>
                           {
-                                result != '' ?
-
-                                  result.map(i => {
-                                        console.log("PRESULT ", result);
-
-                                    return <Post4
-                                                key={i[0]._id}
-                                                id={i[0]._id}
-                                                Icon={Avatar}
-                                                displayName={i[0].postedBy.Name}
-                                                username={i[0].postedBy.username}
-
-                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
-
-                                                postText={i[0].content}
-                                                createdAt={i[0].createdAt}
-                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                                                verified="True"
-
-                                                likeslength={i[0].likes.length}
-                                                likesData={i[0].likes}
-                                                retweetUserList={i[0].retweetUserList}
-                                                retweetData={i[0].retweetDataId}
-                                                replyDataId={i[0].replyDataId}
-                                                who={2}
-                                            />
-
-
-                                    })
-
-                                 :
-
-                                  <div className='Follow_NoFollows'>No Such Posts</div>
-                            }
-                      </>
-
-                     :
-                      <>
-                          {
-                              usersResult != '' ?
-
+                              usersResult != '' && usersData != "Invalid Details" ?
+                                //   <h2>USERS{usersResult.map(i => console.log("yo ",i))}</h2>
                                   usersResult.map(i => {
-                                      console.log("FRESULT ", usersResult);
+                                      console.log("FRESULT ", usersResult,usersData.length);
 
                                       return <FollowList
                                           key={i[0]._id}
@@ -198,22 +168,72 @@ function Search() {
 
 
                                   })
-                                  
+
                                   :
 
-                                  <div className='Follow_NoFollows'>1.No Such User</div>
+                                  <div className='Follow_NoFollows'>No Such User</div>
                           }
-                      </> /* ⬆️ Following tab closing bracket */
+                          
+                      </>
+
+                     :
+                      <>
+                          {
+                              result != '' && data != "No Such Posts" ?
+
+                                  result.map(i => {
+                                      console.log("PRESULT ", result,data);
+
+                                      return <Post4
+                                          key={i[0]._id}
+                                          id={i[0]._id}
+                                          Icon={Avatar}
+                                          displayName={i[0].postedBy.Name}
+                                          username={i[0].postedBy.username}
+
+                                          originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+
+                                          postText={i[0].content}
+                                          createdAt={i[0].createdAt}
+                                          // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                          verified="True"
+
+                                          likeslength={i[0].likes.length}
+                                          likesData={i[0].likes}
+                                          retweetUserList={i[0].retweetUserList}
+                                          retweetData={i[0].retweetDataId}
+                                          replyDataId={i[0].replyDataId}
+                                          who={2}
+                                      />
+
+
+                                  })
+
+                                  :
+
+                                  <div className='Follow_NoFollows'>No Such Posts</div>
+                          }
+                         
+                      </> /* ⬆️ Post tab closing bracket */
                   }
-              </> /* ⬆️ Followers tab closing bracket */
+              </> /* ⬆️ Users tab closing bracket */
               :
               /* ⬆️ If No SUCH USER */
               <>
                   {
-                      data == "NO SUCH USER" ?
-                          <div className='Follow_NoFollows'>2.No Such User</div>
+                      data == "Error" ?
+                          <div className='Follow_NoFollows'>Error</div>
                           :
-                          <div className='Follow_NoFollows'>1Invalid Details</div>
+                          <>
+                             {(Object.keys(data).length ==0 && Object.keys(usersData).length) == 0 ?
+                                  
+                                  <div className='Follow_NoFollows'>Search Above{usersData}</div>
+                              :
+                                  <div className='Follow_NoFollows'>Invalid Details</div>
+                            
+                             }
+                          </>
+                        //   <div className='Follow_NoFollows'>Invalid Details</div>
                   }
 
               </>
