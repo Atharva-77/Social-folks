@@ -5,6 +5,7 @@ const router=exp.Router()
 let PostDb=require('../schema_model/post_schema');
 let RegisterDb=require('../schema_model/register_schema')
 
+//Add a post
 router.post('/add',protect,async(req,res)=>
 {
     try
@@ -51,6 +52,70 @@ router.post('/add',protect,async(req,res)=>
     }
 })
 
+
+
+//Edit a POST
+router.post('/editPost/add/:id', protect, async (req, res) => {
+    try {
+        console.log("EDIT-POST mai", req.body.content, req.params.id, "\n", req.body.originalContent);
+
+        var content = req.body.content;
+        // var content_BeforeEdit = req.body.content_BeforeEdit;
+        var postid = req.params.id;
+
+        const data = await PostDb.findById(postid)//.populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
+        
+        var oldContent = data.content
+
+        data.content_BeforeEdit = oldContent;
+        data.content = req.body.content;
+        
+        
+        const retweetPosts = await PostDb.find({retweetDataId: postid })
+
+        for (const i of retweetPosts)
+        {
+            console.log("1.FOR", i.retweetContent);
+
+            i.retweetContent = content;
+            i.retweetContent_BeforeEdit = oldContent;
+
+            console.log("2.FOR", i.retweetContent);
+            await i.save()
+        }
+
+
+        const updatePost = await data.save() ;  
+             
+
+        try {
+            res.status(201).send("SUCCESS")
+        }
+
+        catch (err) {
+            res.status(401).send("ERROR " + err)
+        }
+        // postUser.save()
+        // .then(res.status(201).json("send success"))
+        // .catch(err=>res.status(401).json("POST ka Error is "+err)) 
+
+        //OR
+
+        //    PostDb.create(postUser)
+        //    .then(res.status(20).json(postUser))
+        //    .catch(err=>res.status(401).json("POST ka Error is "+err))
+
+    }
+    catch (err) {
+        console.log("Error hai", err);
+        res.status(401).send("Invalid Details",err)
+    }
+})
+
+
+
+
+//Get ALL Post
 router.get('/allpost',async(req,res)=>
 {
     try

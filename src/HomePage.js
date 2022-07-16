@@ -135,7 +135,7 @@ function HomePage() {
                 {/* <h2>{count}</h2> */}
             </div>
 
-            {/* <Tweetbox parentHandler={()=>parentFunc()}/> */}
+            <Tweetbox parentHandler={()=>parentFunc()}/>
            
 
             <div className='Homepage_Allposts_specificPost_tab'>

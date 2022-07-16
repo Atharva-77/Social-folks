@@ -485,17 +485,18 @@ var editFlag=false;
         const editContent_data =
         {
             "content": editContent.trim(),
-            "replyTo": id
+            "postId": id
         }
 
-        // axios.post(`http://localhost:4000/post/add`, editContent_data, config)
-        //     .then(res => {
-        //         console.log("AXIOS:-", res.data);
-        //         // console.log("PROPS.parentHandler",props.parentHandler); 
-        //         // props.parentHandler();
-        //         var yo = (parentHandler == undefined) ? null : parentHandler();
-        //     }
-        //     )
+        // console.log((`http://localhost:4000/post/editPost/add/${id}`));
+        axios.post(`http://localhost:4000/post/editPost/add/${id}`, editContent_data, config)
+            .then(res => {
+                console.log("AXIOS:-", res.data);
+                // console.log("PROPS.parentHandler",props.parentHandler); 
+                // props.parentHandler();
+                var yo = (parentHandler == undefined) ? null : parentHandler();
+            }
+            )
 
 
         setEditCnt(0);
@@ -645,7 +646,9 @@ var editFlag=false;
                             <div className="bottom-border"></div>
                             {/* <</p> */}
                             <div className='modal-reply_header'>
-                                <Icon className="modal_Post_avator" />
+
+                                <Icon className="modal_Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+
                                 <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
                             </div>
                         </div>
@@ -726,7 +729,7 @@ var editFlag=false;
 
                     {/* ---------------------------------------------------------------------- */}
                     {/*  EDIT PART*/}
-                    {userInfo.name==displayName?
+                    {userInfo.name==displayName && typeof(retweetData)=='undefined'?
                         <>
 
                             <button onClick={() => edit_clicked()} className='Post_icon_button'>
@@ -740,7 +743,7 @@ var editFlag=false;
 
                                         <div className='reply-closeArrowBtn'>
 
-                                            <div className='modal-reply-heading'>Reply</div>
+                                            <div className='modal-reply-heading'>Edit Tweet</div>
                                             <button className="closeArrowBtn" onClick={() => edit_close_clicked()}>X</button>
 
                                         </div>
@@ -769,8 +772,10 @@ var editFlag=false;
                                             {/* <</p> */}
 
                                             <div className='modal-reply_header'>
-                                                <Icon className="modal_Post_avator" />
-                                                <textarea className='modal-textarea' id="editMyTextarea" placeholder='Tweet Your Reply' value={editContent} onChange={(e) => seteditContent(e.target.value)} ></textarea>
+
+                                                <Icon className="modal_Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                                
+                                                <textarea className='modal-textarea' id="editMyTextarea" placeholder='Enter Your Edited Tweet' value={editContent} onChange={(e) => seteditContent(e.target.value)} ></textarea>
                                             </div>
 
                                         </div>

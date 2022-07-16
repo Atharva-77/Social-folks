@@ -6,6 +6,10 @@ const PostSchema=new mongoose.Schema({
     {
         type:String
     },
+    content_BeforeEdit:
+    {
+        type: String
+    },
 
     postedBy:
     {
@@ -49,6 +53,10 @@ const PostSchema=new mongoose.Schema({
     retweetContent:
     {
         type:String
+    },
+    retweetContent_BeforeEdit:
+    {
+        type: String
     },
     //Parent post Id to whom reply is given
     replyDataId:
