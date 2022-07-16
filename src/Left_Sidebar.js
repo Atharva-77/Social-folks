@@ -19,11 +19,17 @@ function Left_Sidebar() {
     return (
         <div className="Left_Sidebar">
             {/* <h1>Sidebar left</h1> */}
+            
             <Link to="/">
                     <TwitterIcon className="main_icon"/>
             </Link>
-             
-            <Left_Sidebar_Icons name="Home" Icons={HomeIcon} />
+           
+
+            <Link to="/" style={{ textDecoration: 'none', color: '#374151' }}>
+                <Left_Sidebar_Icons name="Home" Icons={HomeIcon} />
+            </Link>
+
+            
             
             <Link to={`/search`} style={{ textDecoration: 'none', color: '#374151' }}>
                 <Left_Sidebar_Icons name="Search" Icons={SearchIcon} />

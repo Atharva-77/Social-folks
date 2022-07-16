@@ -86,6 +86,24 @@
     padding: 2px 12px;
 }
 
+.Profile_follow_button:hover
+{
+    background-color: #efefef;
+    /* font-size: large; */
+}
+
+.Profile_following_button:hover {
+    background-color: #41b0f4;
+    
+    
+}
+
+/* .Profile_following_button:hover:before {
+  
+    content: "Reply!"
+} */
+
+
 .Profile_displayName
 {
     margin: 5px;

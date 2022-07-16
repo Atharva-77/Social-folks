@@ -387,7 +387,7 @@ function Profile() {
                                         </div>
                                     
                                     
-                                       
+                                        {/*Count of Followers & their display  */}
                                         <div className='Profile_followers_following'> 
                                             
                                             <Link to={{pathname:`/follow/${id}` ,query:1}}  style={{ textDecoration: 'none',color:'#374151'}} hi={1}> 
