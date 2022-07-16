@@ -12,7 +12,7 @@ function Tweetbox(props) {
     const userLoginData = useSelector(state => state.userLoginKey)
     const {userInfo} =userLoginData //....undefined
 
-    console.log("TweetBox",userLoginData,typeof(userLoginData)=='undefined');
+    // console.log("TweetBox",userLoginData,typeof(userLoginData)=='undefined');
     // console.log("TweetBox",content,typeof(undefined)=='undefined');
     
     const handleKeyDown = (event) => {

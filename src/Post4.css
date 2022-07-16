@@ -136,6 +136,43 @@
     height: 10%; */
 
 }
+
+/* ---------------------------------------------------- */
+.Post_EditText_SeeText_div
+{
+    margin-bottom: 5px;
+}
+.Post_Edited_text
+{
+    color: #1da1f2;
+    font-size: small;
+    font-weight: 500;
+}
+
+.Post_See_Edited_text_heading
+{
+    color: #1da1f2;
+    font-size: small;
+    font-weight: 500;
+}
+.Post_See_Edited_text_specialChar
+{
+    color: #1da1f2;
+    font-size: small;
+    font-weight: 500;
+}
+
+.Post_See_Edited_text_heading:hover 
+{
+ text-decoration: underline;
+}
+
+.Post_See_ActualEdited_text
+{
+    color:red
+}
+/* ---------------------------------------------------- */
+
 /* -------------------------------------------------- */
 .Post_icon_button
 {

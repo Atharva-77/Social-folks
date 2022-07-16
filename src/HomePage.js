@@ -81,7 +81,7 @@ function HomePage() {
         }
         {
             var specificResult = Object.keys(specificFollowing_Data).map((key) => [specificFollowing_Data[key]]);
-            // console.log("SRESULT", typeof(specificResult), "\nDATA", specificFollowing_Data);
+            console.log("SRESULT", typeof(specificResult), "\nDATA", specificFollowing_Data);
         }
 
 
@@ -172,7 +172,7 @@ function HomePage() {
                                     {
                                         result.map(i => {
                                             // if(typeof(i[0].replyDataId)!='undefined')
-
+                                            
 
                                             return <Post4
                                                 key={i[0]._id}
@@ -182,6 +182,8 @@ function HomePage() {
                                                 username={i[0].postedBy.username}
                                                 originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
                                                 postText={i[0].content}
+                                                editedText={i[0].content_BeforeEdit}
+
                                                 createdAt={i[0].createdAt}
                                                 // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
                                                 verified="True"
@@ -198,6 +200,7 @@ function HomePage() {
                                                 retweetData={i[0].retweetDataId}
                                                 //  retweetContent={i[0].retweetContent}
                                                 replyDataId={i[0].replyDataId}
+                                                
                                             />
 
                                             // console.log("i=",i[0].likes.length,i[0])
@@ -220,6 +223,8 @@ function HomePage() {
                                                 username={i[0].postedBy.username}
                                                 originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
                                                 postText={i[0].content}
+                                                editedText={i[0].content_BeforeEdit}
+
                                                 createdAt={i[0].createdAt}
                                                 // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
                                                 verified="True"
@@ -261,6 +266,7 @@ function HomePage() {
                                         username={i[0].postedBy.username}
                                         originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
                                         postText={i[0].content}
+                                        editedText={i[0].content_BeforeEdit}
                                         createdAt={i[0].createdAt}
                                         // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
                                         verified="True"

@@ -12,12 +12,13 @@ import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 
-function Post({id,Icon,displayName, username,originalData,postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
+function Post({id,Icon,displayName, username,originalData,postText, editedText,imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
    
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
     // console.log("1.Yo",likesData,postText)
     //  console.log("2.",typeof(retweetData),originalData,postText);
     // console.log("ON POST",postText,replyDataId,replyDataId==undefined);
+    console.log("EDITED TEXT",editedText);
     var displayname_retweet=displayName;
 
     if (typeof(retweetData)!='undefined') {
@@ -47,6 +48,7 @@ function Post({id,Icon,displayName, username,originalData,postText, imageUrl, ve
     const [store, setstore] = useState("Nope");
     const [cnt, setcnt] = useState(0);
     const [editCnt, setEditCnt] = useState(0);
+    const [seeEditedText, setseeEditedText] = useState(0);
 
     const [reply, setreply] = useState("");
     const [replycontent, setreplycontent] = useState("");
@@ -508,7 +510,18 @@ var editFlag=false;
         setEditCnt(0);
         seteditContent('');
     }
-
+    
+    // ------------Original Text------------------------------------------------
+    
+    const seeEditedText_clicked=()=>
+    {
+        if(seeEditedText==0)
+            setseeEditedText(1);
+        
+        else
+            setseeEditedText(0);
+    }
+    // ------------------------------------------------------------------------- 
 
 
     return (
@@ -595,6 +608,47 @@ var editFlag=false;
                                           
                 {/* </Link>} */}
                 </Link>
+               
+               
+                    {
+                        editedText != undefined
+                        ?
+                            <div className='Post_EditText_SeeText_div'>
+                                <div>
+                                    <span className='Post_Edited_text'>Post Edited</span>
+                                </div>
+                                
+                                <div>
+                                     <span className='Post_See_Edited_text_heading' onClick={() => seeEditedText_clicked()}>See Original Post </span> 
+                                     
+                                     {
+                                        seeEditedText==1
+                                        ?
+                                            <>
+                                                <span className='Post_See_Edited_text_specialChar'>:- </span>
+                                                <span className='Post_See_ActualEdited_text'>{editedText}</span>
+                                            </>
+                                            
+                                         :
+                                             <span className='Post_See_Edited_text_specialChar'>?</span>
+                                     }
+                                    
+                                </div>  
+
+                            </div>
+                            
+                        :
+                        null
+                    }
+
+                        {/* 
+                        <div>
+                            <span className='Post_Edited_text'>Post Edited</span>
+                        </div>
+
+                        <div>
+                            <span className='Post_See_Edited_text'>See Original Text:- </span> {editedText}
+                        </div>   */}
              
                 
                 {/* <div>
