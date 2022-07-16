@@ -212,39 +212,42 @@ function HomePage() {
                                 //Logged in but Specific posts
 
                                 <>
-                                    {
-                                        specificResult.map(i => {
+                                    {specificFollowing_Data!=''?
+                                            specificResult.map(i => {
 
-                                            return <Post4
-                                                key={i[0]._id}
-                                                id={i[0]._id}
-                                                Icon={Avatar}
-                                                displayName={i[0].postedBy.Name}
-                                                username={i[0].postedBy.username}
-                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
-                                                postText={i[0].content}
-                                                editedText={i[0].content_BeforeEdit}
+                                                return <Post4
+                                                    key={i[0]._id}
+                                                    id={i[0]._id}
+                                                    Icon={Avatar}
+                                                    displayName={i[0].postedBy.Name}
+                                                    username={i[0].postedBy.username}
+                                                    originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+                                                    postText={i[0].content}
+                                                    editedText={i[0].content_BeforeEdit}
 
-                                                createdAt={i[0].createdAt}
-                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                                                verified="True"
-                                                parentHandler={() => parentFunc()}
+                                                    createdAt={i[0].createdAt}
+                                                    // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                    verified="True"
+                                                    parentHandler={() => parentFunc()}
 
-                                                //  replyHandler={()=>replyFunc(i[0].content)}
-                                                replyHandler={() => replyFunc()}
-                                                onClick={increment}
-                                                count={count}
+                                                    //  replyHandler={()=>replyFunc(i[0].content)}
+                                                    replyHandler={() => replyFunc()}
+                                                    onClick={increment}
+                                                    count={count}
 
-                                                likeslength={i[0].likes.length}
-                                                likesData={i[0].likes}
-                                                retweetUserList={i[0].retweetUserList}
-                                                retweetData={i[0].retweetDataId}
-                                                //  retweetContent={i[0].retweetContent}
-                                                replyDataId={i[0].replyDataId}
-                                            />
+                                                    likeslength={i[0].likes.length}
+                                                    likesData={i[0].likes}
+                                                    retweetUserList={i[0].retweetUserList}
+                                                    retweetData={i[0].retweetDataId}
+                                                    //  retweetContent={i[0].retweetContent}
+                                                    replyDataId={i[0].replyDataId}
+                                                />
 
-                                            // console.log("i=",i[0].likes.length,i[0])
-                                        })
+                                                // console.log("i=",i[0].likes.length,i[0])
+                                            })
+                                        :
+                                        <div className='Homepage_NotFollowing'>Not Following Anyone</div>
+
                                     }
                                 </>
                             }
