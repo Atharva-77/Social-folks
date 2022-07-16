@@ -65,7 +65,7 @@ function HomePage() {
             axios.get(`http://localhost:4000/post/allpost`)
                 .then(res => {
 
-                    // console.log("HomePg RES.DATA ", (res.data));
+                    console.log("HomePg RES.DATA ", (res.data));
                     setdata(res.data);
                     setreload(0);
 

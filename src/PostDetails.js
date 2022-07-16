@@ -39,13 +39,16 @@ function PostDetails() {
     const [data_Likes,setdata_Likes] = useState('');
     const [dataLen_Likes, setdataLen_Likes] = useState(0);
     
+    const [rootCntModal, setrootCntModal] = useState(0);
     const [cnt, setcnt] = useState(0);
+
     const [replycontent, setreplycontent] = useState("");
 
 
     var Rx=0;
     var rootReteweetColor=0;
     var flag=false;
+    var rootFlag = false;
     
     var x=0;
     var reteweetColor=0;
@@ -157,7 +160,7 @@ function PostDetails() {
             axios.get(`http://localhost:4000/post/${id}`)
             .then(res=>
                 {
-                    // console.log(" RES.DATA ",(res.data));
+                    console.log(" 160RES.DATA ",(res.data));
                     setdata(res.data);
                     setreload(0);
                     
@@ -365,12 +368,15 @@ function PostDetails() {
 
         const reply_clicked=()=>
         {
+            // console.log("REPLYYPOST");
                 if(cnt==0)
                     setcnt(1);
                 else
                 setcnt(0);
             
         }
+
+        
 // console.log("COunt",cnt);
     const divfun1=()=>
     {
@@ -467,156 +473,289 @@ function PostDetails() {
         setreplycontent('');
     }
     
+
+
+    //-------------ROOT MODALS----------------------------------------------------------------------- 
+   // ---------------------------------------------------------------------------------------------------------
+    const root_reply_clicked = () => {
+        // console.log("REPLYYPOST");
+        if (rootCntModal == 0)
+            setrootCntModal(1);
+        else
+            setrootCntModal(0);
+
+    }
+    const divfun1_root = () => {
+
+
+        // console.log("IN DIV1", rootFlag, document.getElementById("root_myTextarea").value.length);
+
+        if (rootFlag == false && document.getElementById("root_myTextarea").value.length == 0)
+            setrootCntModal(0);
+
+
+        if (rootFlag == false && document.getElementById("root_myTextarea").value.length > 0) {
+            var val = window.confirm("Do you want to Delete Data? Click Ok.");
+            if (val == false) {
+                // alert("You pressed OK.");
+            }
+            else {
+                var val_again = window.confirm("Confirm Delete Data? Click Ok.");
+                if (val_again == true) {
+                    alert("Deleted");
+                    setreplycontent('');
+                    setrootCntModal(0);
+                }
+                // else
+                // alert("No delete");
+            }
+        }
+
+        else
+            rootFlag = false;
+
+
+    }
+    const divfun2_root = () => {
+        // div2++;
+        rootFlag = true;
+        console.log("IN DIV2");
+    }
+
+
+    const root_reply_submit_clicked = (replySubmitId = '') => {
+        console.log("Submitted", replycontent, replycontent.trim().length);
+
+        const config =
+        {
+            headers:
+            {
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+
+        const replycontent_data =
+        {
+            "content": replycontent.trim(),
+            "replyTo": replySubmitId
+        }
+
+        axios.post(`http://localhost:4000/post/add`, replycontent_data, config)
+            .then(res => {
+                console.log("AXIOS:-", res.data);
+                // console.log("PROPS.parentHandler",props.parentHandler); 
+                // props.parentHandler();
+
+                axios.get(`http://localhost:4000/post/reply/${id}`)
+                    .then(res => {
+                        console.log(" 2.RepliesRES.DATA ", (res.data));
+                        setrepliesData(res.data);
+                        // setreload(0)
+                        // console.log(" 3.RES.DATA ",repliesData);
+                        // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                    })
+
+            }
+            )
+
+
+
+        setrootCntModal(0);
+        setreplycontent('');
+    }
+    const root_reply_close_clicked = () => {
+        console.log("Closed", replycontent);
+        setrootCntModal(0);
+        setreplycontent('');
+    }
+
+
     
   return (
     <div className='PostDetail_HomePage_top'>
         {/* PostDetails {id} */}
         {data!=0
-        ?
+         ?
             <div>
                    <div className="PostDetail_HomePage_title">
                         <h2 id='Tweet-heading'>Tweet</h2>
                     </div>
-                   {/* {console.log("ROOTID",rootId)} */}
+                   {/* {console.log("ROOTID",rootId,id,data)} */}
 
-                   {rootData!=0 && rootId!=id?
+                        {rootData!=0 && rootId!=id?
                   
-                            <div className='PostDetail'>
-                                {rootData.retweetDataId!=undefined
-                                  ?
-                                        <div className='PostDetail_retweetText-header'>
-                                            <p className="PostDetail_retweetText" id='PostDetail-retweetby'>Retweeted by <a href="/profile">{rootData.postedBy.Name}</a></p>
-                                            <p className="PostDetail_retweetText">New Post of <a href="/profile">{rootData.postedBy.Name}</a></p>
-                                        </div>
-                                    :
-                                    null
-                                }   
-                            <div className="PostDetail_header">
-
-                                <Avatar className="PostDetail_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
-
-                                <div className="PostDetail_displayName">
-                                    
-                                    {rootData.originalPostedBy==undefined
-                                     ?
-                                        rootData.postedBy.Name
-                                     :
-                                        rootData.originalPostedBy.Name
-                                        // <h2>Orgp</h2>
-                                     }
-                                </div>
-                                
-                                <VerifiedUserIcon className="PostDetail_verified"/>
-                                
-                                <div className="PostDetail_username">
-                                    {/* @{rootData.postedBy.username}  */}
-                                    @{rootData.originalPostedBy==undefined
+                             <div className='PostDetail'>
+                                        {rootData.retweetDataId!=undefined
                                         ?
-                                            rootData.postedBy.username
+                                                <div className='PostDetail_retweetText-header'>
+                                                    <p className="PostDetail_retweetText" id='PostDetail-retweetby'>Retweeted by <a href="/profile">{rootData.postedBy.Name}</a></p>
+                                                    <p className="PostDetail_retweetText">New Post of <a href="/profile">{rootData.postedBy.Name}</a></p>
+                                                </div>
                                         :
-                                            rootData.originalPostedBy.username
-                                     }
-                                    </div>
-                                <div className='PostDetail_dot'>.</div>
-                                <div className='PostDetail_date'>{timeDifference(new Date(),new Date(rootData.createdAt))}</div>
-                            
-                            </div>
-                        
-                        
-                            <div className="PostDetail_text_img">
-                                {/* {console.log("RETWEET",rootData.retweetContent,typeof(rootData.retweetContent)!='undefined')} */}
-                                {typeof(rootData.content)!='undefined'
-                                    ? <p className="PostDetail_postText">{rootData.content}</p>
-                                    
-                                : <div>{typeof(rootData.retweetContent)!='undefined'
-                                    ?<p className="PostDetail_postText">{rootData.retweetContent}</p>
-                                :
-                                    <p className="PostDetail_postText">{rootData.retweetDataId.retweetContent}</p>}</div>}
-                                
-                            </div>
+                                            null
+                                        }   
 
-                                {/* Comment Button */}
-                                <div className="PostDetail_bottomIcons">
+                                     <div className="PostDetail_header">
 
-                                        <button id="myBtn" className='PostDetail_icon_button' onClick={()=>reply_clicked()}> 
-                                            <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
-                                        </button>
-                                        
-                                        {/*When Modal Open  */}
-                                          {typeof(userInfo.id)!='undefined'
+                                        <Avatar className="PostDetail_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
+
+                                        <div className="PostDetail_displayName">
+                                            
+                                            {rootData.originalPostedBy==undefined
                                             ?
-                                                <div>
-                                                    {cnt==1?
+                                                rootData.postedBy.Name
+                                            :
+                                                rootData.originalPostedBy.Name
+                                                // <h2>Orgp</h2>
+                                            }
+                                        </div>
+                                        
+                                        <VerifiedUserIcon className="PostDetail_verified"/>
+                                        
+                                        <div className="PostDetail_username">
+                                            {/* @{rootData.postedBy.username}  */}
+                                              @{rootData.originalPostedBy==undefined
+                                                ?
+                                                    rootData.postedBy.username
+                                                :
+                                                    rootData.originalPostedBy.username
+                                            }
+                                            </div>
+                                        <div className='PostDetail_dot'>.</div>
+                                        <div className='PostDetail_date'>{timeDifference(new Date(),new Date(rootData.createdAt))}</div>
+                                    
+                                     </div>
+                        
+                        
+                                     <div className="PostDetail_text_img">
+                                            {/* {console.log("RETWEET",rootData.retweetContent,typeof(rootData.retweetContent)!='undefined')} */}
+                                            
+                                            {typeof(rootData.content)!='undefined'
+                                                ? <p className="PostDetail_postText"> {rootData.content}</p>
+                                                
+                                            : 
+                                            <div>
+                                                    {
+                                                        typeof(rootData.retweetContent)!='undefined'
+                                                        ?
+                                                        <p className="PostDetail_postText">{rootData.retweetContent}</p>
+                                                        :
+                                                        <p className="PostDetail_postText"> {rootData.retweetDataId.retweetContent}</p>
+                                                    }
+                                                </div>
+                                            }
+                                        
+                                        </div>
 
-                                                         <div id="myModal" className="modal3" onClick={() => divfun1()}>
-                                                                <div className="modal-content" onClick={() => divfun2()}>
+
+                                    {/* Bottom ICONS */}
+                                     <div className="PostDetail_bottomIcons">
+
+                                             {/* Comment Button */}
+                                            <button id="myBtn" className='PostDetail_icon_button' onClick={()=>root_reply_clicked()}> 
+                                                <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+                                            </button>
+                                                
+                                                {/* -------------------1ST MODAL ------------------------------------------------------------------ */}
+                                            {/*When 1st Modal Open  */}
+                                                  {/* {console.log("/")} */}
+                                            {typeof(userInfo.id)!='undefined'
+                                             ?
+                                                <div>
+                                                    {rootCntModal==1?
+
+                                                         <div id="myModal" className="modal3" onClick={() => divfun1_root()}>
+                                                                <div className="modal-content" onClick={() => divfun2_root()}>
                                                                     
                                                                         <div className='reply-closeArrowBtn'>
                                                                             <div className='modal-reply-heading'>Reply</div>
-                                                                            <button className="closeArrowBtn" onClick={()=>reply_close_clicked()}>X</button>
+                                                                            <button className="closeArrowBtn" onClick={()=>root_reply_close_clicked()}>X</button>
                                                                         </div>
 
                                                                         <div className='modal-closeArrow-textarea'>
                                                                             
-                                                                            <div className='PostDetail_header'>
-                                                                                    <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
-                                                                                
-                                                                                    <div className="PostDetail_displayName">
-                                                                                        {rootData.originalPostedBy==undefined
-                                                                                            ?
-                                                                                                rootData.postedBy.Name
+                                                                                   <div className='PostDetail_header'>
+                                                                                        <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                                                                    
+                                                                                        <div className="PostDetail_displayName">
+                                                                                            {rootData.originalPostedBy==undefined
+                                                                                                ?
+                                                                                                    rootData.postedBy.Name
+                                                                                                :
+                                                                                                    rootData.originalPostedBy.Name
+                                                                                            }
+                                                                                        </div>
+                                                                                    
+                                                                                        <VerifiedUserIcon className="PostDetail_verified"/>
+                                                                                                
+                                                                                        <div className="PostDetail_username">
+                                                                                            @{rootData.originalPostedBy==undefined
+                                                                                                ?
+                                                                                                    rootData.postedBy.username
+                                                                                                :
+                                                                                                    rootData.originalPostedBy.username
+                                                                                            }
+                                                                                        </div>
+                                                                                        <div className='PostDetail_dot'>.</div>
+                                                                                        <div className='PostDetail_date'>{timeDifference(new Date(),new Date(data.createdAt))}</div>
+                                                                                   </ div>
+
+                                                                                    {/* <p className="modal_postText">{rootData.content}</p> */}
+                                                                                    {console.log("ROOT C",rootData)}
+                                                                                    
+                                                                                    <div >
+                                                                                        {/* {console.log("RETWEET",rootData.retweetContent,typeof(rootData.retweetContent)!='undefined')} */}
+
+                                                                                        {typeof (rootData.content) != 'undefined'
+                                                                                            ? <p className="modal_postText"> {rootData.content}</p>
+
                                                                                             :
-                                                                                                rootData.originalPostedBy.Name
+                                                                                            <div>
+                                                                                                {
+                                                                                                    typeof (rootData.retweetContent) != 'undefined'
+                                                                                                        ?
+                                                                                                        <p className="modal_postText">{rootData.retweetContent}</p>
+                                                                                                        :
+                                                                                                        <p className="modal_postText"> {rootData.retweetDataId.retweetContent}</p>
+                                                                                                }
+                                                                                            </div>
                                                                                         }
+
                                                                                     </div>
+
+                                                                                    <div className="bottom-border"></div>
                                                                                 
-                                                                                    <VerifiedUserIcon className="PostDetail_verified"/>
-                                                                                            
-                                                                                    <div className="PostDetail_username">
-                                                                                        @{rootData.originalPostedBy==undefined
-                                                                                            ?
-                                                                                                rootData.postedBy.username
-                                                                                            :
-                                                                                                rootData.originalPostedBy.username
-                                                                                          }
-                                                                                    </div>
-                                                                                    <div className='PostDetail_dot'>.</div>
-                                                                                    <div className='PostDetail_date'>{timeDifference(new Date(),new Date(data.createdAt))}</div>
-                                                                            </ div>
+                                                                                        <div className='modal-reply_header'>
+                                                                                            <Avatar className="modal_PostDetail_avator" />
+                                                                                            <textarea className='modal-textarea' id="root_myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
+                                                                                        </div>
 
-                                                                            <p className="modal_postText">{rootData.content}</p>
-
-                                                                            <div className="bottom-border"></div>
-                                                                        
-                                                                            <div className='modal-reply_header'>
-                                                                                <Avatar className="modal_PostDetail_avator" />
-                                                                                <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
-                                                                            </div>
                                                                         </div>
                                                                     
                                                                     
                                                                 
                                                                         {replycontent.trim().length!=0? 
-                                                                            <button id="postBtn" className='modal_PostDetail_reply' onClick={()=>reply_submit_clicked(rootId)}>Post</button>
+                                                                            <button id="postBtn" className='modal_PostDetail_reply' onClick={()=>root_reply_submit_clicked(rootId)}>Post</button>
                                                                             :
                                                                             <button id="postBtn" className='modal_PostDetail_reply_disable' >Post</button>
                                                                         }
 
-                                                                        <button id="closeBtn" className='modal_Close_reply' onClick={()=>reply_close_clicked()}>Close</button>
+                                                                         <button id="closeBtn" className='modal_Close_reply' onClick={()=>root_reply_close_clicked()}>Close</button>
                                                                     
                                                                 </div> 
                                                            </div>
                                                     :
                                                     null}
                                                 </div>
-                                           :    
-                                           null}
+                                             :    
+                                             null}
 
-                                            {/* ********************************************************************************************* */}
+                                            {/* ************************************ 1ST Modal close ********************************************************* */}
 
 
 
-                                            {/* Retweet  */}
+                                            {/* 1st Retweet  */}
                                              <button className='PostDetail_icon_button' onClick={()=>retweet_clicked(rootId)}>
 
                                                 <div className='icon-div-like-number'> 
@@ -640,12 +779,12 @@ function PostDetails() {
                                                 
                                             </button>
 
-                                           {/* Likes Part  */}
+                                           {/* 1st Likes Part  */}
                                             <button id='like_button' className='PostDetail_icon_button' onClick={()=>like_clicked(rootId)}>
                                                 
 
                                                 <div className='icon-div-like-number'> 
-                                                <h1>HI</h1>
+                                                <h1>HI1</h1>
 
                                                     {Rx==1?
                                                         <div>
@@ -669,76 +808,91 @@ function PostDetails() {
 
                                             </button> 
 
-                                </div>               
+                                    </div>               
                     
-                         </div>
-                     :null
-                    }
-                  {/* <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}} onClick={() => divfun1()}> */}
-                        {/* 2nd partt */}
-                    <div className='PostDetail' id='PostDetail_header-largesize'>
-
-                            {data.retweetDataId!=undefined
-                            ?
-                                    <div >
-                                            <p className="PostDetail_retweetText" id='PostDetail-retweetby'>Retweeted by <a href="/profile">{data.postedBy.Name}</a></p>
-                                            <p className="PostDetail_retweetText">New Post of <a href="/profile">{data.postedBy.Name}</a></p>
-                                    </div>
-                                :
-                                null
-                            }
-
-                        <div className="PostDetail_header" >
-                        
-                            <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
-
-                            <div className="PostDetail_displayName" id="PostDetail-largesize">
-                                {data.originalPostedBy==undefined
-                                 ?
-                                    data.postedBy.Name
-                                 :
-                                    data.originalPostedBy.Name
-                                    // <h2>Orgp</h2>
-                                 }
                             </div>
-                            
-                            <VerifiedUserIcon className="PostDetail_verified"/>
-                            
-                            <div className="PostDetail_username" id="PostDetail-largesize">
-                                @{data.originalPostedBy==undefined
-                                  ?
-                                    data.postedBy.username
-                                 :
-                                    data.originalPostedBy.username
-                                 }
+                         :
+                         null
+                        }
+
+
+
+                      {/*==================================================================================================================  */}
+                         {/*==========================2nd PART========================================================================================  */}
+                        {/* <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}} onClick={() => divfun1()}> */}
+                                {/* 2nd partt */}
+                        <div className='PostDetail' id='PostDetail_header-largesize'>
+
+                                {data.retweetDataId!=undefined
+                                    ?
+                                        <div >
+                                                <p className="PostDetail_retweetText" id='PostDetail-retweetby'>Retweeted by <a href="/profile">{data.postedBy.Name}</a></p>
+                                                <p className="PostDetail_retweetText">New Post of <a href="/profile">{data.postedBy.Name}</a></p>
+                                        </div>
+                                    :
+                                    null
+                                }
+
+                                <div className="PostDetail_header" >
+                                
+                                    <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+
+                                    <div className="PostDetail_displayName" id="PostDetail-largesize">
+                                        {data.originalPostedBy==undefined
+                                        ?
+                                            data.postedBy.Name
+                                        :
+                                            data.originalPostedBy.Name
+                                            // <h2>Orgp</h2>
+                                        }
+                                    </div>
+                                    
+                                    <VerifiedUserIcon className="PostDetail_verified"/>
+                                    
+                                    <div className="PostDetail_username" id="PostDetail-largesize">
+                                        @{data.originalPostedBy==undefined
+                                        ?
+                                            data.postedBy.username
+                                        :
+                                            data.originalPostedBy.username
+                                        }
+                                        
+                                    </div>
+
+                                    <div className='PostDetail_dot'>.</div>
+                                    <div className='PostDetail_date' id="PostDetail-largesize">{timeDifference(new Date(),new Date(data.createdAt))}</div>
                                 
                                 </div>
-
-                            <div className='PostDetail_dot'>.</div>
-                            <div className='PostDetail_date' id="PostDetail-largesize">{timeDifference(new Date(),new Date(data.createdAt))}</div>
                         
-                        </div>
-                    
-                    
-                        <div className="PostDetail_text_img">
-                            {/* {console.log("RETWEET",data.retweetContent,typeof(data.retweetContent)!='undefined')} */}
-                            {typeof(data.content)!='undefined'
-                                ? <p className="PostDetail_postText" id="PostDetail-postText-largesize">{data.content}</p>
-                                
-                            : <div>{typeof(data.retweetContent)!='undefined'
-                                ?<p className="PostDetail_postText" id="PostDetail-postText-largesize">{data.retweetContent}</p>
-                            :
-                                <p className="PostDetail_postText" id="PostDetail-postText-largesize">{data.retweetDataId.retweetContent}</p>}</div>}
-                            
-                        </div>
+                        
+                                <div className="PostDetail_text_img">
+                                    {/* {console.log("RETWEET",data.retweetContent,typeof(data.retweetContent)!='undefined')} */}
+                                    {typeof(data.content)!='undefined'
+                                    ? 
+                                        <p className="PostDetail_postText" id="PostDetail-postText-largesize">{data.content}</p>
+                                        
+                                    :   
+                                    <div>
+                                            {
+                                                typeof(data.retweetContent)!='undefined'
+                                                ?
+                                                    <p className="PostDetail_postText" id="PostDetail-postText-largesize">{data.retweetContent}</p>
+                                                :
+                                                <p className="PostDetail_postText" id="PostDetail-postText-largesize">{data.retweetDataId.retweetContent}</p>
+                                            }
+                                        </div>
+                                    }
+                                    
+                                </div>
 
-                        {/* BOTTOM ICONS */}
-                        <div className="PostDetail_bottomIcons">
+                            {/* BOTTOM ICONS */}
+                            <div className="PostDetail_bottomIcons">
 
                                     <button id="myBtn" className='PostDetail_icon_button' onClick={()=>reply_clicked()}> 
                                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
                                     </button>
-                                    
+
+                                        {/* -------------------2ND MODAL ------------------------------------------------------------------ */}
                                     {/*When Modal Open  */}
                                         {typeof(userInfo.id)!='undefined'
                                         ?
@@ -755,40 +909,61 @@ function PostDetails() {
 
                                                                     <div className='modal-closeArrow-textarea'>
                                                                         
-                                                                        <div className='PostDetail_header'>
-                                                                                <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
-                                                                            
-                                                                                <div className="PostDetail_displayName">
-                                                                                    {data.originalPostedBy==undefined
-                                                                                        ?
-                                                                                            data.postedBy.Name
-                                                                                        :
-                                                                                            data.originalPostedBy.Name
-                                                                                    }
-                                                                                </div>
-                                                                            
-                                                                                <VerifiedUserIcon className="PostDetail_verified"/>
-                                                                                        
-                                                                                <div className="PostDetail_username">
-                                                                                    @{data.originalPostedBy==undefined
-                                                                                        ?
-                                                                                            data.postedBy.username
-                                                                                        :
-                                                                                            data.originalPostedBy.username
+                                                                             <div className='PostDetail_header'>
+                                                                                    <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                                                                
+                                                                                    <div className="PostDetail_displayName">
+                                                                                        {
+                                                                                            data.originalPostedBy==undefined
+                                                                                            ?
+                                                                                                    data.postedBy.Name
+                                                                                            :
+                                                                                                    data.originalPostedBy.Name
                                                                                         }
+                                                                                    </div>
+                                                                                
+                                                                                    <VerifiedUserIcon className="PostDetail_verified"/>
+                                                                                            
+                                                                                    <div className="PostDetail_username">
+                                                                                        @{data.originalPostedBy==undefined
+                                                                                            ?
+                                                                                                data.postedBy.username
+                                                                                            :
+                                                                                                data.originalPostedBy.username
+                                                                                            }
+                                                                                    </div>
+                                                                                    <div className='PostDetail_dot'>.</div>
+                                                                                    <div className='PostDetail_date'>{timeDifference(new Date(),new Date(data.createdAt))}</div>
+                                                                             </ div>
+ 
+                                                                               {/* <p className="modal_postText">{data.content} 112</p> */}
+                                                                               
+                                                                               
+                                                                                <div >                                                                                                
+                                                                                    {typeof (data.content) != 'undefined'
+                                                                                        ?
+                                                                                            <p className="modal_postText"> {data.content}</p>
+
+                                                                                        :
+                                                                                            <div>
+                                                                                                {
+                                                                                                    typeof (data.retweetContent) != 'undefined'
+                                                                                                        ?
+                                                                                                        <p className="modal_postText">{data.retweetContent}</p>
+                                                                                                        :
+                                                                                                        <p className="modal_postText"> {data.retweetDataId.retweetContent}</p>
+                                                                                                }
+                                                                                            </div>
+                                                                                     }
+
                                                                                 </div>
-                                                                                <div className='PostDetail_dot'>.</div>
-                                                                                <div className='PostDetail_date'>{timeDifference(new Date(),new Date(data.createdAt))}</div>
-                                                                        </ div>
 
-                                                                        <p className="modal_postText">{data.content}</p>
-
-                                                                        <div className="bottom-border"></div>
+                                                                               <div className="bottom-border"></div>
                                                                     
-                                                                        <div className='modal-reply_header'>
-                                                                            <Avatar className="modal_PostDetail_avator" />
-                                                                            <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
-                                                                        </div>
+                                                                                <div className='modal-reply_header'>
+                                                                                    <Avatar className="modal_PostDetail_avator" />
+                                                                                    <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
+                                                                                </div>
                                                                     </div>
                                                                 
                                                                 
@@ -804,17 +979,18 @@ function PostDetails() {
                                                             </div> 
                                                         </div>
                                                 :
-                                                null}
+                                                  null
+                                                }
                                             </div>
                                         :    
                                         null}
 
-                                        {/* ********************************************************************************************* */}
+                                     {/* *********** 2ND MODAL CLOSE ********************************************************************************** */}
 
 
 
-                                        {/* Retweet  */}
-                                            <button className='PostDetail_icon_button' onClick={()=>retweet_clicked(id)}>
+                                    {/* 2nd Retweet  */}
+                                    <button className='PostDetail_icon_button' onClick={()=>retweet_clicked(id)}>
 
                                             <div className='icon-div-like-number'> 
 
@@ -834,35 +1010,35 @@ function PostDetails() {
 
 
                                             </div>
-                                            
-                                        </button>
+                                        
+                                    </button>
 
-                                        {/* Likes Part  */}
-                                        <button id='like_button' className='PostDetail_icon_button' onClick={()=>like_clicked(id)}>
-                                            
+                                    {/* 2nd Likes Part  */}
+                                    <button id='like_button' className='PostDetail_icon_button' onClick={()=>like_clicked(id)}>
+                                        
 
-                                            <div className='icon-div-like-number'> 
-                                            <h1>HIi</h1>
-                                                {x==1?
-                                                    <div>
-                                                            <FavoriteIcon fontSize="small" className={'icon-like-red'}/>
-                                                    </div>
-                                                    :
-                                                    <div>
-                                                            <FavoriteBorderIcon fontSize="small" className={'icon-like'}/>
-                                                    </div>
-                                                }
-                                            
-                                                {x==1?
-                                                    <span className='icon-like-number'>{dataLen_Likes || ""}</span>
-                                                    :
-                                                    <span className='icon-number'>{dataLen_Likes || ""}</span>
-                                                }
+                                        <div className='icon-div-like-number'> 
+                                            <h1>Hi2</h1>
+                                            {x==1?
+                                                <div>
+                                                        <FavoriteIcon fontSize="small" className={'icon-like-red'}/>
+                                                </div>
+                                                :
+                                                <div>
+                                                        <FavoriteBorderIcon fontSize="small" className={'icon-like'}/>
+                                                </div>
+                                            }
+                                        
+                                            {x==1?
+                                                <span className='icon-like-number'>{dataLen_Likes || ""}</span>
+                                                :
+                                                <span className='icon-number'>{dataLen_Likes || ""}</span>
+                                            }
 
 
-                                            </div>
+                                        </div>
 
-                                        </button> 
+                                    </button> 
 
                             </div>             
 
@@ -872,55 +1048,55 @@ function PostDetails() {
         
             </ div>
         
-        : null}
+         :  null}
         
 
             {
               <div>
                 {
-                //console.log(" 4.RES.DATA ",repliesData.length)
-                    repliesData.length>0 && rootData.postedBy!=undefined?
-                    // <div>
-                       repliesData.map(i=>{
-                        // if(typeof(i[0].replyDataId)!='undefined')
-                    //   console.log("i=",repliesData.length,i[0],i)rootData
-                            // console.log("i=",data.postedBy)
-                      
-                  return  <Post4 
-                            key={i._id}
-                            id={i._id}
-                            Icon={Avatar}  
-                            displayName={i.postedBy.Name}
-                            username={i.postedBy.username}
-                            originalData={i.originalPostedBy}
-                            postText={i.content}
-                            createdAt={i.createdAt}
-                            // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                             verified="True"
-                            //  parentHandler={()=>parentFunc()}   
-
-                            //  replyHandler={()=>replyFunc(i.content)}
-                            // replyHandler={()=>replyFunc()}
-                            // onClick={increment} 
-                            // count={count} 
-
-                             likeslength={i.likes.length}
-                             likesData={i.likes}
-                             retweetUserList={i.retweetUserList}
-                             retweetData={i.retweetDataId}
-                            //  retweetContent={i.retweetContent}
-                            // replyDataId={i.replyDataId}
-                            
-                            postDetails_boolean={true}
-                            postDetails_RootUser={rootData.postedBy.Name}
-                            postDetails_CurrentUser={data.postedBy.Name}
-                          />
+                    //console.log(" 4.RES.DATA ",repliesData.length)
+                        repliesData.length>0 && rootData.postedBy!=undefined?
+                            // <div>
+                            repliesData.map(i=>{
+                                    // if(typeof(i[0].replyDataId)!='undefined')
+                                    //   console.log("i=",repliesData.length,i[0],i)rootData
+                                    // console.log("i=",data.postedBy)
                         
-                        
-                    })
-                    // </div>
-                    :
-                    null
+                                return  <Post4 
+                                            key={i._id}
+                                            id={i._id}
+                                            Icon={Avatar}  
+                                            displayName={i.postedBy.Name}
+                                            username={i.postedBy.username}
+                                            originalData={i.originalPostedBy}
+                                            postText={i.content}
+                                            createdAt={i.createdAt}
+                                            // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                            verified="True"
+                                            //  parentHandler={()=>parentFunc()}   
+
+                                            //  replyHandler={()=>replyFunc(i.content)}
+                                            // replyHandler={()=>replyFunc()}
+                                            // onClick={increment} 
+                                            // count={count} 
+
+                                            likeslength={i.likes.length}
+                                            likesData={i.likes}
+                                            retweetUserList={i.retweetUserList}
+                                            retweetData={i.retweetDataId}
+                                            //  retweetContent={i.retweetContent}
+                                            // replyDataId={i.replyDataId}
+                                            
+                                            postDetails_boolean={true}
+                                            postDetails_RootUser={rootData.postedBy.Name}
+                                            postDetails_CurrentUser={data.postedBy.Name}
+                                        />
+                                        
+                                        
+                                    })
+                        // </div>
+                        :
+                        null
                 }
                 </div>
 
