@@ -9,6 +9,7 @@ import { userAction_details } from './Reducers/actions/userActions';
 
 import Post4 from './Post4';
 import { Link } from 'react-router-dom';
+import EditIcon from '@material-ui/icons/Edit';
 
 
 function Profile() {
@@ -21,7 +22,10 @@ function Profile() {
     const [replyTabclicked, setreplyTabclicked] = useState(0);
     const [data, setdata] = useState('');
     const [likesdata, setlikesdata] = useState('');
+
+    const [editDescription, seteditDescription] = useState('');
     
+    const [editCnt, setEditCnt] = useState(0);
  
 
     const dispatch = useDispatch();
@@ -216,7 +220,7 @@ function Profile() {
     {
         
             var result = Object.keys(data).map((key) => [data[key]]);
-            console.log("RESULTss",result,typeof(result));
+            // console.log("RESULTss",result,typeof(result));
         
     }
     {
@@ -224,6 +228,55 @@ function Profile() {
         var likesresult = Object.keys(likesdata).map((key) => [likesdata[key]]);
         // console.log("LikeRESULTss",likesresult,typeof(likesresult),"\nDATA",likesdata);
     
+    }
+ 
+ 
+ 
+    //---------------EDIT-------------------------------------------------
+    // --------------------------------------------------------------------
+    const edit_clicked = () => {
+
+        console.log("ediit");
+        if (editCnt == 0)
+            setEditCnt(1);
+        else
+            setEditCnt(0);
+
+    }
+
+    const saveDescription_submit_clicked = () => {
+
+        console.log("Description ", editDescription,id);
+        if (editCnt == 1)
+            setEditCnt(0);
+
+        const config =
+        {
+            headers:
+            {
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        const postData =
+        {
+            "username": userInfo.username,
+            "description": editDescription
+        }
+
+        axios.post(`http://localhost:4000/profile/editUserDescp/${userInfo.username}`, postData,config)
+            .then(res => {
+                // dispatch(userAction_details(userInfo.email,'q1')); 
+
+                console.log("DESC data all  RES.DATA ", (res.data));
+                // setprofileData(res.data);   
+                setprofileData(res.data);
+
+
+            })
+        // else
+        //     setEditCnt(0);
+
     }
 
   return (
@@ -277,7 +330,61 @@ function Profile() {
 
                                         <div className='Profile_displayName'>{profileData.Name}</div>
                                         <div className='Profile_username'>@{profileData.username}</div>
-                                        <div className='Profile_description'>Description here-{profileData.description}/</div>
+                                        
+                                        <div className='Profile_description'>
+                                            <div className='Profile_description_text_editBtn'>
+
+                                                    <span className='Profile_descriptionText'>Description:-</span>&nbsp;
+                                                    {
+                                                        profileData.description!=undefined && profileData.description.length>0
+                                                        ?
+                                                            <span className='Profile_description_UsersText'>{profileData.description}</span>
+                                                                
+                                                        :
+                                                            <>
+                                                                    None
+                                                            </>
+                                                    }
+                                                    
+                                                    {
+                                                        userInfo.username != undefined && id==userInfo.username
+                                                         ?
+                                                            <button onClick={() => edit_clicked()} className='Post_icon_button'>
+                                                                <EditIcon fontSize="small" className={'icon-like'} />
+                                                            </button> 
+                                                         :
+                                                            null
+                                                    }
+                                                    
+                                            </div>
+
+
+                                            <div>     
+                                            {
+                                                editCnt==1
+                                                ?
+                                                    <div className='Profile_description_input_div'>
+                                                        <div>
+                                                            <textarea className="Profile_description_input" placeholder="Write a Description?" value={editDescription} name="YO" onChange={(e) => seteditDescription(e.target.value)} type="text"  /> 
+                                                        </div>
+
+                                                        <button className='Profile_Post_reply' onClick={() => saveDescription_submit_clicked()}>Save Description</button>
+                                                        {/* <button id="postBtn" className='modal_Post_reply' >Post</button> */}
+
+                                                        {/* <button id="postBtn" className='modal_Post_reply' onClick={() => reply_submit_clicked()}>Post</button> */}
+
+                                                        {/* <textarea className="Tweetbox_input" placeholder="Write a Post?" type="text" value={content} name="YO" onChange={(e) => setcontent(e.target.value)} onKeyDown={handleKeyDown} />  */}
+                                                    </div>
+                                                :
+                                                    <>
+                                                    </>
+
+                                            }
+                                            </div>
+
+                                           
+
+                                        </div>
                                     
                                     
                                        
@@ -402,8 +509,12 @@ function Profile() {
                                                                                         who={2}
                                                                                     />
                                                                             :
-                                                                            // <div className='Profile_NoTweets'>2.No Posts</div>
-                                                                            null
+                                                                                null
+                                                                                // <>
+                                                                                    {/* {console.log("2.2 No resul",result)} */}
+                                                                                    {/* <div className='Profile_NoTweets'>2.22No Posts</div> */}
+                                                                                // </>
+                                                                            
                                                                         })
 
                                                                 :
@@ -464,10 +575,19 @@ function Profile() {
                                                     /* ⬆️ If No Post && Likes data */
                                                     <>
                                                         {
-                                                            Object.keys(data).length==0 && (postTabclicked==1 || replyTabclicked==1)?
+                                                            Object.keys(data).length==0 && (postTabclicked==1 || replyTabclicked==1) && data!=1?
                                                                 <div className='Profile_NoTweets'>No Posts</div>
                                                             :
-                                                                 <div className='Profile_NoTweets'>No Likes</div>
+                                                            <>
+                                                                {data==1?
+
+                                                                    <div className='Profile_NoTweets'>Loading...</div>
+                                                                :
+
+                                                                    <div className='Profile_NoTweets'>No Likes</div>
+                                                                }
+                                                            </>
+                                                                
                                                         }
                                                         
                                                     </>

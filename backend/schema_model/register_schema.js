@@ -30,6 +30,8 @@ const RegisterSchema = new mongoose.Schema({
         type: Boolean,
         default:false
     },
+
+   
     //For profile pg
     likes:
     [{
@@ -53,6 +55,12 @@ const RegisterSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'Register'
     }],
+
+    description:
+    {
+        type: String,
+    },
+
 },
     {
         timestamps:true

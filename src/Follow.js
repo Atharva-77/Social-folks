@@ -155,6 +155,7 @@ function Follow() {
                                                 Icon={Avatar}
                                                 displayName={i[0].Name}
                                                 username={i[0].username}
+                                                description={i[0].description}
                                             />
 
                                         })
@@ -178,6 +179,7 @@ function Follow() {
                                             Icon={Avatar}
                                             displayName={i[0].Name}
                                             username={i[0].username}
+                                            description={i[0].description}
 
                                         />
 

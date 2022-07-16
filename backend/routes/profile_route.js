@@ -111,4 +111,39 @@ router.get('/allFollowers/:username',async(req,res)=>
     }
 })
 
+
+
+//Edit User. Change description.
+router.post('/editUserDescp/:username', protect,async (req, res) => {
+    try {
+
+
+        var username = req.params.username || req.body.username
+        var description = req.body.description
+
+        // console.log("PROFILE Route ", username, req.params.username);
+
+        const getUser = await RegisterDb.findOne({ username: username })
+       
+        getUser.description=description.trim()
+       
+        const updateUser = await getUser.save();  
+        // console.log("\n\nPROF DB",getUser);
+
+        // if (getUser != null)
+            res.status(201).json(getUser)
+
+        // else
+        //     res.status(201).json("NO SUCH USER")
+
+
+
+    }
+    catch (err) {
+        console.log("Error hai", err);
+        // res.status(401).json("Invalid Details",err)
+    }
+})
+
+
 module.exports=router;
