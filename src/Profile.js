@@ -10,7 +10,8 @@ import { userAction_details } from './Reducers/actions/userActions';
 import Post4 from './Post4';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
-
+import { storage } from './firebaseFolder/index2.js'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 function Profile() {
   
@@ -26,7 +27,13 @@ function Profile() {
     const [editDescription, seteditDescription] = useState('');
     
     const [editCnt, setEditCnt] = useState(0);
+    const [editPicCnt, setEditPicCnt] = useState(0);
  
+    const [fileDetails, setfileDetails] = useState('');
+    const [fileDetails_Cover, setfileDetails_Cover] = useState('');
+    var fileTypes = [".jpg", ".png", ".jpeg"];
+    const [url, setUrl] = useState('')
+    const [coverUrl, setcoverUrl] = useState('')
 
     const dispatch = useDispatch();
     const userLoginData=useSelector(state=>state.userLoginKey)
@@ -279,6 +286,140 @@ function Profile() {
 
     }
 
+    // --------------------------------------------------------------------
+    
+    // -------------------   PIC EDIT  -------------------------------------------
+
+    const editPic_clicked = () => {
+
+        console.log("ediit");
+        if (editPicCnt == 0)
+            setEditPicCnt(1);
+        else
+            setEditPicCnt(0);
+
+
+    }
+    const editPic_close_clicked = () => {
+        console.log("Closed");
+        setEditPicCnt(0);
+
+        setfileDetails('');
+        setfileDetails_Cover('')
+    }
+
+
+    // -------FILE UPLOADS--------------
+    const uploadFileHandler = (e) => 
+    {
+        console.log("315",e.target.files[0]);
+        setfileDetails(e.target.files[0])
+    }
+    const uploadFileHandler_Cover = (e) => {
+        console.log("319", e.target.files[0]);
+        setfileDetails_Cover(e.target.files[0])
+    }
+
+    {
+            console.log("url is", url,"\n\nCOVER",coverUrl);
+    }
+
+    const processFileName = (fileName)=>
+    {
+        console.log("FILEDETAILS:-",fileDetails,"\n\nCOVER",fileDetails_Cover,"\nFILENAME",fileName);
+        var img_extension = fileName.type.split("/")[1]
+
+        var current_date = new Date()
+        let final_date = ""
+        final_date = current_date.toString().substring(0, 24)
+        final_date = final_date.replace(":", "-")
+        final_date = final_date.replace(":", "-")
+
+        console.log("FIANL DATE IS", final_date, img_extension);
+
+        var imgName = final_date + "-" + userInfo.username + "." + img_extension
+
+        console.log("339",imgName);
+
+        return imgName;
+    }
+
+    
+    const saveFileHandler = () => 
+    {
+        // console.log(fileDetails);
+
+        const file = fileDetails
+
+        const profilePic_File= fileDetails;
+        const coverFile= fileDetails_Cover;
+
+        if (profilePic_File != '') 
+        {
+            console.log("IN PROFILE",profilePic_File);
+            const imgName=processFileName( profilePic_File )
+            console.log("353",imgName);
+
+            //----- 1st Part of upload-------
+            // const uploadTask = storage.ref(`images/${imgName}`).put(file);
+
+            // uploadTask.on(
+            //   "state_changed",
+            //   snapshot => { },
+            //   error => {
+            //     console.log(error);
+            //   },
+            //   () => {
+            //     storage
+            //       .ref("images")
+            //       .child(imgName)
+            //       .getDownloadURL()
+            //       .then(url => {
+            //         setUrl(url);
+            //       });
+            //   }
+            // )
+            //---1st part end------
+
+
+            //----2nd Part--------
+            const imageRef = ref(storage, `profilePics/${imgName}`)
+            uploadBytes(imageRef, file)
+                .then((res) => {
+
+                    console.log("Res", res.ref);
+                    getDownloadURL(res.ref).then((url) => setUrl(url))
+
+                })
+            //---2nd part end------
+
+            setEditPicCnt(0);
+            setfileDetails('');
+            setfileDetails_Cover('')
+        }
+
+        if (coverFile != '')
+        {
+            console.log("COVER",coverFile);
+            const imgName = processFileName(coverFile)
+            console.log("398", imgName);
+
+            const imageRef = ref(storage, `coverPics/${imgName}`)
+            uploadBytes(imageRef, file)
+                .then((res) => {
+
+                    console.log("Res", res.ref);
+                    getDownloadURL(res.ref).then((url) => setcoverUrl(url))
+
+                })
+
+            setEditPicCnt(0);
+            setfileDetails('');
+            setfileDetails_Cover('')
+        }
+    }
+    
+    // ------end file upload------------
   return (
     <div className='Profile_top'>
         {/* Profile pg */}
@@ -290,35 +431,128 @@ function Profile() {
                         <div className='1Profile_Homepage_top'>
                                 <h2>Username {profileData.username}</h2>
                                     
-                                    <div className='Profile_Div_CoverPic'>
-                                        
+                                     <div className='Profile_Div_CoverPic'>
+
+                                          < img className='Profile_Div_Cp' src='https://firebasestorage.googleapis.com/v0/b/social-folks-9683b.appspot.com/o/imagesFolder%2FMon%20Jul%2018%202022%2014-00-18.jpeg?alt=media&token=d10babb8-ad03-403f-be66-0a4a69a594d0' />
+
                                       
                                         <div className='Profile_avatar_header'>
-                                            <Avatar className="Profile_avatar" style={{ textDecoration: 'none',backgroundColor:'red'}} 
+                                                <Avatar className="Profile_avatar" style={{ textDecoration: 'none',backgroundColor:'red'}} 
                                                  src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                 
 
+                                                  {/*-------------------------------------------------------------------------  */}
+                                                  {/* EDIT PIC MODAL  */}
+                                                {
+                                                    Object.keys(userInfo) != 0 && id == userInfo.username
+                                                    ?
+                                                     <div>
+                                                           <button className='Profile_EditPic_button' onClick={() => editPic_clicked()}>
+                                                                Edit Picture
+                                                            </button>
 
-                                                 {/* <div className='Profile_follow_div'> */}
+                                                            {editPicCnt == 1 ?
 
-                                                 {Object.keys(userInfo)==0?
-                                                  <button className='Profile_follow_button'>Follow</button>
-                                                 :
-                                                 <>
-                                                    {id!==userInfo.username?
-                                                          <> 
+                                                                <div id="myModal" className="modal3">
+                                                                    
+                                                                        <div className="Profile_EditPic_modal-content">
 
-                                                            { profileData.followers.includes(userInfo.id)?
+                                                                                    <div className='Profile_EditPic_reply-closeArrowBtn'>
 
-                                                                <button className='Profile_following_button' onClick={()=>follow_following_func()}>Following</button>
+                                                                                        <div className='modal-reply-heading'>Edit Picture</div>
+                                                                                        <button className="closeArrowBtn" onClick={() => editPic_close_clicked()}>X</button>
+
+                                                                                    </div>
+
+                                                                                    <div className='modal-closeArrow-textarea'>
+                                                                                                                              
+                                                                                            <div className='1modal-uploadPic-div'>
+                                                                                                
+                                                                                                    <div className='modal-uploadPic-div'>
+                                                                                                        
+                                                                                                        <label for="file-upload1" class="custom-file-upload">
+                                                                                                                <span className='span-img'>
+                                                                                                                        {fileDetails==''
+                                                                                                                        ?
+                                                                                                                            <>Upload Profile Image</>
+                                                                                                                        : 
+                                                                                                                            <>Uploaded</>
+                                                                                                                        }
+                                                                                                                </span>
+                                                                                                        </label>
+                                                                                        
+                                                                                                        <input id='file-upload1' type="file" accept={fileTypes} onChange={e => uploadFileHandler(e)} /> 
+                                                                                                    
+                                                                                                    </div>
+
+                                                                                                    {/* ------------------------------------------------------------------------------------------ */}
+                                                                                                    
+                                                                                                    <div className='modal-uploadPic-div'>
+
+                                                                                                        <label for="file-upload2" class="custom-file-upload">
+                                                                                                                <span className='span-img'>
+                                                                                                                    {fileDetails_Cover == ''
+                                                                                                                        ?
+                                                                                                                        <>Upload Cover Image</>
+                                                                                                                        :
+                                                                                                                        <>Uploaded</>
+                                                                                                                    }
+                                                                                                                </span>
+                                                                                                        </label>
+
+                                                                                                        <input id='file-upload2' type="file" accept={fileTypes} onChange={e => uploadFileHandler_Cover(e)} />
+                                                                                                    
+                                                                                                    </div>
+
+                                                                                            </div>
+
+                                                                                    </div>
+
+                                                                                     <div className='Profile_EditPic_modal_Btns'>
+                                                                                            {fileDetails != '' || fileDetails_Cover!=''?
+                                                                                            <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => saveFileHandler()}>1Save Pictures</button>
+                                                                                                :
+                                                                                                <button id="postBtn" className='Profile_EditPic_modal_Post_reply_disable' >Save Picturesss</button>
+                                                                                            }
+
+                                                                                            <button id="closeBtn" className='Profile_EditPic_modal_Close_reply' onClick={() => editPic_close_clicked()}>Close</button>
+                                                                                     </div>
+                                                                         </div>
+                                                                 </div>
                                                              :
-                                                              <button className='Profile_follow_button' onClick={()=>follow_following_func()}>Follow</button>
-
+                                                                null
                                                             }
+                                                            
+                                                        </div>
+                                                        //  Else part
+                                                     :
+                                                        null
+                                                 } 
+                                                
+                                                   {/*--------------------------  END MODAL -------------------------------------------  */}
 
-                                                          </>
-                                                    :
-                                                         null
-                                                    }
+                                                {/* <div className='Profile_follow_div'> */}
+
+                                                 {Object.keys(userInfo)==0
+                                                  ?
+                                                    <button className='Profile_follow_button'>Follow</button>
+                                                  :
+                                                   <>
+                                                        {id!==userInfo.username?
+                                                            <> 
+
+                                                                { profileData.followers.includes(userInfo.id)?
+
+                                                                    <button className='Profile_following_button' onClick={()=>follow_following_func()}>Following</button>
+                                                                :
+                                                                <button className='Profile_follow_button' onClick={()=>follow_following_func()}>Follow</button>
+
+                                                                }
+
+                                                            </>
+                                                        :
+                                                            null
+                                                        }
                                                  </>
                                                     // null
                                                  }
@@ -369,9 +603,9 @@ function Profile() {
                                                         </div>
 
                                                         <button className='Profile_Post_reply' onClick={() => saveDescription_submit_clicked()}>Save Description</button>
-                                                        {/* <button id="postBtn" className='modal_Post_reply' >Post</button> */}
+                                                        {/* <button id="postBtn" className='Profile_EditPic_modal_Post_reply' >Post</button> */}
 
-                                                        {/* <button id="postBtn" className='modal_Post_reply' onClick={() => reply_submit_clicked()}>Post</button> */}
+                                                        {/* <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => reply_submit_clicked()}>Post</button> */}
 
                                                         {/* <textarea className="Tweetbox_input" placeholder="Write a Post?" type="text" value={content} name="YO" onChange={(e) => setcontent(e.target.value)} onKeyDown={handleKeyDown} />  */}
                                                     </div>
@@ -434,7 +668,7 @@ function Profile() {
 
                                         </div>
 
-                                            {Object.keys(data).length>0 || Object.keys(likesdata).length>0?
+                                            {Object.keys(data).length>0 || Object.keys(likesdata).length>0 && editPicCnt==0?
                                                 <>
                                                 {/* If post part clicked */}
                                                     {   Object.keys(data).length>0 

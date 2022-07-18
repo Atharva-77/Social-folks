@@ -18,7 +18,7 @@ function Post({id,Icon,displayName, username,originalData,postText, editedText,i
     // console.log("1.Yo",likesData,postText)
     //  console.log("2.",typeof(retweetData),originalData,postText);
     // console.log("ON POST",postText,replyDataId,replyDataId==undefined);
-    console.log("EDITED TEXT",editedText);
+    // console.log("EDITED TEXT",editedText,postText);
     var displayname_retweet=displayName;
 
     if (typeof(retweetData)!='undefined') {
@@ -848,7 +848,8 @@ var editFlag=false;
                                     </div>
                                 </div>
                                 :
-                                null}
+                                null
+                            }
                         </>
                      :
 
