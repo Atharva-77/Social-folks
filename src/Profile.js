@@ -321,7 +321,8 @@ function Profile() {
     }
 
     {
-            console.log("url is", url,"\n\nCOVER",coverUrl);
+        console.log("url is", url, "\n\nCOVER", coverUrl);
+            // console.log("\n\nCOVER",coverUrl);
     }
 
     const processFileName = (fileName)=>
@@ -339,7 +340,7 @@ function Profile() {
 
         var imgName = final_date + "-" + userInfo.username + "." + img_extension
 
-        console.log("339",imgName);
+        console.log("342",imgName);
 
         return imgName;
     }
@@ -378,13 +379,13 @@ function Profile() {
             //         setUrl(url);
             //       });
             //   }
-            // )
+            // ) 
             //---1st part end------
 
 
             //----2nd Part--------
             const imageRef = ref(storage, `profilePics/${imgName}`)
-            uploadBytes(imageRef, file)
+            uploadBytes(imageRef, profilePic_File)
                 .then((res) => {
 
                     console.log("Res", res.ref);
@@ -395,7 +396,7 @@ function Profile() {
 
             setEditPicCnt(0);
             setfileDetails('');
-            setfileDetails_Cover('')
+            // setfileDetails_Cover('')
         }
 
         if (coverFile != '')
@@ -405,7 +406,7 @@ function Profile() {
             console.log("398", imgName);
 
             const imageRef = ref(storage, `coverPics/${imgName}`)
-            uploadBytes(imageRef, file)
+            uploadBytes(imageRef, coverFile)
                 .then((res) => {
 
                     console.log("Res", res.ref);
@@ -414,8 +415,11 @@ function Profile() {
                 })
 
             setEditPicCnt(0);
-            setfileDetails('');
+            // setfileDetails('');
             setfileDetails_Cover('')
+          
+            // setUrl('');
+            // setcoverUrl('')
         }
     }
     
@@ -509,7 +513,7 @@ function Profile() {
                                                                                     </div>
 
                                                                                      <div className='Profile_EditPic_modal_Btns'>
-                                                                                            {fileDetails != '' || fileDetails_Cover!=''?
+                                                                                            {fileDetails_Cover!=''?
                                                                                             <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => saveFileHandler()}>1Save Pictures</button>
                                                                                                 :
                                                                                                 <button id="postBtn" className='Profile_EditPic_modal_Post_reply_disable' >Save Picturesss</button>
