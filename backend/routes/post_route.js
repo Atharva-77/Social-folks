@@ -122,7 +122,7 @@ router.get('/allpost',async(req,res)=>
     {   
         // console.log("All Poste mai",req.userAuth);
         console.log("ENTERED ALLPOST");
-        const data=await PostDb.find({}).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
+        const data=await PostDb.find({}).populate('postedBy','Name username email profilePicUrl').populate('originalPostedBy','Name username email').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
         // console.log("DATA",data);
         // const data
         const data1=await RegisterDb.populate(data,{path:'retweetDataId.postedBy'})

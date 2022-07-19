@@ -121,7 +121,7 @@ router.post('/editUserDescp/:username', protect,async (req, res) => {
         var username = req.params.username || req.body.username
         var description = req.body.description
 
-        // console.log("PROFILE Route ", username, req.params.username);
+        console.log("DESCR", description==undefined);
 
         const getUser = await RegisterDb.findOne({ username: username })
        
@@ -144,6 +144,46 @@ router.post('/editUserDescp/:username', protect,async (req, res) => {
         // res.status(401).json("Invalid Details",err)
     }
 })
+
+
+
+
+//PUT A IMG URL
+router.put('/imgUrls/:username',protect, async (req, res) => {
+    try {
+
+
+        var username = req.params.username || req.body.username
+        var coverPicUrl= req.body.coverPicUrl;
+        var profilePicUrl = req.body.profilePicUrl;
+
+
+        console.log("PICS Route ", username, coverPicUrl != undefined, profilePicUrl != undefined);
+
+        const getUser = await RegisterDb.findOne({ username: username })
+        if (coverPicUrl != undefined)
+        {
+            console.log("COVERPIC URL");
+            getUser.coverPicUrl=coverPicUrl;
+        }
+        if (profilePicUrl != undefined)
+        {   
+            console.log("PROFILE URL");
+            getUser.profilePicUrl=profilePicUrl
+        }
+        const updateUser = await getUser.save();
+      
+        res.status(201).json(updateUser)
+
+
+
+    }
+    catch (err) {
+        console.log("Error hai", err);
+        // res.status(401).json("Invalid Details",err)
+    }
+})
+
 
 
 module.exports=router;

@@ -12,13 +12,14 @@ import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 
-function Post({id,Icon,displayName, username,originalData,postText, editedText,imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
+function Post({id,Icon,displayName, username,originalData, profilePicUrl,postText, editedText,imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
    
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
     // console.log("1.Yo",likesData,postText)
     //  console.log("2.",typeof(retweetData),originalData,postText);
     // console.log("ON POST",postText,replyDataId,replyDataId==undefined);
     // console.log("EDITED TEXT",editedText,postText);
+    console.log("PROFILE PIC URL",profilePicUrl);
     var displayname_retweet=displayName;
 
     if (typeof(retweetData)!='undefined') {
@@ -576,8 +577,8 @@ var editFlag=false;
 
               <div className="Post_header">
                    {/* {console.log("LIKE FLAG",link_flag)} */}
-
-                    <Icon className="Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                    
+                    <Icon className="Post_avator" src={`${profilePicUrl}`}/>
                     
                   
                     <Link to={`/profile/${username}`} style={{ textDecoration: 'none',color:'#374151'}}>

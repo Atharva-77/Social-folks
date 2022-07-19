@@ -97,6 +97,145 @@ function Profile() {
 
     }, [id])
 
+    useEffect(() => 
+    {
+        if (id != typeof (undefined)) 
+        {
+            console.log("22ID ");
+            // console.log("FILESSCVALL " ,fileDetails, fileDetails_Cover)
+            // setfileDetails
+            // setfileDetails_Cover
+
+            // if(fileDetails!='' && url!='')
+            // console.log("FILED1 ",url);
+
+            // if(fileDetails_Cover!='' && coverUrl!='')
+            //     console.log("FILED2 ", coverUrl);
+
+
+                const config =
+                {
+                    headers:
+                    {
+                        'Content-Type': "application/json",
+                        Authorization: `Bearer ${userInfo.token}`
+                    }
+                }
+                
+                const userData =
+                {
+                    "username": id,
+                    "profilePicUrl": url,
+                    "coverPicUrl": coverUrl
+                }
+
+            //     axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+            //         .then(res => {
+            //             console.log("Profile RES.DATA ", (res.data));
+            //             // setprofileData(res.data);
+
+            //         })
+
+            if(fileDetails!='' && fileDetails_Cover!='')
+            {
+                if(url!='' && coverUrl!='')
+                {
+                    console.log("BOTH URLS",url,"\n\n",coverUrl);
+                    
+                    axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+                        .then(res => {
+                            console.log("Profile RES.DATA ", (res.data));
+                            setprofileData(res.data);
+
+                        })
+
+                    setfileDetails('')
+                    setfileDetails_Cover('')
+                    setUrl('')
+                    setcoverUrl('')
+                }
+            }
+            
+            else if(fileDetails!='')
+            {
+                if(url!='')
+                {
+                    console.log("ELSE If - BOTH URLS", url);
+                    userData.coverPicUrl=undefined
+
+                    axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+                    .then(res => {
+                        console.log("Profile RES.DATA ", (res.data));
+                        setprofileData(res.data);
+
+                    })
+                    setfileDetails('')
+                    setfileDetails_Cover('')
+                    setUrl('')
+                    setcoverUrl('')
+                }
+                    
+            }
+
+            else if(fileDetails_Cover!='')
+            {
+                if(coverUrl!='')
+                {
+                    console.log("3.Else if-BOTH CURLS", coverUrl);
+                    userData.profilePicUrl=undefined
+                    
+                    axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+                    .then(res => {
+                        console.log("Profile RES.DATA ", (res.data));
+                        setprofileData(res.data);
+
+                    })
+                    setfileDetails('')
+                    setfileDetails_Cover('')
+                    setUrl('')
+                    setcoverUrl('')
+                }
+                   
+            }
+        }   
+        // else 
+        // {
+        //     console.log("YES/NOT LOGGED IN");
+        //     const config =
+        //     {
+        //         headers:
+        //         {
+        //             'Content-Type': "application/json",
+        //             Authorization: `Bearer ${userInfo.token}`
+        //         }
+        //     }
+            
+        //     const userData =
+        //     {
+        //         "username": id,
+        //         "coverPicUrl": url,
+        //         "profilePicUrl": coverUrl
+        //     }
+
+        //     axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+        //         .then(res => {
+        //             console.log("Profile RES.DATA ", (res.data));
+        //             // setprofileData(res.data);
+
+        //         })
+
+        //     // axios.post(`http://localhost:4000/profile/${id}`, userData)
+        //     //     .then(res => {
+        //     //         console.log("Profile RES.DATA ", (res.data));
+        //     //         setprofileData(res.data);
+
+        //     //     })
+
+        // }
+
+
+    }, [url,coverUrl])
+
     const postsTab_clicked_func=()=>
     {
         console.log("Posts tab clicked",data);
@@ -320,14 +459,14 @@ function Profile() {
         setfileDetails_Cover(e.target.files[0])
     }
 
-    {
-        console.log("url is", url, "\n\nCOVER", coverUrl);
-            // console.log("\n\nCOVER",coverUrl);
-    }
+    // {
+    //     console.log("url is", url, "\n\nCOVER", coverUrl);
+    //         // console.log("\n\nCOVER",coverUrl);
+    // }
 
     const processFileName = (fileName)=>
     {
-        console.log("FILEDETAILS:-",fileDetails,"\n\nCOVER",fileDetails_Cover,"\nFILENAME",fileName);
+        // console.log("FILEDETAILS:-",fileDetails,"\n\nCOVER",fileDetails_Cover,"\nFILENAME",fileName);
         var img_extension = fileName.type.split("/")[1]
 
         var current_date = new Date()
@@ -357,7 +496,7 @@ function Profile() {
 
         if (profilePic_File != '') 
         {
-            console.log("IN PROFILE",profilePic_File);
+            console.log("360 IN PROFILE",profilePic_File);
             const imgName=processFileName( profilePic_File )
             console.log("353",imgName);
 
@@ -395,13 +534,13 @@ function Profile() {
             //---2nd part end------
 
             setEditPicCnt(0);
-            setfileDetails('');
+            // setfileDetails('');
             // setfileDetails_Cover('')
         }
 
         if (coverFile != '')
         {
-            console.log("COVER",coverFile);
+            console.log("404 COVER",coverFile);
             const imgName = processFileName(coverFile)
             console.log("398", imgName);
 
@@ -416,11 +555,12 @@ function Profile() {
 
             setEditPicCnt(0);
             // setfileDetails('');
-            setfileDetails_Cover('')
+            // setfileDetails_Cover('')
           
             // setUrl('');
             // setcoverUrl('')
         }
+        // console.log("424 END");
     }
     
     // ------end file upload------------
@@ -437,12 +577,12 @@ function Profile() {
                                     
                                      <div className='Profile_Div_CoverPic'>
 
-                                          < img className='Profile_Div_Cp' src='https://firebasestorage.googleapis.com/v0/b/social-folks-9683b.appspot.com/o/imagesFolder%2FMon%20Jul%2018%202022%2014-00-18.jpeg?alt=media&token=d10babb8-ad03-403f-be66-0a4a69a594d0' />
+                                          < img className='Profile_Div_Cp' src={`${profileData.coverPicUrl}`} />
 
                                       
                                         <div className='Profile_avatar_header'>
                                                 <Avatar className="Profile_avatar" style={{ textDecoration: 'none',backgroundColor:'red'}} 
-                                                 src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                                 src={`${profileData.profilePicUrl}`}/>
                                  
 
                                                   {/*-------------------------------------------------------------------------  */}
@@ -513,7 +653,7 @@ function Profile() {
                                                                                     </div>
 
                                                                                      <div className='Profile_EditPic_modal_Btns'>
-                                                                                            {fileDetails_Cover!=''?
+                                                                                            {fileDetails!='' || fileDetails_Cover!=''?
                                                                                             <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => saveFileHandler()}>1Save Pictures</button>
                                                                                                 :
                                                                                                 <button id="postBtn" className='Profile_EditPic_modal_Post_reply_disable' >Save Picturesss</button>
@@ -544,7 +684,7 @@ function Profile() {
                                                    <>
                                                         {id!==userInfo.username?
                                                             <> 
-
+                                                            
                                                                 { profileData.followers.includes(userInfo.id)?
 
                                                                     <button className='Profile_following_button' onClick={()=>follow_following_func()}>Following</button>

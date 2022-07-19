@@ -20,7 +20,7 @@ function Left_Sidebar() {
         <div className="Left_Sidebar">
             {/* <h1>Sidebar left</h1> */}
             
-            <Link to="/">
+            <Link to="/login">
                     <TwitterIcon className="main_icon"/>
             </Link>
            

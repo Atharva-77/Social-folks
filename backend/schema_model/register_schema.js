@@ -61,6 +61,15 @@ const RegisterSchema = new mongoose.Schema({
         type: String,
     },
 
+    coverPicUrl:
+    {
+        type: String,
+    },
+    profilePicUrl:
+    {
+        type: String,
+    },
+
 },
     {
         timestamps:true
