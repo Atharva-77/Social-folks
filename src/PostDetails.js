@@ -713,6 +713,7 @@ function PostDetails() {
                                          :
                                             null
                                         }
+                                        
                                         {rootData.replyDataId != undefined &&
 
                                             <div className='PostDetail_replyingTo_header'>
@@ -727,64 +728,79 @@ function PostDetails() {
                                             </div>
                                         }   
 
-                                        <div className="PostDetail_header">
+                                         <Link to={{ pathname: `/post/${rootId}`, query: 0}} style={{ textDecoration: 'none',color:'#374151'}}>
+                                               
+                                                <div className="PostDetail_header">
 
-                                                {/* <Avatar className="PostDetail_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
-                                                {rootData.originalPostedBy == undefined
-                                                    ?
-                                                    <Avatar className="PostDetail_avator" src={`${rootData.postedBy.profilePicUrl}`} />
-                                                    :
-                                                    <Avatar className="PostDetail_avator" src={`${rootData.originalPostedBy.profilePicUrl}`} />
-                                                    // <h2>Orgp</h2>
-                                                }
-                                            <div className="PostDetail_displayName">
-                                                
-                                                {rootData.originalPostedBy==undefined
-                                                ?
-                                                    rootData.postedBy.Name
-                                                :
-                                                    rootData.originalPostedBy.Name
-                                                    // <h2>Orgp</h2>
-                                                }
-                                            </div>
+                                                        {/* <Avatar className="PostDetail_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
+                                                        {rootData.originalPostedBy == undefined
+                                                            ?
+                                                            <Avatar className="PostDetail_avator" src={`${rootData.postedBy.profilePicUrl}`} />
+                                                            :
+                                                            <Avatar className="PostDetail_avator" src={`${rootData.originalPostedBy.profilePicUrl}`} />
+                                                            // <h2>Orgp</h2>
+                                                        }
+                                                        <div className="PostDetail_displayName">
+                                                            
+                                                            {rootData.originalPostedBy==undefined
+                                                             ?
+                                                                <Link to={`/profile/${rootData.postedBy.username}`} style={{ textDecoration: 'none',color:'#374151'}}>
+                                                                    {rootData.postedBy.Name}
+                                                                </Link>
+                                                             :
+                                                                <Link to={`/profile/${rootData.originalPostedBy.username}`} style={{ textDecoration: 'none',color:'#374151'}}>
+                                                                    {rootData.originalPostedBy.Name}
+                                                                </Link>
+                                                                
+                                                                // <h2>Orgp</h2>
+                                                            }
+                                                        </div>
+                                                    
+                                                        <VerifiedUserIcon className="PostDetail_verified"/>
+                                                    
+                                                        <div className="PostDetail_username">
+                                                            {/* @{rootData.postedBy.username}  */}
+                                                            @{rootData.originalPostedBy==undefined
+                                                                ?
+                                                                    <Link to={`/profile/${rootData.postedBy.username}`} style={{ textDecoration: 'none',color:'#374151'}}>
+                                                                        {rootData.postedBy.username}
+                                                                    </Link>
+                                                                    
+                                                                :
+                                                                    <Link to={`/profile/${rootData.originalPostedBy.username}`} style={{ textDecoration: 'none',color:'#374151'}}>
+                                                                        {rootData.originalPostedBy.username}
+                                                                    </Link>
+                                                                    
+                                                            }
+                                                            
+                                                        </div>
+                                                        
+                                                         <div className='PostDetail_dot'>.</div>
+                                                         <div className='PostDetail_date'>{timeDifference(new Date(),new Date(rootData.createdAt))}</div>
                                             
-                                            <VerifiedUserIcon className="PostDetail_verified"/>
-                                            
-                                            <div className="PostDetail_username">
-                                                {/* @{rootData.postedBy.username}  */}
-                                                @{rootData.originalPostedBy==undefined
-                                                    ?
-                                                        rootData.postedBy.username
-                                                    :
-                                                        rootData.originalPostedBy.username
-                                                }
                                                 </div>
-                                            <div className='PostDetail_dot'>.</div>
-                                             <div className='PostDetail_date'>{timeDifference(new Date(),new Date(rootData.createdAt))}</div>
-                                    
-                                        </div>
-                        
-                        
-                                     <div className="PostDetail_text_img">
-                                            {/* {console.log("RETWEET",rootData.retweetContent,typeof(rootData.retweetContent)!='undefined')} */}
-                                            
-                                            {typeof(rootData.content)!='undefined'
-                                                ? <p className="PostDetail_postText"> {rootData.content}</p>
-                                                
-                                            : 
-                                            <div>
-                                                    {
-                                                        typeof(rootData.retweetContent)!='undefined'
-                                                        ?
-                                                        <p className="PostDetail_postText">{rootData.retweetContent}</p>
-                                                        :
-                                                        <p className="PostDetail_postText"> {rootData.retweetDataId.retweetContent}</p>
+                                
+                                
+                                                <div className="PostDetail_text_img">
+                                                    {/* {console.log("RETWEET",rootData.retweetContent,typeof(rootData.retweetContent)!='undefined')} */}
+                                                    
+                                                    {typeof(rootData.content)!='undefined'
+                                                    ? <p className="PostDetail_postText"> {rootData.content}</p>
+                                                        
+                                                    : 
+                                                    <div>
+                                                            {
+                                                                typeof(rootData.retweetContent)!='undefined'
+                                                                ?
+                                                                <p className="PostDetail_postText">{rootData.retweetContent}</p>
+                                                                :
+                                                                <p className="PostDetail_postText"> {rootData.retweetDataId.retweetContent}</p>
+                                                            }
+                                                        </div>
                                                     }
+                                                
                                                 </div>
-                                            }
-                                        
-                                        </div>
-
+                                          </Link>
 
                                     {/* Bottom ICONS */}
                                      <div className="PostDetail_bottomIcons">
@@ -1003,9 +1019,15 @@ function PostDetails() {
                                     <div className="PostDetail_displayName" id="PostDetail-largesize">
                                         {data.originalPostedBy==undefined
                                          ?
-                                            data.postedBy.Name
+                                            <Link to={`/profile/${data.postedBy.username}`} style={{ textDecoration: 'none',color:'#374151'}}>
+                                                    {data.postedBy.Name}
+                                            </Link>
+                                            
                                          :
-                                            data.originalPostedBy.Name
+                                            <Link to={`/profile/${data.originalPostedBy.username}`} style={{ textDecoration: 'none',color:'#374151'}}>
+                                                    {data.originalPostedBy.Name}
+                                            </Link>
+                                            
                                             // <h2>Orgp</h2>
                                         }
                                     </div>
@@ -1014,10 +1036,16 @@ function PostDetails() {
                                     
                                     <div className="PostDetail_username" id="PostDetail-largesize">
                                         @{data.originalPostedBy==undefined
-                                        ?
-                                            data.postedBy.username
-                                        :
-                                            data.originalPostedBy.username
+                                         ?
+                                            <Link to={`/profile/${data.postedBy.username}`} style={{ textDecoration: 'none',color:'#374151'}}>
+                                                    {data.postedBy.username}
+                                            </Link>
+                                            
+                                         :
+                                            <Link to={`/profile/${data.originalPostedBy.username}`} style={{ textDecoration: 'none',color:'#374151'}}>
+                                                    {data.originalPostedBy.username}
+                                            </Link>
+                                            
                                         }
                                         
                                     </div>
@@ -1212,9 +1240,10 @@ function PostDetails() {
                                     </button> 
 
                             </div>             
-
+                                {/* ⬆️Upper div is  Bottom Icons closing */}
                     
                         </div>
+                         {/* ⬆️Upper div is  2nd Part closing */}
                  {/* </Link> */}
         
             </ div>

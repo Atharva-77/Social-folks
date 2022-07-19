@@ -527,91 +527,91 @@ var editFlag=false;
 
     return (
         <div className="Post" id={id}>
- {/* {true && <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}}> */}
+
            
             {/* to={{ pathname: `/follow/${id}`, query: 1 }} */}
 
- <Link to={{ pathname: `/post/${id}`, query: 0}} style={{ textDecoration: 'none',color:'#374151'}}>
-                {typeof(retweetData)!='undefined'
-                            ?
-                            <div className='icon-div-like-number'>
-                                {/* <div className="icon-div-like-number"> */}
-                                    <RepeatIcon fontSize="small"  className='Post_icon-above-avator'/>
-                                {/* </div>   */}
-                                <p className="Post_retweetText">Retweeted by <a href="/profile">{displayname_retweet}</a></p>
-                            </div>
-                            :
-                             null
-                }
+                <Link to={{ pathname: `/post/${id}`, query: 0}} style={{ textDecoration: 'none',color:'#374151'}}>
 
-                {replyDataId!=undefined && 
-                    
-                    <div className='Post_replyingTo_header'>
-                        
-                        <span className='Post_replyingTo-title'>Replying to </span> 
-                        <span className='Post_replyingTo-name'>@{replyDataId.postedBy.Name}</span>
-                        
-                        <div className='Post_fullTweet_header'>
-                            <span className='Post_fullTweet-title'>Link to Full Tweet <Link to={{ pathname: `/post/${replyDataId._id}`, query: 0 }}  > here </Link></span>
-                        </div>
+                            {typeof(retweetData)!='undefined'
+                                        ?
+                                        <div className='icon-div-like-number'>
+                                            {/* <div className="icon-div-like-number"> */}
+                                                <RepeatIcon fontSize="small"  className='Post_icon-above-avator'/>
+                                            {/* </div>   */}
+                                            <p className="Post_retweetText">Retweeted by <a href="/profile">{displayname_retweet}</a></p>
+                                        </div>
+                                        :
+                                        null
+                            }
+
+                            {replyDataId!=undefined && 
+                                
+                                <div className='Post_replyingTo_header'>
+                                    
+                                    <span className='Post_replyingTo-title'>Replying to </span> 
+                                    <span className='Post_replyingTo-name'>@{replyDataId.postedBy.Name}</span>
+                                    
+                                    <div className='Post_fullTweet_header'>
+                                        <span className='Post_fullTweet-title'>Link to Full Tweet <Link to={{ pathname: `/post/${replyDataId._id}`, query: 0 }}  > here </Link></span>
+                                    </div>
+                                        
+                                </div>
+                            }
+
+                            {postDetails_boolean && 
+                                
+                                <div className='Post_replyingTo_header'>
+
+                                    <span className='Post_replyingTo-title'>Replying to</span> 
+                                    <span className='Post_replyingTo-name'>@{postDetails_RootUser}</span>
+                                    
+                                    {postDetails_RootUser!=postDetails_CurrentUser
+                                    ? 
+                                        <>
+                                            and <span className='Post_replyingTo-name'>@{postDetails_CurrentUser}</span>
+                                        </>
+
+                                    :
+                                    null
+                                    }
+                                </div>
+                            }
+
+                        <div className="Post_header">
+                            {/* {console.log("LIKE FLAG",link_flag)} */}
+                                
+                                <Icon className="Post_avator" src={`${profilePicUrl}`}/>
+                                
                             
-                    </div>
-                }
+                                <Link to={`/profile/${username}`} style={{ textDecoration: 'none',color:'#374151'}}>
 
-                {postDetails_boolean && 
-                    
-                    <div className='Post_replyingTo_header'>
+                                    <div className="Post_displayName">
+                                        {displayName}
+                                    </div>
+                                </Link>
 
-                        <span className='Post_replyingTo-title'>Replying to</span> 
-                        <span className='Post_replyingTo-name'>@{postDetails_RootUser}</span>
+                                {/* {console.log("post mai hu ",{verified},{verified}=="True")} */}
+
+                                {/* <div className=""> */}
+                                    {/* { {verified}===true? <h2>hi</h2>:<div>flase hai</div>} */}
+                                <VerifiedUserIcon className="Post_verified"/>
+                                {/* </div> */}
+                                
+                                <div className="Post_username">@{username} </div>
+                                <div className='Post_dot'>.</div>
+                                <div className='Post_date'>{timestamp}</div>
+                            
+                            </div>
                         
-                        {postDetails_RootUser!=postDetails_CurrentUser
-                          ? 
-                            <>
-                                and <span className='Post_replyingTo-name'>@{postDetails_CurrentUser}</span>
-                            </>
-
-                          :
-                          null
-                        }
-                    </div>
-                }
-
-              <div className="Post_header">
-                   {/* {console.log("LIKE FLAG",link_flag)} */}
-                    
-                    <Icon className="Post_avator" src={`${profilePicUrl}`}/>
-                    
-                  
-                    <Link to={`/profile/${username}`} style={{ textDecoration: 'none',color:'#374151'}}>
-
-                        <div className="Post_displayName">
-                            {displayName}
-                        </div>
-                    </Link>
-
-                    {/* {console.log("post mai hu ",{verified},{verified}=="True")} */}
-
-                    {/* <div className=""> */}
-                        {/* { {verified}===true? <h2>hi</h2>:<div>flase hai</div>} */}
-                    <VerifiedUserIcon className="Post_verified"/>
-                    {/* </div> */}
-                    
-                    <div className="Post_username">@{username} </div>
-                    <div className='Post_dot'>.</div>
-                    <div className='Post_date'>{timestamp}</div>
-                
-              </div>
-            
-            
-                <div className="Post_text_img">
-                        <p className="Post_postText">{postText}</p>
-                        {/* <img className="Post_img" src={imageUrl} /> */}
-                </div>
+                        
+                            <div className="Post_text_img">
+                                    <p className="Post_postText">{postText}</p>
+                                    {/* <img className="Post_img" src={imageUrl} /> */}
+                            </div>
                                           
-                {/* </Link>} */}
-                </Link>
-               
+                 </Link>
+              {/*End of Link Tag  */}
                
                     {
                         editedText != undefined
@@ -654,130 +654,142 @@ var editFlag=false;
                         </div>   */}
              
                 
-                {/* <div>
-                    <button>
-                        <i class="fa-regular fa-comment"></i>
-                    </button>
-                </div> */}
-                {/* <FontAwesomeIcon icon="fa-regular fa-comment" /> */}
+                        {/* <div>
+                            <button>
+                                <i class="fa-regular fa-comment"></i>
+                            </button>
+                        </div> */}
+                        {/* <FontAwesomeIcon icon="fa-regular fa-comment" /> */}
 
-{/* *************************************************************************************** */}
-              <div className="Post_bottomIcons">
+                     
+                <div className="Post_bottomIcons">
 
-              {/* <button onClick={onClick}> Click me {count} </button> */}
+                         {/* <button onClick={onClick}> Click me {count} </button> */}
 
-                    <button id="myBtn" className='Post_icon_button' onClick={()=>reply_clicked()}> 
-                        <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
-                    </button>
- {typeof(userInfo.id)!='undefined'?
-   <>
-    {cnt==1?
+                        <button id="myBtn" className='Post_icon_button' onClick={()=>reply_clicked()}> 
+                            <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+                        </button>
 
-            <div id="myModal" className="modal3" onClick={() => divfun1()}>
-                 <div className="modal-content" onClick={() => divfun2()}>
-                        
-                        <div className='reply-closeArrowBtn'>
-                              <div className='modal-reply-heading'>Reply</div>
-                              <button className="closeArrowBtn" onClick={()=>reply_close_clicked()}>X</button>
-                        </div>
+                            {/* **********************************MODAL START***************************************************** */}
+                        {typeof(userInfo.id)!='undefined'
+                            ?
+                            <>
+                                {cnt==1?
 
-                        {/* <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
-                        <div className='modal-closeArrow-textarea'>
-                            
-                            <div className='Post_header'>
-                                <Icon className="Post_avator"  src={`${profilePicUrl}`}/>
-                            
-                                <div className="Post_displayName">
-                                    {displayName}
-                                </div>
-                            
-                                <VerifiedUserIcon className="Post_verified"/>
+                                    <div id="myModal" className="modal3" onClick={() => divfun1()}>
+                                            <div className="modal-content" onClick={() => divfun2()}>
+                                                
+                                                    <div className='reply-closeArrowBtn'>
+                                                        <div className='modal-reply-heading'>Reply</div>
+                                                        <button className="closeArrowBtn" onClick={()=>reply_close_clicked()}>X</button>
+                                                    </div>
+
+                                                    {/* <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
+                                                    <div className='modal-closeArrow-textarea'>
+                                                    
+                                                        <div className='Post_header'>
+                                                                <Icon className="Post_avator"  src={`${profilePicUrl}`}/>
+                                                            
+                                                                <div className="Post_displayName">
+                                                                    {displayName}
+                                                                </div>
+                                                            
+                                                                <VerifiedUserIcon className="Post_verified"/>
+                                                                        
+                                                                <div className="Post_username">@{username} </div>
+                                                                <div className='Post_dot'>.</div>
+                                                                <div className='Post_date'>{timestamp}</div>
+
+                                                            </ div>
+
+                                                            <p className="modal_postText">{postText}</p>
+                                                            {/* <hr className="bottom-border"/> */}
+                                                            <div className="bottom-border"></div>
+                                                        
+                                                            <div className='modal-reply_header'>
+
+                                                                <Icon className="modal_Post_avator" src={`${userInfo.profilePicUrl}`}/>
+
+                                                                <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
+                                                            </div>
+                                                    </div>
+                                                
+                                                
+                                                    {/* <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button> */}
                                         
-                                <div className="Post_username">@{username} </div>
-                                <div className='Post_dot'>.</div>
-                                <div className='Post_date'>{timestamp}</div>
-                            </ div>
+                                                    {replycontent.trim().length!=0? 
+                                                        <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button>
+                                                        :
+                                                        <button id="postBtn" className='modal_Post_reply_disable' >Post</button>
+                                                    }
 
-                            <p className="modal_postText">{postText}</p>
-                            {/* <hr className="bottom-border"/> */}
-                            <div className="bottom-border"></div>
-                            {/* <</p> */}
-                            <div className='modal-reply_header'>
-
-                                <Icon className="modal_Post_avator" src={`${userInfo.profilePicUrl}`}/>
-
-                                <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
-                            </div>
-                        </div>
-                        
-                        
-                        {/* <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button> */}
-                  
-                        {replycontent.trim().length!=0? 
-                            <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button>
+                                                    <button id="closeBtn" className='modal_Close_reply' onClick={()=>reply_close_clicked()}>Close</button>
+                                                
+                                            </div> 
+                                        </div>
+                                    :
+                                    null
+                                }
+                            </>
                             :
-                            <button id="postBtn" className='modal_Post_reply_disable' >Post</button>
+                                    
+                            null
                         }
 
-                        <button id="closeBtn" className='modal_Close_reply' onClick={()=>reply_close_clicked()}>Close</button>
-                        
-                    </div> 
-             </div>
-                    :
-     null}
-    </>
-    :
-                    
-    null}
+                        {/* ********************************END************************************************************* */}
 
-{/* ********************************END************************************************************* */}
+                   
 
-                    {/* <EditIcon /> */}
+                        {/* Retweet  */}
+                            <button className='Post_icon_button' onClick={()=>retweet_clicked()}>
+            
+                                <div className='icon-div-like-number'> 
 
-                    {/* Retweet  */}
-                    <button className='Post_icon_button' onClick={()=>retweet_clicked()}>
-    
-                        <div className='icon-div-like-number'> 
+                                         { reteweetColor==1
+                                             ?
+                                                <RepeatIcon fontSize="small" className={'icon-retweet-green'}/>
+                                             :
+                                                <RepeatIcon fontSize="small" className={'icon-retweet'}/>
+                                         }
 
-                        {reteweetColor==1?<RepeatIcon fontSize="small" className={'icon-retweet-green'}/>
-                            :<RepeatIcon fontSize="small" className={'icon-retweet'}/>}
+                                       {reteweetColor==1?<span className='icon-retweet-number'>{retweetLen || ""}</span>
+                                           :<span className='icon-number'>{retweetLen || ""}</span>}
 
-                         {reteweetColor==1?<span className='icon-retweet-number'>{retweetLen || ""}</span>
-                            :<span className='icon-number'>{retweetLen || ""}</span>}
+                                        {/* <span className='icon-like-number'>{retweetLen || ""}</span> */}
 
-                            {/* <span className='icon-like-number'>{retweetLen || ""}</span> */}
+                                </div>
+                                
+                            </button>
 
-                        </div>
-                        
-                    </button>
+                        {/* Likes Part */}
+                              <button id='like_button' className='Post_icon_button' onClick={()=>like_clicked()}>
+                                    {/* <FavoriteBorderIcon fontSize="small" className={'icon-like-'+btnCls}/> */}
 
-                   {/* Likes Part */}
-                    <button id='like_button' className='Post_icon_button' onClick={()=>like_clicked()}>
-                        {/* <FavoriteBorderIcon fontSize="small" className={'icon-like-'+btnCls}/> */}
+                                    {/* If you use setx() in useeffect then lot of re-rendering was happening. Also using it in if-else before console.log causes re-rendering. Thus used terneary operator. */}
+                                    <div className='icon-div-like-number'> 
 
-                        {/* If you use setx() in useeffect then lot of re-rendering was happening. Also using it in if-else before console.log causes re-rendering. Thus used terneary operator. */}
-                        <div className='icon-div-like-number'> 
+                                            {x==1
+                                            ?
+                                                <div>
+                                                        <FavoriteIcon fontSize="small" className={'icon-like-red'}/>
+                                                        {/* <span className='icon-like-number'>{dataLen_Likes || ""}</span> */}
+                                                </div>
+                                                :
+                                                <div>
+                                                        <FavoriteBorderIcon fontSize="small" className={'icon-like'}/>
+                                                        {/* <span className='icon-number'>{dataLen_Likes || ""}</span> */}
+                                                </div>
+                                            }
+                                    
+                                            {x==1?<span className='icon-like-number'>{dataLen_Likes || ""}</span>
+                                                :<span className='icon-number'>{dataLen_Likes || ""}</span>}
 
-                           {x==1?<div>
-                                    <FavoriteIcon fontSize="small" className={'icon-like-red'}/>
-                                    {/* <span className='icon-like-number'>{dataLen_Likes || ""}</span> */}
-                               </div>
-                             :
-                              <div>
-                                    <FavoriteBorderIcon fontSize="small" className={'icon-like'}/>
-                                    {/* <span className='icon-number'>{dataLen_Likes || ""}</span> */}
-                              </div>
-                            }
-                       
-                           {x==1?<span className='icon-like-number'>{dataLen_Likes || ""}</span>
-                             :<span className='icon-number'>{dataLen_Likes || ""}</span>}
+                                            {/* <span className='icon-like-number'>{dataLen_Likes || ""}</span> */}
 
-                             {/* <span className='icon-like-number'>{dataLen_Likes || ""}</span> */}
+                                    </div>
 
-                        </div>
-
-                        {/* In JavaScript, undefined, null, empty string and 0 all evaluate to false in a boolean context. Using || in an assignment is a way of saying "if defined, otherwise use this". */}
-                    </button>
+                                   {/* In JavaScript, undefined, null, empty string and 0 all evaluate to false in a boolean context. Using || in an assignment is a way of saying "if defined, otherwise use this". */}
+                              </button>
 
 
 
@@ -798,58 +810,61 @@ var editFlag=false;
                                 <div id="myModal" className="modal3" onClick={() => divfun1_edit()}>
                                     <div className="modal-content" onClick={() => divfun2_edit()}>
 
-                                        <div className='reply-closeArrowBtn'>
+                                            <div className='reply-closeArrowBtn'>
 
-                                            <div className='modal-reply-heading'>Edit Tweet</div>
-                                            <button className="closeArrowBtn" onClick={() => edit_close_clicked()}>X</button>
+                                                <div className='modal-reply-heading'>Edit Tweet</div>
+                                                <button className="closeArrowBtn" onClick={() => edit_close_clicked()}>X</button>
 
-                                        </div>
-
-                                        {/* <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
-                                        <div className='modal-closeArrow-textarea'>
-
-                                            <div className='Post_header'>
-                                                <Icon className="Post_avator" src={`${profilePicUrl}`} />
-
-                                                <div className="Post_displayName">
-                                                    {displayName}
-                                                </div>
-
-                                                <VerifiedUserIcon className="Post_verified" />
-
-                                                <div className="Post_username">@{username} </div>
-                                                <div className='Post_dot'>.</div>
-                                                <div className='Post_date'>{timestamp}</div>
-                                            </ div>
-
-                                            <p className="modal_postText">{postText}</p>
-                                            {/* <hr className="bottom-border"/> */}
-
-                                            <div className="bottom-border"></div>
-                                            {/* <</p> */}
-
-                                            <div className='modal-reply_header'>
-
-                                                <Icon className="modal_Post_avator" src={`${userInfo.profilePicUrl}`}/>
-                                                
-                                                <textarea className='modal-textarea' id="editMyTextarea" placeholder='Enter Your Edited Tweet' value={editContent} onChange={(e) => seteditContent(e.target.value)} ></textarea>
                                             </div>
 
-                                        </div>
+                                            {/* <Icon className="Post_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
+                                            <div className='modal-closeArrow-textarea'>
+
+                                                  <div className='Post_header'>
+                                                        <Icon className="Post_avator" src={`${profilePicUrl}`} />
+
+                                                        <div className="Post_displayName">
+                                                            {displayName}
+                                                        </div>
+
+                                                        <VerifiedUserIcon className="Post_verified" />
+
+                                                        <div className="Post_username">@{username} </div>
+                                                        <div className='Post_dot'>.</div>
+                                                        <div className='Post_date'>{timestamp}</div>
+                                                 </ div>
+
+                                                        <p className="modal_postText">{postText}</p>
+                                                        {/* <hr className="bottom-border"/> */}
+
+                                                        <div className="bottom-border"></div>
+                                                        {/* <</p> */}
+
+                                                    <div className='modal-reply_header'>
+
+                                                        <Icon className="modal_Post_avator" src={`${userInfo.profilePicUrl}`}/>
+                                                        
+                                                        <textarea className='modal-textarea' id="editMyTextarea" placeholder='Enter Your Edited Tweet' value={editContent} onChange={(e) => seteditContent(e.target.value)} ></textarea>
+                                                    </div>
+
+                                            </div>
 
 
-                                        {/* <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button> */}
+                                            {/* <button id="postBtn" className='modal_Post_reply' onClick={()=>reply_submit_clicked()}>Post</button> */}
 
-                                        {editContent.trim().length != 0 ?
-                                            <button id="postBtn" className='modal_Post_reply' onClick={() => edit_submit_clicked()}>Modify Tweet</button>
-                                            :
-                                        <button id="postBtn" className='modal_Post_reply_disable' >Modify Tweet</button>
-                                        }
+                                            {editContent.trim().length != 0 
+                                                ?
+                                                    <button id="postBtn" className='modal_Post_reply' onClick={() => edit_submit_clicked()}>Modify Tweet</button>
+                                                 :
+                                                    <button id="postBtn" className='modal_Post_reply_disable' >Modify Tweet</button>
+                                             }
 
-                                        <button id="closeBtn" className='modal_Close_reply' onClick={() => edit_close_clicked()}>Close</button>
+                                            <button id="closeBtn" className='modal_Close_reply' onClick={() => edit_close_clicked()}>Close</button>
 
                                     </div>
-                                </div>
+                                    {/* ⬆️Upper div is  Div-fun 2 closing */}
+                                 </div>
+                                   // ⬆️Upper div is  Div-fun 1 closing
                                 :
                                 null
                             }
@@ -862,10 +877,9 @@ var editFlag=false;
 
                     {/* <PublishIcon fontSize="small" /> */}
               </div>
- 
-              {/* </Link> */}
-        </div>
-        
+                {/* ⬆️Upper div is  Bottom Icons closing */}
+              
+         </div> //End of DIV     
     )
     
 }

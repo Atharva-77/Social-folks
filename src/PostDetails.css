@@ -36,6 +36,15 @@
 
 }
 
+.PostDetailTwo
+{
+    border-bottom: 1px solid lightgray;
+
+    padding-bottom: 0rem;
+    cursor: pointer;
+  
+
+}
 .PostDetail_HomePage_title
 {
     position: sticky;
@@ -91,6 +100,7 @@
     /* font-size: large; */
     /* color: red; */
     padding: 20px 0px;
+    background-color: rgb(243, 243, 243,0.8);;
 
 }
 .PostDetail_displayName
@@ -290,7 +300,7 @@
 /* .................................... */
 .PostDetail_replyingTo_header {
     margin-left: 1rem;
-    padding-bottom: 12px;
+    /* padding-bottom: 12px; */
 }
 
 .PostDetail_replyingTo-title {
