@@ -832,6 +832,7 @@ function Profile() {
                                                                         username={i[0].postedBy.username}
 
                                                                         originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+                                                                        profilePicUrl={i[0].postedBy.profilePicUrl}
 
                                                                         postText={i[0].content}
                                                                         createdAt={i[0].createdAt}
@@ -873,7 +874,7 @@ function Profile() {
                                                                                         username={i[0].postedBy.username}
                         
                                                                                         originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
-                        
+                                                                                        profilePicUrl={i[0].postedBy.profilePicUrl}
                                                                                         postText={i[0].content}
                                                                                         createdAt={i[0].createdAt}
                                                                                         // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
@@ -913,7 +914,7 @@ function Profile() {
                                                                                             username={i[0].postedBy.username}
                             
                                                                                             originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
-                            
+                                                                                            profilePicUrl={i[0].postedBy.profilePicUrl}
                                                                                             postText={i[0].content}
                                                                                             createdAt={i[0].createdAt}
                                                                                             // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"

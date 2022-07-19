@@ -10,14 +10,14 @@ import { Link } from 'react-router-dom';
 
 
 
-function FollowList({ids,Icon,displayName, username , description,followers}) {
+function FollowList({ids,Icon,displayName, username , description, profilePicUrl,followers}) {
     
     
     
     const {id}=useParams();
     const { query } = useLocation(); 
 
-    console.log(id,"FOLLOWLIST ",description);
+    console.log(id,"FOLLOWLIST ",description,profilePicUrl);
 
 
 
@@ -26,7 +26,7 @@ function FollowList({ids,Icon,displayName, username , description,followers}) {
     <div className='FollowList_top'>
         <div className="FollowList_header">
 
-                 <Icon className="FollowList_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs" />
+                 <Icon className="FollowList_avator" src={`${profilePicUrl}`} />
 
                 <Link to={`/profile/${username}`} style={{ textDecoration: 'none', color: '#374151' }}>
 
@@ -43,7 +43,7 @@ function FollowList({ids,Icon,displayName, username , description,followers}) {
 
           <div className="FollowList_description">
               {
-                description!=undefined
+                description!=undefined && description!=""
                 ?
                   description
                 :

@@ -19,7 +19,7 @@ function Post({id,Icon,displayName, username,originalData, profilePicUrl,postTex
     //  console.log("2.",typeof(retweetData),originalData,postText);
     // console.log("ON POST",postText,replyDataId,replyDataId==undefined);
     // console.log("EDITED TEXT",editedText,postText);
-    console.log("PROFILE PIC URL",profilePicUrl);
+    // console.log("PROFILE PIC URL",profilePicUrl);
     var displayname_retweet=displayName;
 
     if (typeof(retweetData)!='undefined') {
@@ -34,7 +34,7 @@ function Post({id,Icon,displayName, username,originalData, profilePicUrl,postTex
         username=originalData.username;
         // displayName='YO'
         // username='HI'
-
+        profilePicUrl=originalData.profilePicUrl;
 
     }
     
@@ -528,8 +528,10 @@ var editFlag=false;
     return (
         <div className="Post" id={id}>
  {/* {true && <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}}> */}
+           
+            {/* to={{ pathname: `/follow/${id}`, query: 1 }} */}
 
- <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}}>
+ <Link to={{ pathname: `/post/${id}`, query: 0}} style={{ textDecoration: 'none',color:'#374151'}}>
                 {typeof(retweetData)!='undefined'
                             ?
                             <div className='icon-div-like-number'>
@@ -550,7 +552,7 @@ var editFlag=false;
                         <span className='Post_replyingTo-name'>@{replyDataId.postedBy.Name}</span>
                         
                         <div className='Post_fullTweet_header'>
-                            <span className='Post_fullTweet-title'>Link to Full Tweet <Link to={`/post/${replyDataId._id}`} > here </Link></span>
+                            <span className='Post_fullTweet-title'>Link to Full Tweet <Link to={{ pathname: `/post/${replyDataId._id}`, query: 0 }}  > here </Link></span>
                         </div>
                             
                     </div>
@@ -683,7 +685,7 @@ var editFlag=false;
                         <div className='modal-closeArrow-textarea'>
                             
                             <div className='Post_header'>
-                                <Icon className="Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                <Icon className="Post_avator"  src={`${profilePicUrl}`}/>
                             
                                 <div className="Post_displayName">
                                     {displayName}
@@ -702,7 +704,7 @@ var editFlag=false;
                             {/* <</p> */}
                             <div className='modal-reply_header'>
 
-                                <Icon className="modal_Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                <Icon className="modal_Post_avator" src={`${userInfo.profilePicUrl}`}/>
 
                                 <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
                             </div>
@@ -807,7 +809,7 @@ var editFlag=false;
                                         <div className='modal-closeArrow-textarea'>
 
                                             <div className='Post_header'>
-                                                <Icon className="Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs" />
+                                                <Icon className="Post_avator" src={`${profilePicUrl}`} />
 
                                                 <div className="Post_displayName">
                                                     {displayName}
@@ -828,7 +830,7 @@ var editFlag=false;
 
                                             <div className='modal-reply_header'>
 
-                                                <Icon className="modal_Post_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                                <Icon className="modal_Post_avator" src={`${userInfo.profilePicUrl}`}/>
                                                 
                                                 <textarea className='modal-textarea' id="editMyTextarea" placeholder='Enter Your Edited Tweet' value={editContent} onChange={(e) => seteditContent(e.target.value)} ></textarea>
                                             </div>

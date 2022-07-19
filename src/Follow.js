@@ -17,7 +17,7 @@ function Follow() {
     const { id } = useParams();
     const { query } = useLocation();
 
-    // console.log(id, "HI ", query);
+    console.log(id, "HI ", query);
 
     const [followers_Tab, setfollowers_Tab] = useState(query);
     const [data, setdata] = useState('')
@@ -156,6 +156,7 @@ function Follow() {
                                                 displayName={i[0].Name}
                                                 username={i[0].username}
                                                 description={i[0].description}
+                                                profilePicUrl={i[0].profilePicUrl}
                                             />
 
                                         })
@@ -180,7 +181,7 @@ function Follow() {
                                             displayName={i[0].Name}
                                             username={i[0].username}
                                             description={i[0].description}
-
+                                            profilePicUrl={i[0].profilePicUrl}
                                         />
 
 

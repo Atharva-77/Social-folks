@@ -122,7 +122,7 @@ router.get('/allpost',async(req,res)=>
     {   
         // console.log("All Poste mai",req.userAuth);
         console.log("ENTERED ALLPOST");
-        const data=await PostDb.find({}).populate('postedBy','Name username email profilePicUrl').populate('originalPostedBy','Name username email').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
+        const data=await PostDb.find({}).populate('postedBy','Name username email profilePicUrl').populate('originalPostedBy','Name username email profilePicUrl').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
         // console.log("DATA",data);
         // const data
         const data1=await RegisterDb.populate(data,{path:'retweetDataId.postedBy'})
@@ -155,7 +155,7 @@ router.get('/allpost/following/:id', protect, async (req, res) => {
         const getUser = await RegisterDb.findOne({ username: username })
         // console.log("GET-FOLLOWING ", getUser.following[0],typeof(getUser.following))
 
-        const data = await PostDb.find({ postedBy: getUser.following }).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
+        const data = await PostDb.find({ postedBy: getUser.following }).populate('postedBy', 'Name username email profilePicUrl').populate('originalPostedBy', 'Name username email profilePicUrl').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
         console.log("DATA", Object.keys(data).length);
 
         const data1 = await RegisterDb.populate(data, { path: 'retweetDataId.postedBy' })
@@ -217,11 +217,11 @@ router.get('/specificPost', async (req, res) => {
 
         //If {} brackets used, then spread the opertor. If not used, dont spread
         // let data_Content = await PostDb.find({...searchWord_Content}).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
-        const data_Content = await PostDb.find(searchWord_Content).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
+        const data_Content = await PostDb.find(searchWord_Content).populate('postedBy', 'Name username email profilePicUrl').populate('originalPostedBy', 'Name username email profilePicUrl').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
 
         console.log("DATA",data_Content.length,typeof(data_Content[0]));
 
-        const dataRetweet_Content = await PostDb.find({ ...searchWord_retweetContent }).populate('postedBy', 'Name username email').populate('originalPostedBy', 'Name username email').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
+        const dataRetweet_Content = await PostDb.find({ ...searchWord_retweetContent }).populate('postedBy', 'Name username email profilePicUrl').populate('originalPostedBy', 'Name username email profilePicUrl').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
         // console.log("DATA.", dataRetweet_Content.length);
 
         // console.log("DATA...",  (data_Content));
@@ -353,7 +353,7 @@ router.get("/postedBy/:id",async(req,res)=>
         console.log("GETUser",getUser,getUser._id);
 
         //After getting username's Id, we search by that Id in POst db..
-        const postDetail=await PostDb.find({postedBy:getUser._id}).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
+        const postDetail=await PostDb.find({postedBy:getUser._id}).populate('postedBy','Name username email profilePicUrl').populate('originalPostedBy','Name username email profilePicUrl').populate('retweetDataId').populate('replyDataId').sort({"createdAt":-1})
         
         const data1=await RegisterDb.populate(postDetail,{path:'retweetDataId.postedBy'})
         const data2=await RegisterDb.populate(data1,{path:'replyDataId.postedBy'})
@@ -437,16 +437,17 @@ router.get("/:id",async(req,res)=>
         // const postDetail=await RegisterDb.populate(postDetail1,{path:'retweetDataId'})
         // console.log("\n RPD",postDetail);
 
-        const postDetail=await PostDb.findById(postid).populate('postedBy','Name username email').populate('originalPostedBy','Name username email').populate('retweetDataId').sort({"createdAt":-1})
+        const postDetail=await PostDb.findById(postid).populate('postedBy','Name username email profilePicUrl').populate('originalPostedBy','Name username email profilePicUrl').populate('retweetDataId').sort({"createdAt":-1})
         
         // console.log("PD1",postDetail);
         // const full_postDetail=await RegisterDb.populate(postDetail,{path:'retweetDataId'})
 
-        const full_postDetail=await RegisterDb.populate(postDetail,{path:'retweetDataId.postedBy'})
+        const full_postDetail1=await RegisterDb.populate(postDetail,{path:'retweetDataId'})
         // console.log("FD2",full_postDetail,"\nPD2",postDetail);
-        // const full_postDetail=await PostDb.populate('624fed7e8cd38accdafd0826')        
+        const full_postDetail2 = await RegisterDb.populate(full_postDetail1, { path: 'replyDataId' })
+        const full_postDetail3 = await RegisterDb.populate(full_postDetail2, { path: 'replyDataId.postedBy' })      
         try{
-            res.status(200).json(full_postDetail)
+            res.status(200).json(full_postDetail3)
         }
        
         catch(err)

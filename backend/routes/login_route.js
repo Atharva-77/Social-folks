@@ -34,6 +34,8 @@ router.post('/add',async(req,res)=>
                         retweets:userDetails[0].retweets,
                         followers:userDetails[0].followers,
                         following:userDetails[0].following,
+                        profilePicUrl:userDetails[0].profilePicUrl,
+                        coverPicUrl:userDetails[0].coverPicUrl,
                         token:generateToken(userDetails[0]._id)                      
                     }
                 )

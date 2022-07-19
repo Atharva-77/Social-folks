@@ -59,7 +59,13 @@
     padding-top: 1rem;
     padding-left: 1rem;
 }
+.PostDetail_header_modal {
+    display: flex;
 
+    align-items: center;
+    padding-top: 1rem;
+    /* padding-left: 1rem; */
+}
 .PostDetail_avator
 {
     margin-right: 10px;
@@ -280,9 +286,39 @@
 
 
 
+/* ......Replying To.............................. */
+/* .................................... */
+.PostDetail_replyingTo_header {
+    margin-left: 1rem;
+    padding-bottom: 12px;
+}
+
+.PostDetail_replyingTo-title {
+    color: #3d3e40;
+    font-weight: 650;
+}
+
+.PostDetail_replyingTo-name {
+    color: #1da1f2;
+    padding-right: 7px;
+    font-weight: 500;
+}
+
+/* .................................... */
+.PostDetail_fullTweet_header {
+    padding: 2px 0px;
+    padding-top: 4px;
+}
+
+.PostDetail_fullTweet-title {
+    font-weight: 500;
+    color: #636e75;
+}
+
+/* .................................... */
 
 
-/* ************************************************************************ */
+/* ********************************  MODAL  **************************************** */
 .modal3 {
     display: block; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -385,7 +421,7 @@
 
 .modal_PostDetail_avator
 {
-margin-top: 5px;
+    margin-top: 5px;
 }
 .modal-textarea
 {  

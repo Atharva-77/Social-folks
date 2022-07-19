@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from 'react'
 import { useDispatch,useSelector } from 'react-redux';
 
-import { useParams } from 'react-router';
+import { useParams, useLocation } from 'react-router';
 import axios from 'axios';
 import Post4 from './Post4';
 
@@ -18,6 +18,9 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 function PostDetails() {
 
     const {id}=useParams();
+    const { query } = useLocation();
+
+    console.log(id, "HI ", query);
     // console.log("ID in PD.js",id);
     var timestamp;//=timeDifference(new Date(),new Date(data.createdAt))
     const [rootId, setrootId] = useState(0); 
@@ -121,7 +124,7 @@ function PostDetails() {
             axios.get(`http://localhost:4000/post/${id}`)
             .then(res=>
                 {
-                    console.log(" RES.DATA ",(res.data));
+                    console.log(" 111111111111111111111111111RES.DATA ",(res.data));
                     setdata(res.data);
                     setrootId(id);
                     setrootData(res.data);
@@ -154,34 +157,149 @@ function PostDetails() {
 
         }, [])
 
-        if(data!=0 && id!=data._id)
+        useEffect(()=>
         {
-            console.log("155 YOYOY");
-            axios.get(`http://localhost:4000/post/${id}`)
-            .then(res=>
-                {
-                    console.log(" 160RES.DATA ",(res.data));
-                    setdata(res.data);
-                    setreload(0);
-                    
-                    setdata_RetweetId(res.data.retweetUserList);
-                    setdataLen_RetweetId(res.data.retweetUserList.length);
+            console.log("id changeddd",id);
 
-                    setdata_Likes(res.data.likes);
-                    setdataLen_Likes(res.data.likes.length);
-                    // timestamp=timeDifference(new Date(),new Date(data.createdAt));
-                })
+            if (data != 0 && id != data._id) 
+            {
+                console.log("155 YOYOY---------------------------------------------------", query);
 
-                axios.get(`http://localhost:4000/post/reply/${id}`)
-                .then(res=>
+                      //If The root tweet is "Replying to", then there is an option of 'Link to Full tweet'. When this is cicked, it take to a tweet. So that tweet should become rootTweet . Hence rootTweet is reassigned.
+                    if (query == 1) 
+                     {
+                            axios.get(`http://localhost:4000/post/${id}`)
+                                .then(res => {
+                                    console.log(" DATAAAAAAAAAAAAAAAA RES.DATA ", (res.data));
+                                    setdata(res.data);
+                                    setrootId(id);
+                                    setrootData(res.data);
+
+
+                                    setrootData_Likes(res.data.likes);
+                                    setrootDataLen_Likes(res.data.likes.length);
+
+                                    setdata_Likes(res.data.likes);
+                                    setdataLen_Likes(res.data.likes.length);
+
+
+                                    setrootData_RetweetId(res.data.retweetUserList);
+                                    setrootDataLen_RetweetId(res.data.retweetUserList.length);
+
+                                    setdata_RetweetId(res.data.retweetUserList);
+                                    setdataLen_RetweetId(res.data.retweetUserList.length);
+                                    // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                                })
+
+                            axios.get(`http://localhost:4000/post/reply/${id}`)
+                                .then(res => {
+                                    // console.log(" 2.RepliesRES.DATA ",(res.data));
+                                    setrepliesData(res.data);
+                                    // setreload(0)
+                                    // console.log(" 3.RES.DATA ",repliesData);
+                                    // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                                })
+                        }
+
+                    else 
                     {
-                        // console.log(" 2.RepliesRES.DATA ",(res.data));
-                        setrepliesData(res.data);
-                        // setreload(0)
-                        // console.log(" 3.RES.DATA ",repliesData);
-                        // timestamp=timeDifference(new Date(),new Date(data.createdAt));
-                    })
-        }
+                            axios.get(`http://localhost:4000/post/${id}`)
+                                .then(res => {
+                                    console.log(" 160RES.DATA ", (res.data));
+                                    setdata(res.data);
+                                    setreload(0);
+
+                                    setdata_RetweetId(res.data.retweetUserList);
+                                    setdataLen_RetweetId(res.data.retweetUserList.length);
+
+                                    setdata_Likes(res.data.likes);
+                                    setdataLen_Likes(res.data.likes.length);
+                                    // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                                })
+
+                            axios.get(`http://localhost:4000/post/reply/${id}`)
+                                .then(res => {
+                                    // console.log(" 2.RepliesRES.DATA ",(res.data));
+                                    setrepliesData(res.data);
+                                    // setreload(0)
+                                    // console.log(" 3.RES.DATA ",repliesData);
+                                    // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                                })
+                    }
+
+
+            }
+        },[id])
+
+
+        // if(data!=0 && id!=data._id)
+        //  {
+        //           console.log("155 YOYOY---------------------------------------------------", query);
+
+        //             //If The root tweet is "Replying to", then there is an option of 'Link to Full tweet'. When this is cicked, it take to a tweet. So that tweet should become rootTweet . Hence rootTweet is reassigned.
+        //         if(query==1)
+        //            {
+        //                 axios.get(`http://localhost:4000/post/${id}`)
+        //                     .then(res => {
+        //                         console.log(" DATAAAAAAAAAAAAAAAA RES.DATA ", (res.data));
+        //                         setdata(res.data);
+        //                         setrootId(id);
+        //                         setrootData(res.data);
+
+
+        //                         setrootData_Likes(res.data.likes);
+        //                         setrootDataLen_Likes(res.data.likes.length);
+
+        //                         setdata_Likes(res.data.likes);
+        //                         setdataLen_Likes(res.data.likes.length);
+
+
+        //                         setrootData_RetweetId(res.data.retweetUserList);
+        //                         setrootDataLen_RetweetId(res.data.retweetUserList.length);
+
+        //                         setdata_RetweetId(res.data.retweetUserList);
+        //                         setdataLen_RetweetId(res.data.retweetUserList.length);
+        //                         // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+        //                     })
+
+        //                 axios.get(`http://localhost:4000/post/reply/${id}`)
+        //                     .then(res => {
+        //                         // console.log(" 2.RepliesRES.DATA ",(res.data));
+        //                         setrepliesData(res.data);
+        //                         // setreload(0)
+        //                         // console.log(" 3.RES.DATA ",repliesData);
+        //                         // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+        //                     })
+        //             }
+
+        //             else
+        //             {
+        //                 axios.get(`http://localhost:4000/post/${id}`)
+        //                     .then(res => {
+        //                         console.log(" 160RES.DATA ", (res.data));
+        //                         setdata(res.data);
+        //                         setreload(0);
+
+        //                         setdata_RetweetId(res.data.retweetUserList);
+        //                         setdataLen_RetweetId(res.data.retweetUserList.length);
+
+        //                         setdata_Likes(res.data.likes);
+        //                         setdataLen_Likes(res.data.likes.length);
+        //                         // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+        //                     })
+
+        //                 axios.get(`http://localhost:4000/post/reply/${id}`)
+        //                     .then(res => {
+        //                         // console.log(" 2.RepliesRES.DATA ",(res.data));
+        //                         setrepliesData(res.data);
+        //                         // setreload(0)
+        //                         // console.log(" 3.RES.DATA ",repliesData);
+        //                         // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+        //                     })
+        //             }
+
+                
+        // }
        
 
         const retweet_clicked=(retweetSubmitId='')=>
@@ -587,45 +705,64 @@ function PostDetails() {
                   
                              <div className='PostDetail'>
                                         {rootData.retweetDataId!=undefined
-                                        ?
+                                         ?
                                                 <div className='PostDetail_retweetText-header'>
                                                     <p className="PostDetail_retweetText" id='PostDetail-retweetby'>Retweeted by <a href="/profile">{rootData.postedBy.Name}</a></p>
                                                     <p className="PostDetail_retweetText">New Post of <a href="/profile">{rootData.postedBy.Name}</a></p>
                                                 </div>
-                                        :
+                                         :
                                             null
+                                        }
+                                        {rootData.replyDataId != undefined &&
+
+                                            <div className='PostDetail_replyingTo_header'>
+
+                                                <span className='PostDetail_replyingTo-title'>Replying to </span>
+                                                <span className='PostDetail_replyingTo-name'>@{rootData.replyDataId.postedBy.Name}</span>
+
+                                                <div className='PostDetail_fullTweet_header'>
+                                                     <span className='PostDetail_fullTweet-title'>Link to Full Tweet <Link to={{ pathname: `/post/${rootData.replyDataId._id}`, query: 1 }} > here </Link></span>
+                                                </div>
+
+                                            </div>
                                         }   
 
-                                     <div className="PostDetail_header">
+                                        <div className="PostDetail_header">
 
-                                        <Avatar className="PostDetail_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
-
-                                        <div className="PostDetail_displayName">
-                                            
-                                            {rootData.originalPostedBy==undefined
-                                            ?
-                                                rootData.postedBy.Name
-                                            :
-                                                rootData.originalPostedBy.Name
-                                                // <h2>Orgp</h2>
-                                            }
-                                        </div>
-                                        
-                                        <VerifiedUserIcon className="PostDetail_verified"/>
-                                        
-                                        <div className="PostDetail_username">
-                                            {/* @{rootData.postedBy.username}  */}
-                                              @{rootData.originalPostedBy==undefined
+                                                {/* <Avatar className="PostDetail_avator" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/> */}
+                                                {rootData.originalPostedBy == undefined
+                                                    ?
+                                                    <Avatar className="PostDetail_avator" src={`${rootData.postedBy.profilePicUrl}`} />
+                                                    :
+                                                    <Avatar className="PostDetail_avator" src={`${rootData.originalPostedBy.profilePicUrl}`} />
+                                                    // <h2>Orgp</h2>
+                                                }
+                                            <div className="PostDetail_displayName">
+                                                
+                                                {rootData.originalPostedBy==undefined
                                                 ?
-                                                    rootData.postedBy.username
+                                                    rootData.postedBy.Name
                                                 :
-                                                    rootData.originalPostedBy.username
-                                            }
+                                                    rootData.originalPostedBy.Name
+                                                    // <h2>Orgp</h2>
+                                                }
                                             </div>
-                                        <div className='PostDetail_dot'>.</div>
-                                        <div className='PostDetail_date'>{timeDifference(new Date(),new Date(rootData.createdAt))}</div>
+                                            
+                                            <VerifiedUserIcon className="PostDetail_verified"/>
+                                            
+                                            <div className="PostDetail_username">
+                                                {/* @{rootData.postedBy.username}  */}
+                                                @{rootData.originalPostedBy==undefined
+                                                    ?
+                                                        rootData.postedBy.username
+                                                    :
+                                                        rootData.originalPostedBy.username
+                                                }
+                                                </div>
+                                            <div className='PostDetail_dot'>.</div>
+                                             <div className='PostDetail_date'>{timeDifference(new Date(),new Date(rootData.createdAt))}</div>
                                     
-                                     </div>
+                                        </div>
                         
                         
                                      <div className="PostDetail_text_img">
@@ -675,9 +812,16 @@ function PostDetails() {
 
                                                                         <div className='modal-closeArrow-textarea'>
                                                                             
-                                                                                   <div className='PostDetail_header'>
-                                                                                        <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
-                                                                                    
+                                                                                        <div className='PostDetail_header_modal'>
+                                                                                                
+                                                                                                 {/* <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/> */}
+                                                                                            {rootData.originalPostedBy == undefined
+                                                                                                ?
+                                                                                                <Avatar className="PostDetail_avator" src={`${rootData.postedBy.profilePicUrl}`} />
+                                                                                                :
+                                                                                                <Avatar className="PostDetail_avator" src={`${rootData.originalPostedBy.profilePicUrl}`} />
+                                                                                                // <h2>Orgp</h2>
+                                                                                            }
                                                                                         <div className="PostDetail_displayName">
                                                                                             {rootData.originalPostedBy==undefined
                                                                                                 ?
@@ -832,16 +976,35 @@ function PostDetails() {
                                     :
                                     null
                                 }
+                                {data.replyDataId != undefined &&
+
+                                    <div className='PostDetail_replyingTo_header'>
+
+                                        <span className='PostDetail_replyingTo-title'>Replying to </span>
+                                        <span className='PostDetail_replyingTo-name'>@{data.replyDataId.postedBy.Name}</span>
+
+                                        <div className='PostDetail_fullTweet_header'>
+                                            <span className='PostDetail_fullTweet-title'>Link to Full Tweet <Link to={{ pathname: `/post/${data.replyDataId._id}`, query: 1 }} > here </Link></span>
+                                        </div>
+
+                                    </div>
+                                }   
 
                                 <div className="PostDetail_header" >
                                 
-                                    <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
-
+                                             {/* <Avatar className="PostDetail_avator" src={`${data.postedBy.profilePicUrl}`}/> */}
+                                         {data.originalPostedBy==undefined
+                                             ?
+                                                 <Avatar className="PostDetail_avator" src={`${data.postedBy.profilePicUrl}`}/>
+                                             :
+                                                <Avatar className="PostDetail_avator" src={`${data.originalPostedBy.profilePicUrl}`}/>
+                                                // <h2>Orgp</h2>
+                                          }
                                     <div className="PostDetail_displayName" id="PostDetail-largesize">
                                         {data.originalPostedBy==undefined
-                                        ?
+                                         ?
                                             data.postedBy.Name
-                                        :
+                                         :
                                             data.originalPostedBy.Name
                                             // <h2>Orgp</h2>
                                         }
@@ -909,8 +1072,16 @@ function PostDetails() {
 
                                                                     <div className='modal-closeArrow-textarea'>
                                                                         
-                                                                             <div className='PostDetail_header'>
-                                                                                    <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/>
+                                                                             <div className='PostDetail_header_modal'>
+                                                                                    {/* <Avatar className="PostDetail_avator" src="https://media-exp2.licdn.com/dms/image/C4D03AQGPawx5zAoFWg/profile-displayphoto-shrink_800_800/0/1600092593879?e=1659571200&v=beta&t=0ffRoHZIbjbW2K79t0l9JnAkEnWgp2vda1MXHWhUwYs"/> */}
+                                                                                    
+                                                                                    {data.originalPostedBy == undefined
+                                                                                        ?
+                                                                                        <Avatar className="PostDetail_avator" src={`${data.postedBy.profilePicUrl}`} />
+                                                                                        :
+                                                                                        <Avatar className="PostDetail_avator" src={`${data.originalPostedBy.profilePicUrl}`} />
+                                                                                        // <h2>Orgp</h2>
+                                                                                    }
                                                                                 
                                                                                     <div className="PostDetail_displayName">
                                                                                         {
@@ -961,7 +1132,7 @@ function PostDetails() {
                                                                                <div className="bottom-border"></div>
                                                                     
                                                                                 <div className='modal-reply_header'>
-                                                                                    <Avatar className="modal_PostDetail_avator" />
+                                                                                    <Avatar className="modal_PostDetail_avator" src={`${userInfo.profilePicUrl}`}/>
                                                                                     <textarea className='modal-textarea' id="myTextarea" placeholder='Tweet Your Reply' value={replycontent} onChange={(e)=>setreplycontent(e.target.value)} ></textarea>
                                                                                 </div>
                                                                     </div>
