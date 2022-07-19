@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { USER_LOGIN_REQUEST, 
          USER_LOGIN_SUCCESS, 
-         USER_LOGIN_FAILURE} from '../constants/userConstants'
+         USER_LOGIN_FAILURE,
+
+         USER_LOGOUT} from '../constants/userConstants'
 
 const userLoginRequest=()=>
 {
@@ -25,6 +27,22 @@ const userLoginFailure= error=>
         type: USER_LOGIN_FAILURE,
         payload: error
     }
+}
+
+
+const userLogout = () =>
+{
+    return {
+        type: USER_LOGOUT
+    }
+}
+
+//Logout
+
+export const logout_action=()=>async(dispatch)=> 
+{
+    dispatch(userLogout());
+    console.log("logged  outttttttttt");
 }
 
 export const userAction_details=(email,password)=>async(dispatch) =>

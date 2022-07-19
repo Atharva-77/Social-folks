@@ -1,34 +1,49 @@
 import axios from 'axios';
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import './Register.css' ;
-
-
+import { useDispatch,useSelector } from 'react-redux';
+import {userAction_details} from './Reducers/actions/userActions'
+import {  useHistory } from 'react-router'; 
 
 
 function Register() {
+
+  let history = useHistory()
 
   const [Name, setName] = useState('');
   const [Email, setEmail] = useState('');
   const [Username, setUsername] = useState('');
   const [Password, setPassword] = useState('');
   const [confirmPassword, setconfirmPassword] = useState('');
+  
+  const redirect=`/`
 
-  // console.log(email);
+    // console.log(email);
+    const dispatch = useDispatch();
+    const userLoginData=useSelector(state=>state.userLoginKey)
+    const {loading, userInfo, error}=userLoginData
+
+   useEffect(() => 
+     {
+          //when getting request, userinfo becomes true as  userLoginRequest is called.
+          //length==0 becomes when 1st time login pg is visited
+          //Fail.No user is received when details don't match
+
+          //if user is logged in  direct to home page..not working when aftr login  i type login_brad url, everything gets refreshed
+          if( !(typeof(userInfo)=='undefined') && userInfo.length!=0 && userInfo!=='Fail.No user' && userInfo!="Fail. Email or password not matching")
+          {
+              console.log("Login useeffect, redirect");
+              history.push(redirect)
+          }
+          
+     }, [history,userInfo,redirect])
+
 
   const submit_form=(e)=>
   {
       // e.preventDefault() // use or no????????????????????????
       console.log('Submit form', Name,Email,Username, Password,confirmPassword);
-    
-      // const config=
-      // {
-      //     headers:
-      //     {
-      //         'Content-Type':"application/json",
-      //         // Authorization:`Bearer ${userInfo.token}`
-      //     }
-      // }
     
       // console.log(config);
       const register_data=
@@ -37,7 +52,7 @@ function Register() {
         "username":Username,
         "email":Email,
         "password": Password
-    }
+      }
 
 
       axios.post(`http://localhost:4000/register/add`,register_data)
@@ -45,15 +60,19 @@ function Register() {
             {
                   console.log("AXIOS:-",res.data); 
                   // console.log("PROPS.parentHandler",props.parentHandler); 
+                  dispatch(userAction_details(Email,Password));   
              } 
          )
+        //  dispatch(userAction_details(Email,Password));  
    }
 
   return (
     <div className='register_header'>
        
-       <img className="logo" src="https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg" />
-     
+          <Link to="/">
+                <img className="logo" src="https://www.mintformations.co.uk/blog/wp-content/uploads/2020/05/shutterstock_583717939.jpg" />
+          </Link>
+
        <div className='register_details'>
            
         

@@ -576,8 +576,14 @@ function Profile() {
                                 <h2>Username {profileData.username}</h2>
                                     
                                      <div className='Profile_Div_CoverPic'>
-
-                                          < img className='Profile_Div_Cp' src={`${profileData.coverPicUrl}`} />
+                                            {profileData.coverPicUrl!=undefined
+                                             ?
+                                                < img className='Profile_Div_Cp' src={`${profileData.coverPicUrl}`} />
+                                             :
+                                                 < img className='Profile_Div_Cp'  />
+                                            
+                                            }
+                                          
 
                                       
                                         <div className='Profile_avatar_header'>
