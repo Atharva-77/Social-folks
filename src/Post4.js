@@ -55,6 +55,8 @@ function Post({id,Icon,displayName, username,originalData, profilePicUrl,postTex
     const [replycontent, setreplycontent] = useState("");
     const [editContent, seteditContent] = useState("");
 
+    const [plsLoginMessg, setplsLoginMessg] = useState(false);
+
     var rep="";
 
     
@@ -164,32 +166,42 @@ var editFlag=false;
         //     console.log("LIKE KARO",likeCounter);
         // else
         //     console.log("Dislike Kyu kiya",likeCounter);
-
-        const config=
+        console.log("LIKE-USERINFO",userInfo.id);
+        if(userInfo.id==undefined)
         {
-            headers:
-            {
-                'Content-Type':"application/json",
-                Authorization:`Bearer ${userInfo.token}`
-            }
+            setplsLoginMessg(true);
         }
-        // console.log("POST ID",id);
-       
-        const postData=
-         {
-            "postid":id
-         }
-
-        axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
-        .then( res =>
+        else
+        {
+            const config=
+            {
+                headers:
                 {
-                    // console.log("179 POST-LIKE-AXIOS:-",dataLen_Likes,data_Likes);
-                    setdataLen_Likes(res.data.likes.length);
-                    setdata_Likes(res.data.likes);
-                    // console.log("182.dataLen_Likes",dataLen_Likes,data_Likes); 
+                    'Content-Type':"application/json",
+                    Authorization:`Bearer ${userInfo.token}`
                 }
-            )
-            // parentHandler();
+            }
+            // console.log("POST ID",id);
+           
+            const postData=
+             {
+                "postid":id
+             }
+    
+            axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
+            .then( res =>
+                    {
+                        // console.log("179 POST-LIKE-AXIOS:-",dataLen_Likes,data_Likes);
+                        setdataLen_Likes(res.data.likes.length);
+                        setdata_Likes(res.data.likes);
+                        // console.log("182.dataLen_Likes",dataLen_Likes,data_Likes); 
+                    }
+                )
+
+                setplsLoginMessg(false);
+                // parentHandler();
+        }
+        
     }
     // console.log("186:- dataLen_Likes56",dataLen_Likes,data_Likes,postText,who); 
     // console.log("Like val",likeCounter,x);
@@ -198,39 +210,49 @@ var editFlag=false;
 
     const retweet_clicked=()=>
     {
-
         console.log("RETWEET clicked",displayName,"POSTID:-",id,username);
 
-        const config=
+        if(userInfo.id==undefined)
         {
-            headers:
-            {
-                'Content-Type':"application/json",
-                Authorization:`Bearer ${userInfo.token}`
-            }
+            setplsLoginMessg(true);
         }
-        // console.log("POST ID",id);
        
-        const postData=
-         {
-            "postid":id
-         }
 
-        axios.post(`http://localhost:4000/post/${id}/retweet`,postData,config)
-        .then( res =>
+        else
+        {
+            const config=
+            {
+                headers:
                 {
-                    console.log("POST-RETWEET-AXIOS:-",res.data.content, res.data.retweetUserList.length,res.data.retweetUserList);
-                    setretweetLen(res.data.retweetUserList.length);
-                    setretweetId_data(res.data.retweetUserList)
-                    // setdata_Likes(res.data.likes);
-                    console.log("RETWEET",res.data); 
-                    console.log("PARENTHANDLER",parentHandler==undefined);
-                    var yo=(parentHandler==undefined)?null:parentHandler();
-
-                    // parentHandler();
+                    'Content-Type':"application/json",
+                    Authorization:`Bearer ${userInfo.token}`
                 }
-            )
-            // parentHandler();
+            }
+            // console.log("POST ID",id);
+           
+            const postData=
+             {
+                "postid":id
+             }
+    
+            axios.post(`http://localhost:4000/post/${id}/retweet`,postData,config)
+            .then( res =>
+                    {
+                        console.log("POST-RETWEET-AXIOS:-",res.data.content, res.data.retweetUserList.length,res.data.retweetUserList);
+                        setretweetLen(res.data.retweetUserList.length);
+                        setretweetId_data(res.data.retweetUserList)
+                        // setdata_Likes(res.data.likes);
+                        console.log("RETWEET",res.data); 
+                        console.log("PARENTHANDLER",parentHandler==undefined);
+                        var yo=(parentHandler==undefined)?null:parentHandler();
+    
+                        // parentHandler();
+                    }
+                )
+                // parentHandler();
+                setplsLoginMessg(false)
+        }
+        
     }
 
 
@@ -240,71 +262,79 @@ var editFlag=false;
     // ---------------------------------------------------------------------------------
     const reply_clicked=(myCloseFunction=false,myFunction=false,spanFunc=false)=>
     {
-        if(cnt==0)
-            setcnt(1);
-        else
-        setcnt(0);
-
-        // console.log("REPLy_CNT", cnt);
-
-        var chor="NO";
-        var hi;
-        var modal = document.getElementById("myModal");
-        var span = document.getElementsByClassName("close")[0];
-        if(myCloseFunction==false && myFunction==false)
-       
+        if(userInfo.id==undefined)
         {
-            chor="OK";
-            hi="2";
-            setstore(chor);
-            // var modal = document.getElementById("myModal");
-            console.log("Clicked here",modal,postText,username,id,chor,store,hi,cnt);
-
-         // Get the button that opens the modal
-            var btn = document.getElementById("myBtn");
-             console.log("Btn",btn);
-         
-            // console.log("LOD",span,document.getElementById("myTextarea").value);
-         // When the user clicks on the button, open the modal
-        //  btn.onClick = function() {
-        //  modal.style.display = "block";      
-        //  }
-        // modal.style.display = "block"; 
-        // params.replyHandler("Child"); 
-        // replyHandler("gg") ;
+            setplsLoginMessg(true);
         }
+        else
+        {
+                if(cnt==0)
+                    setcnt(1);
+                else
+                    setcnt(0);
 
-    
-        // if(cnt==1)
-        // {
-            //  console.log("HELLO",span);
-             
-            //  span.onclick = function() {
-            // console.log("SPAN");
-            //document.getElementById("myTextarea").value ="---";
-            // modal.style.display = "none";
-            // setcnt(0);
-        //   }  
-        // }
-        // }
+                // console.log("REPLy_CNT", cnt);
 
-        // if(spanFunc==true)
-        // {
-        //     // document.getElementById("myTextarea").value ="--";
-        //     // document.getElementById("yo").innerHTML="-";
-        //     // modal.style.display = "none"; 
-        //     setcnt(0);
-        // }
+                var chor="NO";
+                var hi;
+                var modal = document.getElementById("myModal");
+                var span = document.getElementsByClassName("close")[0];
+                if(myCloseFunction==false && myFunction==false)
+            
+                {
+                    chor="OK";
+                    hi="2";
+                    setstore(chor);
+                    // var modal = document.getElementById("myModal");
+                    console.log("Clicked here",modal,postText,username,id,chor,store,hi,cnt);
 
-      
-        //  window.onclick = function(event) {
-        //     if (event.target == modal) {
-        //         console.log("2.WINDOWS",event);
-        //         //document.getElementById("myTextarea").value ="Nan";
-        //         modal.style.display = "none"; 
-        //         // setcnt(0);
-        //     }
-        //     }
+                // Get the button that opens the modal
+                    var btn = document.getElementById("myBtn");
+                    console.log("Btn",btn);
+                
+                    // console.log("LOD",span,document.getElementById("myTextarea").value);
+                // When the user clicks on the button, open the modal
+                //  btn.onClick = function() {
+                //  modal.style.display = "block";      
+                //  }
+                // modal.style.display = "block"; 
+                // params.replyHandler("Child"); 
+                // replyHandler("gg") ;
+                }
+
+            
+                // if(cnt==1)
+                // {
+                    //  console.log("HELLO",span);
+                    
+                    //  span.onclick = function() {
+                    // console.log("SPAN");
+                    //document.getElementById("myTextarea").value ="---";
+                    // modal.style.display = "none";
+                    // setcnt(0);
+                //   }  
+                // }
+                // }
+
+                // if(spanFunc==true)
+                // {
+                //     // document.getElementById("myTextarea").value ="--";
+                //     // document.getElementById("yo").innerHTML="-";
+                //     // modal.style.display = "none"; 
+                //     setcnt(0);
+                // }
+
+            
+                //  window.onclick = function(event) {
+                //     if (event.target == modal) {
+                //         console.log("2.WINDOWS",event);
+                //         //document.getElementById("myTextarea").value ="Nan";
+                //         modal.style.display = "none"; 
+                //         // setcnt(0);
+                //     }
+                //     }
+                }
+       
     
     }
 // console.log("COunt",cnt);
@@ -527,7 +557,15 @@ var editFlag=false;
 
     return (
         <div className="Post" id={id}>
-
+            {/* <h2>Pls login</h2> */}
+            {plsLoginMessg && 
+                            
+                            <h3 className='Post_Please_Login_Message_Div'>
+                                 <Link to='/login' style={{ textDecoration: 'underline', color: 'red' }}>
+                                     <span lassName='Post_Please_Login_Message'>Please login</span>
+                                </Link>
+                            </h3>
+            }
            
             {/* to={{ pathname: `/follow/${id}`, query: 1 }} */}
 
@@ -553,7 +591,10 @@ var editFlag=false;
                                     <span className='Post_replyingTo-name'>@{replyDataId.postedBy.Name}</span>
                                     
                                     <div className='Post_fullTweet_header'>
-                                        <span className='Post_fullTweet-title'>Link to Full Tweet <Link to={{ pathname: `/post/${replyDataId._id}`, query: 0 }}  > here </Link></span>
+                                        <span className='Post_fullTweet-title'> 
+                                            <Link to={{ pathname: `/post/${replyDataId._id}`, query: 0 }} style={{ textDecoration: 'none', color: 'gray' }} >Link to Full Tweet</Link> 
+                                            <Link to={{ pathname: `/post/${replyDataId._id}`, query: 0 }} style={{ textDecoration: 'underline', color: '#1da1f2' }}  > here </Link>
+                                        </span>
                                     </div>
                                         
                                 </div>

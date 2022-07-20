@@ -18,14 +18,14 @@
     background-color: white;
 }
 .Search_title {
-    position: sticky;
-    top: 0;
-    /* z-index: 100; */
+    
     border-bottom: 1px solid lightgray;
 
     margin:0px;
     padding: 9.6px 8px 10px 16px;
     color:#1da1f2;
+    display: flex;
+    justify-content: center;
 
 }
 

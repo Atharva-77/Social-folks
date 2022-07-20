@@ -29,6 +29,7 @@ router.post('/add',async(req,res)=>
                         name:userDetails[0].Name,
                         email:email,
                         username:userDetails[0].username,
+                        // password:userDetails[0].password,//Password reqd in Profile.js...to update Login redux i.e. ipdate useractiosn....
                         isAdmin:userDetails[0].isAdmin,
                         likes:userDetails[0].likes,
                         retweets:userDetails[0].retweets,

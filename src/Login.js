@@ -17,7 +17,7 @@ function Login() {
     const userLoginData=useSelector(state=>state.userLoginKey)  
 
     const {loading, userInfo, error}=userLoginData
-    console.log("USE-SELECTOR",userLoginData, userInfo);
+    // console.log("USE-SELECTOR",userLoginData, userInfo);
     const redirect=`/`
     
     const submit_form=(e)=>
@@ -26,9 +26,9 @@ function Login() {
       console.log('Submit form', email, password);
 
       dispatch(userAction_details(email,password));  
-      console.log("2.USE-SELECTOR",userLoginData, userInfo);
-      // setemail('')
-      // setpassword('')
+      // console.log("2.USE-SELECTOR",userLoginData, userInfo);
+      setemail('')
+      setpassword('')
     }
 
 

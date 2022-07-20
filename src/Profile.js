@@ -153,6 +153,8 @@ function Profile() {
                     setfileDetails_Cover('')
                     setUrl('')
                     setcoverUrl('')
+
+                    // dispatch(userAction_details(userInfo.email,userInfo.password));  
                 }
             }
             
@@ -173,6 +175,8 @@ function Profile() {
                     setfileDetails_Cover('')
                     setUrl('')
                     setcoverUrl('')
+
+                    // dispatch(userAction_details(userInfo.email,userInfo.password));  
                 }
                     
             }
@@ -194,6 +198,8 @@ function Profile() {
                     setfileDetails_Cover('')
                     setUrl('')
                     setcoverUrl('')
+
+                    // dispatch(userAction_details(userInfo.email,userInfo.password));  
                 }
                    
             }
@@ -574,7 +580,7 @@ function Profile() {
                        ?
                          <div className='1Profile_Homepage_top'>
                                     <div className='Profile_Div_Title_Name'>
-                                        <h2>Name:-<span className='Profile_Title_Name'>{profileData.Name}</span></h2>
+                                        <h2 className='Profile_title_h2'>Name:-<span className='Profile_Title_Name'>{profileData.Name}</span></h2>
                                      </div>
                                     
                                      <div className='Profile_Div_CoverPic'>
@@ -664,9 +670,9 @@ function Profile() {
 
                                                                                         <div className='Profile_EditPic_modal_Btns'>
                                                                                                 {fileDetails!='' || fileDetails_Cover!=''?
-                                                                                                <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => saveFileHandler()}>1Save Pictures</button>
+                                                                                                <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => saveFileHandler()}>Save Pictures</button>
                                                                                                     :
-                                                                                                    <button id="postBtn" className='Profile_EditPic_modal_Post_reply_disable' >Save Picturesss</button>
+                                                                                                    <button id="postBtn" className='Profile_EditPic_modal_Post_reply_disable' >Save Pictures</button>
                                                                                                 }
 
                                                                                                 <button id="closeBtn" className='Profile_EditPic_modal_Close_reply' onClick={() => editPic_close_clicked()}>Close</button>

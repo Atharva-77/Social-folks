@@ -17,6 +17,8 @@ import { useDispatch,useSelector } from 'react-redux';
 import {logout_action} from './Reducers/actions/userActions'
 import Tweetbox from './Tweetbox';
 
+import axios from 'axios';
+ 
 function Left_Sidebar() {
 
     const dispatch=useDispatch()
@@ -62,7 +64,7 @@ function Left_Sidebar() {
                        </Link>
 
                     
-                            {typeof(userInfo.id)=='undefined'?
+                            {typeof(userInfo)=='undefined' || typeof(userInfo.id)=='undefined'?
                                 <>
                                     <Link to={`/login`}  style={{ textDecoration: 'none',color:'#374151'}}> 
                                         <Left_Sidebar_Icons name="Login" Icons={VpnKeyIcon} />
@@ -84,7 +86,7 @@ function Left_Sidebar() {
                             {/* <Left_Sidebar_Icons name="Bookmark" Icons={BookmarkIcon } /> */}
                              {/* <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} /> */}
 
-                        {typeof(userInfo.id)!='undefined'?
+                        {typeof(userInfo)!='undefined' && typeof(userInfo.id)!='undefined' && (userInfo!='Fail.No user' && userInfo!='Fail. Email or password not matching')?
                             
                             <Link to={`/profile/${userInfo.username}`}  style={{ textDecoration: 'none',color:'#374151'}}> 
                                 <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} />
@@ -93,16 +95,16 @@ function Left_Sidebar() {
                             null
                         }
 
-                        {/* <Link to={`/`}  style={{ textDecoration: 'none',color:'#374151'}}> 
-                               <button className="post_button" onClick={PostClicked}>+ Post</button>
+                        {/* <Link to={`/`}  style={{ textDecoration: 'none',color:'#374151'}}>  */}
+                               {/* <button className="post_button" onClick={PostClicked}>+ Post</button>
                                
                                {TweetboxClick==1?
                                     <Tweetbox />
                                 :
                                     null
 
-                               }
-                        </Link> */}
+                               } */}
+                        {/* </Link> */}
                     
                             {/* <button className="post_button" onClick={PostClicked}>+ Post</button> */}
                  </div>

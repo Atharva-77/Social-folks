@@ -3,7 +3,7 @@
     /* display: flex; */
     /* margin:1rem; */
     padding: 1rem;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 2px solid lightgray;
     /* margin-top:1rem; */
     /* margin-left: 1rem; */
     /* margin-right: 1rem; */
@@ -13,8 +13,9 @@
     /* line-height: 30px;
     height: 40px; */
     /* color:#7c7f80; */
-    border-right: 1px solid lightgray;
-    border-left: 1px solid lightgray;
+    border-right: 2px solid lightgray;
+    border-left: 2px solid lightgray;
+    border-top: 2px solid lightgray;
 
 }
 .Post:hover
@@ -23,6 +24,22 @@
     /* margin: 1rem; */
     /* margin-bottom: 0rem; */
     /* line-height: 29px; */
+}
+.Post_Please_Login_Message_Div
+{
+    margin: 0.5rem;
+
+    margin-left: 1rem;
+    margin-top: 5px;
+    
+    padding-bottom: 0.2rem;
+    display: flex;
+    justify-content: center;
+    color: red;
+}
+.Post_Please_Login_Message
+{
+    color: blue;
 }
 .Post_header
 {

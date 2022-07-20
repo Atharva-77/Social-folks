@@ -17,6 +17,19 @@
     color: #1da1f2;
     padding-left: 5px;
 }
+.Profile_title_h2
+{
+    margin:0.5rem;
+    /* font-size: x-large; */
+    /* font-weight: 570; */
+    margin-left: 1rem;
+    margin-top: 5px;
+    /* margin-bottom: 2rem; */
+    padding-bottom: 0.2rem;
+    display: flex;
+    justify-content: center;
+}
+
 .Profile_Div_CoverPic
 {
     height:180px;

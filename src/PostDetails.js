@@ -750,7 +750,7 @@ function PostDetails() {
          ?
             <div>
                    <div className="PostDetail_HomePage_title">
-                        <h2 id='Tweet-heading'>Tweet</h2>
+                        <h2 className='Tweet-heading'>Tweet</h2>
                     </div>
                    {/* {console.log("ROOTID",rootId,id,data)} */}
 
@@ -776,7 +776,10 @@ function PostDetails() {
                                                 <span className='PostDetail_replyingTo-name'>@{rootData.replyDataId.postedBy.Name}</span>
 
                                                 <div className='PostDetail_fullTweet_header'>
-                                                     <span className='PostDetail_fullTweet-title'>Link to Full Tweet <Link to={{ pathname: `/post/${rootData.replyDataId._id}`, query: 1 }} > here </Link></span>
+                                                     <span className='PostDetail_fullTweet-title'>
+                                                          <Link to={{ pathname: `/post/${rootData.replyDataId._id}`, query: 1 }} style={{ textDecoration: 'none', color: 'gray' }} >Link to Full Tweet</Link> 
+                                                          <Link to={{ pathname: `/post/${rootData.replyDataId._id}`, query: 1 }} style={{ textDecoration: 'underline', color: '#1da1f2' }}> here </Link>
+                                                      </span>
                                                 </div>
 
                                             </div>
@@ -1061,7 +1064,10 @@ function PostDetails() {
                                         <span className='PostDetail_replyingTo-name'>@{data.replyDataId.postedBy.Name}</span>
 
                                         <div className='PostDetail_fullTweet_header'>
-                                            <span className='PostDetail_fullTweet-title'>Link to Full Tweet <Link to={{ pathname: `/post/${data.replyDataId._id}`, query: 1 }} > here </Link></span>
+                                            <span className='PostDetail_fullTweet-title'>
+                                                <Link to={{ pathname: `/post/${data.replyDataId._id}`, query: 1 }} style={{ textDecoration: 'none', color: 'gray' }} >Link to Full Tweet</Link>
+                                                <Link to={{ pathname: `/post/${data.replyDataId._id}`, query: 1 }} style={{ textDecoration: 'underline', color: '#1da1f2' }} > here </Link>
+                                            </span>
                                         </div>
 
                                     </div>

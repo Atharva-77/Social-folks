@@ -1,5 +1,5 @@
 import { Avatar } from '@material-ui/core'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './Tweetbox.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -8,12 +8,39 @@ function Tweetbox(props) {
 
     const [content, setcontent] = useState('')
     const [content2, setcontent2] = useState('')
+   
+    
 
     const userLoginData = useSelector(state => state.userLoginKey)
     const {userInfo} =userLoginData //....undefined
-
-    // console.log("TweetBox",userLoginData,typeof(userLoginData)=='undefined');
+    
+    const [picurl, setpicurl] = useState(userInfo.profilePicUrl)
+    // console.log("TweetBox",userInfo,userInfo!=undefined && userInfo.id!=undefined);
     // console.log("TweetBox",content,typeof(undefined)=='undefined');
+    useEffect(() => 
+    {
+        if(userInfo!=undefined && userInfo.id!=undefined)
+        {
+            // console.log("USEEFF",userInfo,userInfo!=undefined && userInfo.id!=undefined);
+            const user_data=
+            {
+                "username":userInfo.username
+            }
+    
+            axios.post(`http://localhost:4000/profile/${userInfo.username}`,user_data)
+            .then( res =>
+                    {
+                        // console.log("......................AXIOS:-",res.data); 
+                        setpicurl(res.data.profilePicUrl)
+                        // console.log("PROPS.parentHandler",props.parentHandler); 
+                        // props.parentHandler();
+                    }
+                )
+        }
+        
+
+    
+     }, [])
     
     const handleKeyDown = (event) => {
         if (event.key === 'Enter') {
@@ -69,13 +96,15 @@ function Tweetbox(props) {
     }
    
     //  {console.log("POST38:-",content,content.length)}
+    
+    {console.log("URLLLLLLLL-",picurl)}
 
     return (
         <div className="Tweetbox">
             {/* <form> */}
             <div className="Tweetbox_avatar_input">
                 
-                <Avatar className="Tweetbox_avatar" src="https://d3g1bypfq0q5lj.cloudfront.net/var/www/preoffer/public/system/avatars/datas/304531/thumb250/IMG-20190416-WA0038.jpg?1587480679"/>
+                <Avatar className="Tweetbox_avatar"  src={`${picurl}`}/>
 
                 <textarea className="Tweetbox_input" placeholder="Write a Post?" type ="text" value={content} name="YO" onChange={(e)=>setcontent(e.target.value)} onKeyDown={handleKeyDown}/> 
             </div>
