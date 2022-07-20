@@ -234,6 +234,7 @@
     /* background-color: rgb(213, 29, 29);  */
     background-color: rgb(0, 0, 0,0.4);    
     cursor:cell;
+    z-index: 101;
 
   }
   

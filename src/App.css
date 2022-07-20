@@ -2,6 +2,9 @@
 {
   display: flex;
   /* height: 100vh;  */
+  /* min-height: 800px; */
+  /* overflow: auto; */
+  /* min-height: 100%; */
   /*Full height of screen is covered.Otherwise only till button , right border was there*/
   
   /* If you zoom out , it goes to 1 side.Thus if size reaches 1300px, it centers itself on the screen */
@@ -14,4 +17,3 @@
   top:0; 
   z-index: 100;
 }
-

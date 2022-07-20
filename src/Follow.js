@@ -117,7 +117,11 @@ function Follow() {
     return (
 
         <div className='Follow_top'>
-            <h2>Username </h2>
+
+             <div className='Profile_Div_Title_Name'>
+                    <h2>Name:-<span className='Profile_Title_Name'>{data.Name}</span></h2>
+              </div>
+            
             {/* {profileData.username} */}
             <div className='Follow_followers_following_tab'>
 

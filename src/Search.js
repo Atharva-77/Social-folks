@@ -112,40 +112,43 @@ function Search() {
   return (
 
     <div className='Search_top'>
-          <h2 className="Search_title">Search</h2>
-           
 
-            <div className="header_search">
+        <div className='Search_sticky'>
 
-              <input className="header_input" placeholder="Search Posts / Users here" value={keyword} onChange={(e) => setkeyword(e.target.value)} onKeyDown={handleKeyDown} />
-            
-              <SearchOutlinedIcon className="header_searchIcon" onClick={submit_form} />
-            </div>
+                     <h2 className="Search_title">Search</h2>
+                
+                    <div className="header_search">
+
+                    <input className="header_input" placeholder="Search Posts / Users here" value={keyword} onChange={(e) => setkeyword(e.target.value)} onKeyDown={handleKeyDown} />
+                    
+                    <SearchOutlinedIcon className="header_searchIcon" onClick={submit_form} />
+                    </div>
 
 
-          <div className='Search_Posts_Users_tab'>
-             {
-                   
-                <>
-                    {Post_Tab == 1 ?
+                <div className='Search_Posts_Users_tab'>
+                    {
+                        
                         <>
-                            <div className='Search_Post_tab_underline' onClick={() => PostsTab_clicked_func()}> Posts </div>
-                            <div className='Search_Post_tab' onClick={() => UsersTab_clicked_func()}> Users </div>
+                            {Post_Tab == 1 ?
+                                <>
+                                    <div className='Search_Post_tab_underline' onClick={() => PostsTab_clicked_func()}> Posts </div>
+                                    <div className='Search_Post_tab' onClick={() => UsersTab_clicked_func()}> Users </div>
 
-                        </>
-                        :
+                                </>
+                                :
 
-                        <>
-                            <div className='Search_Post_tab' onClick={() => PostsTab_clicked_func()}> Posts </div>
-                            <div className='Search_Post_tab_underline' onClick={() => UsersTab_clicked_func()}> Users </div>
+                                <>
+                                    <div className='Search_Post_tab' onClick={() => PostsTab_clicked_func()}> Posts </div>
+                                    <div className='Search_Post_tab_underline' onClick={() => UsersTab_clicked_func()}> Users </div>
+                                </>
+                            }
                         </>
+
                     }
-                </>
+                    </div>
+         </div>
 
-             }
-            </div>
-
-            {/* <h2>UU</h2> */}
+        {/* <h2>UU</h2> */}
           {(Object.keys(data).length || Object.keys(usersData).length) > 0 ?
               <>
                   {/* If Follower part clicked */}

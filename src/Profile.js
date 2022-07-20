@@ -568,54 +568,56 @@ function Profile() {
     <div className='Profile_top'>
         {/* Profile pg */}
         {!loading && Object.keys(profileData).length>0 
-        ?
+         ?
             <div>
                     {profileData!="NO SUCH USER"
-                    ?
-                        <div className='1Profile_Homepage_top'>
-                                <h2>Username {profileData.username}</h2>
+                       ?
+                         <div className='1Profile_Homepage_top'>
+                                    <div className='Profile_Div_Title_Name'>
+                                        <h2>Name:-<span className='Profile_Title_Name'>{profileData.Name}</span></h2>
+                                     </div>
                                     
                                      <div className='Profile_Div_CoverPic'>
-                                            {profileData.coverPicUrl!=undefined
-                                             ?
-                                                < img className='Profile_Div_Cp' src={`${profileData.coverPicUrl}`} />
-                                             :
-                                                 < img className='Profile_Div_Cp'  />
-                                            
-                                            }
+                                                {profileData.coverPicUrl!=undefined
+                                                ?
+                                                    < img className='Profile_Div_Cp' src={`${profileData.coverPicUrl}`} />
+                                                :
+                                                    < img className='Profile_Div_Cp'  />
+                                                
+                                                }
                                           
 
                                       
-                                        <div className='Profile_avatar_header'>
-                                                <Avatar className="Profile_avatar" style={{ textDecoration: 'none',backgroundColor:'red'}} 
-                                                 src={`${profileData.profilePicUrl}`}/>
-                                 
+                                              <div className='Profile_avatar_header'>
+                                                    <Avatar className="Profile_avatar" style={{ textDecoration: 'none',backgroundColor:'red'}} 
+                                                    src={`${profileData.profilePicUrl}`}/>
+                                    
 
-                                                  {/*-------------------------------------------------------------------------  */}
-                                                  {/* EDIT PIC MODAL  */}
-                                                {
-                                                    Object.keys(userInfo) != 0 && id == userInfo.username
-                                                    ?
-                                                     <div>
-                                                           <button className='Profile_EditPic_button' onClick={() => editPic_clicked()}>
-                                                                Edit Picture
-                                                            </button>
+                                                    {/*-------------------------------------------------------------------------  */}
+                                                    {/* EDIT PIC MODAL  */}
+                                                    {
+                                                        Object.keys(userInfo) != 0 && id == userInfo.username
+                                                        ?
+                                                        <div>
+                                                            <button className='Profile_EditPic_button' onClick={() => editPic_clicked()}>
+                                                                    Edit Picture
+                                                                </button>
 
-                                                            {editPicCnt == 1 ?
+                                                                {editPicCnt == 1 ?
 
-                                                                <div id="myModal" className="modal3">
-                                                                    
-                                                                        <div className="Profile_EditPic_modal-content">
+                                                                    <div id="myModal" className="modal3">
+                                                                        
+                                                                            <div className="Profile_EditPic_modal-content">
 
-                                                                                    <div className='Profile_EditPic_reply-closeArrowBtn'>
+                                                                                        <div className='Profile_EditPic_reply-closeArrowBtn'>
 
-                                                                                        <div className='modal-reply-heading'>Edit Picture</div>
-                                                                                        <button className="closeArrowBtn" onClick={() => editPic_close_clicked()}>X</button>
+                                                                                            <div className='modal-reply-heading'>Edit Picture</div>
+                                                                                            <button className="closeArrowBtn" onClick={() => editPic_close_clicked()}>X</button>
 
-                                                                                    </div>
+                                                                                        </div>
 
-                                                                                    <div className='modal-closeArrow-textarea'>
-                                                                                                                              
+                                                                                        <div className='modal-closeArrow-textarea'>
+                                                                                                                            
                                                                                             <div className='1modal-uploadPic-div'>
                                                                                                 
                                                                                                     <div className='modal-uploadPic-div'>
@@ -655,308 +657,316 @@ function Profile() {
                                                                                                     </div>
 
                                                                                             </div>
+                                                                                            {/* 1modal-uploadPic-div */}
 
-                                                                                    </div>
+                                                                                        </div>
+                                                                                        {/*Modal Cross-Arw-txt-area */}
 
-                                                                                     <div className='Profile_EditPic_modal_Btns'>
-                                                                                            {fileDetails!='' || fileDetails_Cover!=''?
-                                                                                            <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => saveFileHandler()}>1Save Pictures</button>
-                                                                                                :
-                                                                                                <button id="postBtn" className='Profile_EditPic_modal_Post_reply_disable' >Save Picturesss</button>
-                                                                                            }
+                                                                                        <div className='Profile_EditPic_modal_Btns'>
+                                                                                                {fileDetails!='' || fileDetails_Cover!=''?
+                                                                                                <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => saveFileHandler()}>1Save Pictures</button>
+                                                                                                    :
+                                                                                                    <button id="postBtn" className='Profile_EditPic_modal_Post_reply_disable' >Save Picturesss</button>
+                                                                                                }
 
-                                                                                            <button id="closeBtn" className='Profile_EditPic_modal_Close_reply' onClick={() => editPic_close_clicked()}>Close</button>
-                                                                                     </div>
-                                                                         </div>
-                                                                 </div>
-                                                             :
-                                                                null
-                                                            }
-                                                            
-                                                        </div>
-                                                        //  Else part
-                                                     :
-                                                        null
-                                                 } 
-                                                
-                                                   {/*--------------------------  END MODAL -------------------------------------------  */}
-
-                                                {/* <div className='Profile_follow_div'> */}
-
-                                                 {Object.keys(userInfo)==0
-                                                  ?
-                                                    <button className='Profile_follow_button'>Follow</button>
-                                                  :
-                                                   <>
-                                                        {id!==userInfo.username?
-                                                            <> 
-                                                            
-                                                                { profileData.followers.includes(userInfo.id)?
-
-                                                                    <button className='Profile_following_button' onClick={()=>follow_following_func()}>Following</button>
+                                                                                                <button id="closeBtn" className='Profile_EditPic_modal_Close_reply' onClick={() => editPic_close_clicked()}>Close</button>
+                                                                                        </div>
+                                                                            </div>
+                                                                    </div>
+                                                                    //  Modal Div end
                                                                 :
-                                                                <button className='Profile_follow_button' onClick={()=>follow_following_func()}>Follow</button>
-
+                                                                    null
                                                                 }
-
-                                                            </>
-                                                        :
-                                                            null
-                                                        }
-                                                 </>
-                                                    // null
-                                                 }
-                                                 
-                                                  {/* <button className='Profile_follow_button' onClick={()=>follow_following_func()}>Follow</button>
-                                                     <button className='Profile_following_button' onClick={()=>follow_following_func()}>Following</button> */}
-                                                 {/* </div> */}
-                                        </div>
-
-                                        <div className='Profile_displayName'>{profileData.Name}</div>
-                                        <div className='Profile_username'>@{profileData.username}</div>
-                                        
-                                        <div className='Profile_description'>
-                                            <div className='Profile_description_text_editBtn'>
-
-                                                    <span className='Profile_descriptionText'>Description:-</span>&nbsp;
-                                                    {
-                                                        profileData.description!=undefined && profileData.description.length>0
-                                                        ?
-                                                            <span className='Profile_description_UsersText'>{profileData.description}</span>
+                                                                {/* editPicCnt == 1  END */}
                                                                 
+                                                            </div>
+                                                        
                                                         :
-                                                            <>
-                                                                    None
-                                                            </>
-                                                    }
+                                                            null //  Else part
+                                                    } 
                                                     
-                                                    {
-                                                        userInfo.username != undefined && id==userInfo.username
-                                                         ?
-                                                            <button onClick={() => edit_clicked()} className='Post_icon_button'>
-                                                                <EditIcon fontSize="small" className={'icon-like'} />
-                                                            </button> 
-                                                         :
-                                                            null
-                                                    }
-                                                    
-                                            </div>
+                                                    {/*--------------------------  END MODAL -------------------------------------------  */}
 
+                                                    {/* <div className='Profile_follow_div'> */}
 
-                                            <div>     
-                                            {
-                                                editCnt==1
-                                                ?
-                                                    <div className='Profile_description_input_div'>
-                                                        <div>
-                                                            <textarea className="Profile_description_input" placeholder="Write a Description?" value={editDescription} name="YO" onChange={(e) => seteditDescription(e.target.value)} type="text"  /> 
-                                                        </div>
-
-                                                        <button className='Profile_Post_reply' onClick={() => saveDescription_submit_clicked()}>Save Description</button>
-                                                        {/* <button id="postBtn" className='Profile_EditPic_modal_Post_reply' >Post</button> */}
-
-                                                        {/* <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => reply_submit_clicked()}>Post</button> */}
-
-                                                        {/* <textarea className="Tweetbox_input" placeholder="Write a Post?" type="text" value={content} name="YO" onChange={(e) => setcontent(e.target.value)} onKeyDown={handleKeyDown} />  */}
-                                                    </div>
-                                                :
-                                                    <>
-                                                    </>
-
-                                            }
-                                            </div>
-
-                                           
-
-                                        </div>
-                                    
-                                    
-                                        {/*Count of Followers & their display  */}
-                                        <div className='Profile_followers_following'> 
-                                            
-                                            <Link to={{pathname:`/follow/${id}` ,query:1}}  style={{ textDecoration: 'none',color:'#374151'}} hi={1}> 
-       
-                                                <span className='Profile_follow'> {Object.keys(profileData.followers).length } </span>  
-                                                <span className='Profile_follow_text'> Followers </span>  &nbsp; &nbsp; 
-                                            </Link>
-
-                                            <Link to={{pathname:`/follow/${id}` ,query:0}}   style={{ textDecoration: 'none',color:'#374151'}}> 
-                                                <span className='Profile_follow'> {Object.keys(profileData.following).length||0} </span>  
-                                                <span className='Profile_follow_text'> Following </span> 
-                                            
-                                            </Link>
-
-                                        </div>
-                                        
-                                       
-                                        <div className='Profile_post_reply_tab'>
-                                            
-                                            {postTabclicked==1?
-                                                <>
-                                                    <div className='Profile_tab_underline' onClick={()=>postsTab_clicked_func()}> Posts </div>
-                                                    <div className='Profile_tab' onClick={()=>replyTab_clicked_func()}> Replies </div>
-                                                    <div className='Profile_tab' onClick={()=>likeTab_clicked_func()}> Likes </div>
-                                                </>
-                                             :
-                                                <>
-                                                    {replyTabclicked==1?
-                                                       <>
-                                                            <div className='Profile_tab' onClick={()=>postsTab_clicked_func()}> Posts </div>
-                                                            <div className='Profile_tab_underline' onClick={()=>replyTab_clicked_func()}> Replies </div>
-                                                            <div className='Profile_tab' onClick={()=>likeTab_clicked_func()}> Likes </div>
-                                                       </>
+                                                    {Object.keys(userInfo)==0
+                                                    ?
+                                                        <button className='Profile_follow_button'>Follow</button>
                                                     :
                                                         <>
-                                                            <div className='Profile_tab' onClick={()=>postsTab_clicked_func()}> Posts </div>
-                                                            <div className='Profile_tab' onClick={()=>replyTab_clicked_func()}> Replies </div>
-                                                            <div className='Profile_tab_underline' onClick={()=>likeTab_clicked_func()}> Likes </div>
+                                                                {id!==userInfo.username?
+                                                                    <> 
+                                                                    
+                                                                        { profileData.followers.includes(userInfo.id)?
+
+                                                                            <button className='Profile_following_button' onClick={()=>follow_following_func()}>Following</button>
+                                                                        :
+                                                                        <button className='Profile_follow_button' onClick={()=>follow_following_func()}>Follow</button>
+
+                                                                        }
+
+                                                                    </>
+                                                                :
+                                                                    null
+                                                                } 
                                                         </>
-                                                   }
+                                                        // null
+                                                    }
                                                     
-                                                </>
-                                            }
+                                                    {/* <button className='Profile_follow_button' onClick={()=>follow_following_func()}>Follow</button>
+                                                        <button className='Profile_following_button' onClick={()=>follow_following_func()}>Following</button> */}
+                                                    {/* </div> */}
+                                              </div>
+                                              {/* Profile_avatar_header END DIV */}
 
-                                        </div>
+                                                    <div className='Profile_displayName'>{profileData.Name}</div>
+                                                   <div className='Profile_username'>@{profileData.username}</div>
+                                        
+                                                 <div className='Profile_description'>
+                                                        <div className='Profile_description_text_editBtn'>
 
-                                            {Object.keys(data).length>0 || Object.keys(likesdata).length>0 && editPicCnt==0?
-                                                <>
-                                                {/* If post part clicked */}
-                                                    {   Object.keys(data).length>0 
-                                                        && postTabclicked==1?
+                                                                <span className='Profile_descriptionText'>Description:-</span>&nbsp;
+                                                                {
+                                                                    profileData.description!=undefined && profileData.description.length>0
+                                                                    ?
+                                                                        <span className='Profile_description_UsersText'>{profileData.description}</span>
+                                                                            
+                                                                    :
+                                                                        <>
+                                                                                None
+                                                                        </>
+                                                                }
+                                                                
+                                                                {
+                                                                    userInfo.username != undefined && id==userInfo.username
+                                                                    ?
+                                                                        <button onClick={() => edit_clicked()} className='Post_icon_button'>
+                                                                            <EditIcon fontSize="small" className={'icon-like'} />
+                                                                        </button> 
+                                                                    :
+                                                                        null
+                                                                }
+                                                                
+                                                        </div>
+
+
+                                                        <div>     
+                                                            {
+                                                                editCnt==1
+                                                                ?
+                                                                    <div className='Profile_description_input_div'>
+                                                                        <div>
+                                                                            <textarea className="Profile_description_input" placeholder="Write a Description?" value={editDescription} name="YO" onChange={(e) => seteditDescription(e.target.value)} type="text"  /> 
+                                                                        </div>
+
+                                                                        <button className='Profile_Post_reply' onClick={() => saveDescription_submit_clicked()}>Save Description</button>
+                                                                        {/* <button id="postBtn" className='Profile_EditPic_modal_Post_reply' >Post</button> */}
+
+                                                                        {/* <button id="postBtn" className='Profile_EditPic_modal_Post_reply' onClick={() => reply_submit_clicked()}>Post</button> */}
+
+                                                                        {/* <textarea className="Tweetbox_input" placeholder="Write a Post?" type="text" value={content} name="YO" onChange={(e) => setcontent(e.target.value)} onKeyDown={handleKeyDown} />  */}
+                                                                    </div>
+                                                                :
+                                                                    <>
+                                                                    </>
+
+                                                            }
+                                                        </div>
+
+
+                                                    </div>
+                                                    {/* Profile_description DIV END */}
+                                    
+                                                    {/*Count of Followers & their display  */}
+                                                <div className='Profile_followers_following'> 
                                                     
-                                                        result.map(i=>{
-                                                            // console.log(i[0].likes,i[0].content );
-                                                        
-                                                            return typeof(i[0].replyDataId)=='undefined'?
-                                                            
-                                                               
-                                                                <Post4 
-                                                                        key={i[0]._id}
-                                                                        id={i[0]._id}
-                                                                        Icon={Avatar}  
-                                                                        displayName={i[0].postedBy.Name}
-                                                                        username={i[0].postedBy.username}
+                                                    <Link to={{pathname:`/follow/${id}` ,query:1}}  style={{ textDecoration: 'none',color:'#374151'}} hi={1}> 
+            
+                                                        <span className='Profile_follow'> {Object.keys(profileData.followers).length } </span>  
+                                                        <span className='Profile_follow_text'> Followers </span>  &nbsp; &nbsp; 
+                                                    </Link>
 
-                                                                        originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
-                                                                        profilePicUrl={i[0].postedBy.profilePicUrl}
-
-                                                                        postText={i[0].content}
-                                                                        createdAt={i[0].createdAt}
-                                                                        // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                                                                        verified="True"
-
-                                                                        likeslength={i[0].likes.length}
-                                                                        likesData={i[0].likes}
-                                                                        retweetUserList={i[0].retweetUserList}
-                                                                        retweetData={i[0].retweetDataId}
-                                                                        replyDataId={i[0].replyDataId}
-                                                                        who={1}
-                                                                    />
-                                                            :
-                                                            null
-                                                            // <div className='Profile_NoTweets'>1.No Posts</div>
-                                                        
-        
-                                                        })
+                                                    <Link to={{pathname:`/follow/${id}` ,query:0}}   style={{ textDecoration: 'none',color:'#374151'}}> 
+                                                        <span className='Profile_follow'> {Object.keys(profileData.following).length||0} </span>  
+                                                        <span className='Profile_follow_text'> Following </span> 
                                                     
+                                                    </Link>
+
+                                                </div>
+                                        
+                                       
+                                                <div className='Profile_post_reply_tab'>
+                                                    
+                                                    {postTabclicked==1?
+                                                        <>
+                                                            <div className='Profile_tab_underline' onClick={()=>postsTab_clicked_func()}> Posts </div>
+                                                            <div className='Profile_tab' onClick={()=>replyTab_clicked_func()}> Replies </div>
+                                                            <div className='Profile_tab' onClick={()=>likeTab_clicked_func()}> Likes </div>
+                                                        </>
                                                      :
                                                         <>
-                                                         {/* If replies part clicked */}
-                                                            {   Object.keys(data).length>0 &&
-                                                                replyTabclicked==1?
-
-
-                                                                        result.map(i=>{
-                                                                            // console.log("LIKES ARRAY B4 PASSED",i[0].likes);
-                                                                        
-                                                                            return typeof(i[0].replyDataId)!='undefined'?
-                                                                            
-                                                                    
-                                                                                <Post4 
-                                                                                        key={i[0]._id}
-                                                                                        id={i[0]._id}
-                                                                                        Icon={Avatar}  
-                                                                                        displayName={i[0].postedBy.Name}
-                                                                                        username={i[0].postedBy.username}
-                        
-                                                                                        originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
-                                                                                        profilePicUrl={i[0].postedBy.profilePicUrl}
-                                                                                        postText={i[0].content}
-                                                                                        createdAt={i[0].createdAt}
-                                                                                        // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                                                                                        verified="True"
-                        
-                                                                                        likeslength={i[0].likes.length}
-                                                                                        likesData={i[0].likes}
-                                                                                        retweetUserList={i[0].retweetUserList}
-                                                                                        retweetData={i[0].retweetDataId}
-                                                                                        replyDataId={i[0].replyDataId}
-                                                                                        who={2}
-                                                                                    />
-                                                                            :
-                                                                                null
-                                                                                // <>
-                                                                                    {/* {console.log("2.2 No resul",result)} */}
-                                                                                    {/* <div className='Profile_NoTweets'>2.22No Posts</div> */}
-                                                                                // </>
-                                                                            
-                                                                        })
-
-                                                                :
-                                                                   // else like is clicked
+                                                            {replyTabclicked==1?
+                                                                 <>
+                                                                        <div className='Profile_tab' onClick={()=>postsTab_clicked_func()}> Posts </div>
+                                                                        <div className='Profile_tab_underline' onClick={()=>replyTab_clicked_func()}> Replies </div>
+                                                                        <div className='Profile_tab' onClick={()=>likeTab_clicked_func()}> Likes </div>
+                                                                 </>
+                                                             :
                                                                 <>
-                                                                    {   postTabclicked!=1 && 
-                                                                        replyTabclicked!=1 && 
-                                                                        Object.keys(likesdata).length>0 ?
-
-                                                                            likesresult.map(i=>{
-                                                                                // console.log("LIKES 336"); 
-                                        
-                                                                                return <Post4 
-                                                                                            key={i[0]._id}
-                                                                                            id={i[0]._id}
-                                                                                            Icon={Avatar}  
-                                                                                            displayName={i[0].postedBy.Name}
-                                                                                            username={i[0].postedBy.username}
-                            
-                                                                                            originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
-                                                                                            profilePicUrl={i[0].postedBy.profilePicUrl}
-                                                                                            postText={i[0].content}
-                                                                                            createdAt={i[0].createdAt}
-                                                                                            // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
-                                                                                            verified="True"
-                            
-                                                                                            likeslength={i[0].likes.length}
-                                                                                            likesData={i[0].likes}
-                                                                                            retweetUserList={i[0].retweetUserList}
-                                                                                            retweetData={i[0].retweetDataId}
-                                                                                            replyDataId={i[0].replyDataId}
-                                                                                            who={3}
-                                                                                        />                                                         
-                            
-                                                                            })
-                                                                        :
-                                                                        <>
-                                                                            {/*When it enters PostTab, daat is set to 1. At that time loading is required untilldata gets updated by axios.Else:- If no posts have been tweeted, then 'No Posts' is shown..  */}
-                                                                            {data==1?
-
-                                                                                <div className='Profile_NoTweets'>Loading...</div>
-                                                                                :
-                                                                            
-                                                                                <div className='Profile_NoTweets'>1.2No Posts</div>
-                                                                           
-                                                                            }
-                                                                            
-                                                                        </>
-                                                                        
-                                                                    }
-                                                                    
+                                                                    <div className='Profile_tab' onClick={()=>postsTab_clicked_func()}> Posts </div>
+                                                                    <div className='Profile_tab' onClick={()=>replyTab_clicked_func()}> Replies </div>
+                                                                    <div className='Profile_tab_underline' onClick={()=>likeTab_clicked_func()}> Likes </div>
                                                                 </>
                                                             }
-                                                        </> /* ⬆️ Reply tab closing bracket */
+                                                            
+                                                        </>
                                                     }
-                                                 </> /* ⬆️ Post tab closing bracket */
-                                              :   
+
+                                                </div>
+
+                                            {Object.keys(data).length>0 || Object.keys(likesdata).length>0 && editPicCnt==0
+                                             ?
+                                                    <>
+                                                        {/* If post part clicked */}
+                                                        {   Object.keys(data).length>0 
+                                                            && postTabclicked==1
+                                                        ?
+                                                        
+                                                                result.map(i=>{
+                                                                    // console.log(i[0].likes,i[0].content );
+                                                                
+                                                                    return typeof(i[0].replyDataId)=='undefined'?
+                                                                    
+                                                                    
+                                                                        <Post4 
+                                                                                key={i[0]._id}
+                                                                                id={i[0]._id}
+                                                                                Icon={Avatar}  
+                                                                                displayName={i[0].postedBy.Name}
+                                                                                username={i[0].postedBy.username}
+
+                                                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+                                                                                profilePicUrl={i[0].postedBy.profilePicUrl}
+
+                                                                                postText={i[0].content}
+                                                                                createdAt={i[0].createdAt}
+                                                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                                                verified="True"
+
+                                                                                likeslength={i[0].likes.length}
+                                                                                likesData={i[0].likes}
+                                                                                retweetUserList={i[0].retweetUserList}
+                                                                                retweetData={i[0].retweetDataId}
+                                                                                replyDataId={i[0].replyDataId}
+                                                                                who={1}
+                                                                            />
+                                                                    : 
+                                                                    null
+                                                                    // <div className='Profile_NoTweets'>1.No Posts</div>
+                                                                
+                
+                                                                })
+                                                        
+                                                            :
+                                                                <>
+                                                                    {/* If replies part clicked */}
+                                                                    {   Object.keys(data).length>0 &&
+                                                                        replyTabclicked==1
+                                                                        ?
+
+
+                                                                                result.map(i=>{
+                                                                                    // console.log("LIKES ARRAY B4 PASSED",i[0].likes);
+                                                                                
+                                                                                    return typeof(i[0].replyDataId)!='undefined'?
+                                                                                    
+                                                                            
+                                                                                        <Post4 
+                                                                                                key={i[0]._id}
+                                                                                                id={i[0]._id}
+                                                                                                Icon={Avatar}  
+                                                                                                displayName={i[0].postedBy.Name}
+                                                                                                username={i[0].postedBy.username}
+                                
+                                                                                                originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+                                                                                                profilePicUrl={i[0].postedBy.profilePicUrl}
+                                                                                                postText={i[0].content}
+                                                                                                createdAt={i[0].createdAt}
+                                                                                                // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                                                                verified="True"
+                                
+                                                                                                likeslength={i[0].likes.length}
+                                                                                                likesData={i[0].likes}
+                                                                                                retweetUserList={i[0].retweetUserList}
+                                                                                                retweetData={i[0].retweetDataId}
+                                                                                                replyDataId={i[0].replyDataId}
+                                                                                                who={2}
+                                                                                            />
+                                                                                    :
+                                                                                        null
+                                                                                        // <>
+                                                                                            {/* {console.log("2.2 No resul",result)} */}
+                                                                                            {/* <div className='Profile_NoTweets'>2.22No Posts</div> */}
+                                                                                        // </>
+                                                                                    
+                                                                                })
+
+                                                                        :
+                                                                        // else like is clicked
+                                                                            <>
+                                                                                {   postTabclicked!=1 && 
+                                                                                    replyTabclicked!=1 && 
+                                                                                    Object.keys(likesdata).length>0 
+                                                                                    ?
+
+                                                                                        likesresult.map(i=>{
+                                                                                            // console.log("LIKES 336"); 
+                                                    
+                                                                                            return  <Post4 
+                                                                                                        key={i[0]._id}
+                                                                                                        id={i[0]._id}
+                                                                                                        Icon={Avatar}  
+                                                                                                        displayName={i[0].postedBy.Name}
+                                                                                                        username={i[0].postedBy.username}
+                                        
+                                                                                                        originalData={i[0].originalPostedBy}//ONLY THIS PART IS DIFFERENT....DURING RETWEET, DISPLAYNAME CHANGED....
+                                                                                                        profilePicUrl={i[0].postedBy.profilePicUrl}
+                                                                                                        postText={i[0].content}
+                                                                                                        createdAt={i[0].createdAt}
+                                                                                                        // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
+                                                                                                        verified="True"
+                                        
+                                                                                                        likeslength={i[0].likes.length}
+                                                                                                        likesData={i[0].likes}
+                                                                                                        retweetUserList={i[0].retweetUserList}
+                                                                                                        retweetData={i[0].retweetDataId}
+                                                                                                        replyDataId={i[0].replyDataId}
+                                                                                                        who={3}
+                                                                                                    />                                                         
+                                        
+                                                                                        })
+                                                                                    :
+                                                                                        <>
+                                                                                            {/*When it enters PostTab, daat is set to 1. At that time loading is required untilldata gets updated by axios.Else:- If no posts have been tweeted, then 'No Posts' is shown..  */}
+                                                                                            {data==1?
+
+                                                                                                <div className='Profile_NoTweets'>Loading...</div>
+                                                                                                :
+                                                                                            
+                                                                                                <div className='Profile_NoTweets'>1.2No Posts</div>
+                                                                                        
+                                                                                            }
+                                                                                            
+                                                                                        </>
+                                                                                    
+                                                                                }
+                                                                                
+                                                                            </>
+                                                                    }
+                                                                </> /* ⬆️ Reply tab closing bracket */
+                                                        }
+                                                    </> /* ⬆️ Post tab closing bracket */
+                                                 :   
                                                     /* ⬆️ If No Post && Likes data */
                                                     <>
                                                         {
@@ -976,7 +986,7 @@ function Profile() {
                                                         }
                                                         
                                                     </>
-                                            }
+                                              }
                                         
                                                 
                                                 {/* result.map(i=>{
@@ -1065,11 +1075,13 @@ function Profile() {
                                               } */}
 
                                     </div>
+                                    {/* COVER PIC DIV END */}
 
                                     {/* <div>YOO</div> */}
 
-                        </div>
-                     :
+                             </div>
+                             //1.Profile pic end 
+                        :
                         <div className='Profile_Homepage_top'>
                             <h2>No Such User</h2>
                         </div>
@@ -1078,6 +1090,7 @@ function Profile() {
             </div>    
          :
             null
+            // NO !loading && Object.keys(profileData).length>0 
             // <h2>No username</h2>
         }
 

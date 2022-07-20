@@ -34,58 +34,58 @@ function Left_Sidebar() {
 
     return (
         <div className="Left_Sidebar">
-            {/* <h1>Sidebar left</h1> */}
+                <div className="Left_Sidebar_sticky_title">
             
-            <Link to="/">
-                    <TwitterIcon className="main_icon"/>
-            </Link>
-           
-
-            <Link to="/" style={{ textDecoration: 'none', color: '#374151' }}>
-                <Left_Sidebar_Icons name="Home" Icons={HomeIcon} />
-            </Link>
-
-            
-            
-            <Link to={`/search`} style={{ textDecoration: 'none', color: '#374151' }}>
-                <Left_Sidebar_Icons name="Search" Icons={SearchIcon} />
-            </Link>
-
-            
-            {typeof(userInfo.id)=='undefined'?
-                <>
-                    <Link to={`/login`}  style={{ textDecoration: 'none',color:'#374151'}}> 
-                        <Left_Sidebar_Icons name="Login" Icons={VpnKeyIcon} />
-                    </Link>
+                         <Link to="/">
+                                <TwitterIcon className="main_icon"/>
+                         </Link>
                     
-                    <Link to={`/register`}  style={{ textDecoration: 'none',color:'#374151'}}> 
-                        <Left_Sidebar_Icons name="Register" Icons={VpnKeyIcon} />
-                    </Link>
-                </>
-                
-             :
-                <>
-                    <div className="Sidebar_Icons" onClick={logoutHandler}>
-                        <PowerSettingsNewIcon className="icon"/> 
-                        <div className="name">Logout</div>
-                    </div>
-                </>
-            }
-            {/* <Left_Sidebar_Icons name="Bookmark" Icons={BookmarkIcon } /> */}
-            {/* <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} /> */}
 
-            {typeof(userInfo.id)!='undefined'?
-                
-                <Link to={`/profile/${userInfo.username}`}  style={{ textDecoration: 'none',color:'#374151'}}> 
-                    <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} />
-                </Link>
-             :
-                null
-            }
-            
-            
-            <button className="post_button">+ Post</button>
-            
+                        <Link to="/" style={{ textDecoration: 'none', color: '#374151' }}>
+                            <Left_Sidebar_Icons name="Home" Icons={HomeIcon} />
+                        </Link>
+
+                        
+                        
+                        <Link to={`/search`} style={{ textDecoration: 'none', color: '#374151' }}>
+                            <Left_Sidebar_Icons name="Search" Icons={SearchIcon} />
+                       </Link>
+
+                    
+                            {typeof(userInfo.id)=='undefined'?
+                                <>
+                                    <Link to={`/login`}  style={{ textDecoration: 'none',color:'#374151'}}> 
+                                        <Left_Sidebar_Icons name="Login" Icons={VpnKeyIcon} />
+                                    </Link>
+
+                                    <Link to={`/register`}  style={{ textDecoration: 'none',color:'#374151'}}> 
+                                        <Left_Sidebar_Icons name="Register" Icons={VpnKeyIcon} />
+                                    </Link>
+                                </>
+                                
+                             : 
+                                <>
+                                    <div className="Sidebar_Icons" onClick={logoutHandler}>
+                                        <PowerSettingsNewIcon className="icon"/> 
+                                        <div className="name">Logout</div>
+                                    </div>
+                                </>
+                            }
+                            {/* <Left_Sidebar_Icons name="Bookmark" Icons={BookmarkIcon } /> */}
+                             {/* <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} /> */}
+
+                        {typeof(userInfo.id)!='undefined'?
+                            
+                            <Link to={`/profile/${userInfo.username}`}  style={{ textDecoration: 'none',color:'#374151'}}> 
+                                <Left_Sidebar_Icons name="Profile" Icons={PersonIcon} />
+                            </Link>
+                         :
+                            null
+                        }
+                        
+                    
+                            {/* <button className="post_button">+ Post</button> */}
+                 </div>
         </div>
     )
 }

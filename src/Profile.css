@@ -4,8 +4,19 @@
     border-right: 1px solid lightgray;
 }
 
-
-
+.Profile_Div_Title_Name
+{
+    position: sticky;
+    top:0;
+    z-index: 100;
+    border: 1px solid lightgray;
+    background-color: #fffefe;
+}
+.Profile_Title_Name
+{
+    color: #1da1f2;
+    padding-left: 5px;
+}
 .Profile_Div_CoverPic
 {
     height:180px;
@@ -338,6 +349,7 @@
     /* background-color: rgb(213, 29, 29);  */
     background-color: rgb(0, 0, 0, 0.4);
     cursor: cell;
+    z-index: 101;
 
 }
 
