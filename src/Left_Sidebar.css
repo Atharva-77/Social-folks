@@ -1,6 +1,6 @@
 .Left_Sidebar
 {
-    flex:0.1;
+    flex:0.2;
     border:1px solid lightgray;
     border-right: 1px solid lightgray;
     border-bottom: 0px;
@@ -19,7 +19,7 @@
 
 .main_icon
 {
-     padding-left: 1.5rem;
+     padding-left: 5.1rem;
      /* display: flex; */
      /* align-items: center; */
      margin-top: 1rem;
