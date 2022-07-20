@@ -132,7 +132,7 @@ function PostDetails() {
                 axios.get(`http://localhost:4000/post/${id}`)
                 .then(res=>
                     {
-                        console.log(" 111111111111111111111111111RES.DATA ",(res.data),query);
+                        // console.log(" 111111111111111111111111111RES.DATA ",(res.data),query);
                         setdata(res.data);
                         setrootId(id);
                         setrootData(res.data);
@@ -175,7 +175,8 @@ function PostDetails() {
 
         useEffect(()=>
         {
-            console.log("id changeddd",id);
+            // console.log("id changeddd",id);
+            console.log("145 YOYOY---------------------------------------------------", query,"\n\nDATA",data,"\n\nid",id);
 
             if (data != 0 && id != data._id) 
             {
@@ -186,7 +187,7 @@ function PostDetails() {
                      {
                             axios.get(`http://localhost:4000/post/${id}`)
                                 .then(res => {
-                                    console.log(" DATAAAAAAAAAAAAAAAA RES.DATA ", (res.data));
+                                    // console.log(" DATAAAAAAAAAAAAAAAA RES.DATA ", (res.data));
                                     setdata(res.data);
                                     setrootId(id);
                                     setrootData(res.data);
@@ -205,15 +206,17 @@ function PostDetails() {
                                     setdata_RetweetId(res.data.retweetUserList);
                                     setdataLen_RetweetId(res.data.retweetUserList.length);
                                     // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                                    setreload(0)
                                 })
 
                             axios.get(`http://localhost:4000/post/reply/${id}`)
                                 .then(res => {
-                                    // console.log(" 2.RepliesRES.DATA ",(res.data));
+                                    // console.log(" 2.2222222222222222222222RepliesRES.DATA ",(res.data));
                                     setrepliesData(res.data);
                                     // setreload(0)
                                     // console.log(" 3.RES.DATA ",repliesData);
                                     // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                                    // setreload(0);
                                 })
                         }
 
@@ -222,7 +225,7 @@ function PostDetails() {
                             axios.get(`http://localhost:4000/post/${id}`)
                                 .then(res => {
                                     rootsIdSpace=1;
-                                    console.log(" 160RES.DATA ", (res.data),rootsIdSpace);
+                                    console.log(" 160R0000000000000000000000000000000000ES.DATA ", (res.data),rootsIdSpace);
                                     setdata(res.data);
                                     setreload(0);
                                    
@@ -233,11 +236,12 @@ function PostDetails() {
                                     setdata_Likes(res.data.likes);
                                     setdataLen_Likes(res.data.likes.length);
                                     // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                                    // setreload(0)
                                 })
 
                             axios.get(`http://localhost:4000/post/reply/${id}`)
                                 .then(res => {
-                                    // console.log(" 2.RepliesRES.DATA ",(res.data));
+                                    console.log(" 242222222222222222222222222222222222222222222.RepliesRES.DATA ",(res.data));
                                     setrepliesData(res.data);
                                     // setreload(0)
                                     // console.log(" 3.RES.DATA ",repliesData);
@@ -245,44 +249,29 @@ function PostDetails() {
                                 })
                      }
 
-                    //  else if(query== undefined && frmPostBack==1)
-                    //  {
-                    //     axios.get(`http://localhost:4000/post/${id}`)
-                    //             .then(res => {
-                    //                 console.log("ELSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE RES.DATA ", (res.data));
-                    //                 setdata(res.data);
-                    //                 setrootId(id);
-                    //                 setrootData(res.data);
-
-
-                    //                 setrootData_Likes(res.data.likes);
-                    //                 setrootDataLen_Likes(res.data.likes.length);
-
-                    //                 setdata_Likes(res.data.likes);
-                    //                 setdataLen_Likes(res.data.likes.length);
-
-
-                    //                 setrootData_RetweetId(res.data.retweetUserList);
-                    //                 setrootDataLen_RetweetId(res.data.retweetUserList.length);
-
-                    //                 setdata_RetweetId(res.data.retweetUserList);
-                    //                 setdataLen_RetweetId(res.data.retweetUserList.length);
-                    //                 // timestamp=timeDifference(new Date(),new Date(data.createdAt));
-                    //             })
-
-                    //         axios.get(`http://localhost:4000/post/reply/${id}`)
-                    //             .then(res => {
-                    //                 // console.log(" 2.RepliesRES.DATA ",(res.data));
-                    //                 setrepliesData(res.data);
-                    //                 // setreload(0)
-                    //                 // console.log(" 3.RES.DATA ",repliesData);
-                    //                 // timestamp=timeDifference(new Date(),new Date(data.createdAt));
-                    //             })
-                    //  }
+                     
 
 
             }
-        },[id])
+
+            else if(data != 0 && id == data._id)
+            {
+                console.log("259...................................ELSLELSE",query,frmPostBack);
+                if((query==0 && frmPostBack==0)||(query==undefined && frmPostBack==0))
+                {
+   
+
+                        axios.get(`http://localhost:4000/post/reply/${id}`)
+                            .then(res => {
+                                console.log(" 2427777777777777777777777777777777777.RepliesRES.DATA ",(res.data));
+                                setrepliesData(res.data);
+                                setreload(0)
+                                // console.log(" 3.RES.DATA ",repliesData);
+                                // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                            })
+                 }
+            }
+        },[id,reload,setreload])
 
 
         // if(data!=0 && id!=data._id)
@@ -354,7 +343,12 @@ function PostDetails() {
                 
         // }
        
-
+        const parentFuncPd=()=>
+        {
+            console.log("clicked");
+            setreload(1);
+            // alert("Button clicked")
+        }
         const retweet_clicked=(retweetSubmitId='')=>
         {
     
@@ -750,7 +744,7 @@ function PostDetails() {
          ?
             <div>
                    <div className="PostDetail_HomePage_title">
-                        <h2 className='Tweet-heading'>Tweet</h2>
+                        <h2 className='Tweet-heading'>Posts</h2>
                     </div>
                    {/* {console.log("ROOTID",rootId,id,data)} */}
 
@@ -863,8 +857,22 @@ function PostDetails() {
                                      <div className="PostDetail_bottomIcons">
 
                                              {/* Comment Button */}
-                                            <button id="myBtn" className='PostDetail_icon_button' onClick={()=>root_reply_clicked()}> 
+                                            {/* <button id="myBtn" className='PostDetail_icon_button' onClick={()=>root_reply_clicked()}> 
                                                 <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+                                            </button> */}
+                                            <button id="myBtn" className='PostDetail_icon_button' onClick={()=>root_reply_clicked()}>
+
+                                                <div className='icon-div-like-number'>
+                                                    <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+
+                                                    {userInfo != undefined && typeof (userInfo.id) != 'undefined'
+                                                        ?
+                                                        <span className='icon-comment-number'>{rootData.totalReplies}</span>
+                                                        :
+                                                        <span className='icon-number'>{rootData.totalReplies}</span>
+                                                    }
+                                                </div>
+
                                             </button>
                                                 
                                                 {/* -------------------1ST MODAL ------------------------------------------------------------------ */}
@@ -872,7 +880,7 @@ function PostDetails() {
                                                   {/* {console.log("/")} */}
                                             {typeof(userInfo.id)!='undefined'
                                              ?
-                                                <div>
+                                                <>
                                                     {rootCntModal==1?
 
                                                          <div id="myModal" className="modal3" onClick={() => divfun1_root()}>
@@ -964,7 +972,7 @@ function PostDetails() {
                                                            </div>
                                                     :
                                                     null}
-                                                </div>
+                                                </>
                                              :    
                                              null}
 
@@ -1001,7 +1009,7 @@ function PostDetails() {
                                                 
 
                                                 <div className='icon-div-like-number'> 
-                                                <h1>HI1</h1>
+                                                {/* <h1>HI1</h1> */}
 
                                                     {Rx==1?
                                                         <div>
@@ -1146,15 +1154,29 @@ function PostDetails() {
                             {/* BOTTOM ICONS */}
                             <div className="PostDetail_bottomIcons">
 
-                                    <button id="myBtn" className='PostDetail_icon_button' onClick={()=>reply_clicked()}> 
+                                    {/* <button id="myBtn" className='PostDetail_icon_button' onClick={()=>reply_clicked()}> 
                                         <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
-                                    </button>
+                                    </button> */}
+                                    <button id="myBtn" className='PostDetail_icon_button' onClick={() => reply_clicked()}>
+
+                                        <div className='icon-div-like-number'>
+                                            <ChatBubbleOutlineIcon fontSize="small" className='icon-comment' />
+
+                                            {userInfo != undefined && typeof (userInfo.id) != 'undefined'
+                                                ?
+                                                <span className='icon-comment-number'>{data.totalReplies}</span>
+                                                :
+                                                <span className='icon-number'>{data.totalReplies}</span>
+                                            }
+                                        </div>
+
+                                     </button>
 
                                         {/* -------------------2ND MODAL ------------------------------------------------------------------ */}
                                     {/*When Modal Open  */}
                                         {typeof(userInfo.id)!='undefined'
                                         ?
-                                            <div>
+                                            <>
                                                 {cnt==1?
 
                                                         <div id="myModal" className="modal3" onClick={() => divfun1()}>
@@ -1247,7 +1269,7 @@ function PostDetails() {
                                                 :
                                                   null
                                                 }
-                                            </div>
+                                            </>
                                         :    
                                         null}
 
@@ -1284,7 +1306,7 @@ function PostDetails() {
                                         
 
                                         <div className='icon-div-like-number'> 
-                                            <h1>Hi2</h1>
+                                            {/* <h1>Hi2</h1> */}
                                             {x==1?
                                                 <div>
                                                         <FavoriteIcon fontSize="small" className={'icon-like-red'}/>
@@ -1337,10 +1359,12 @@ function PostDetails() {
                                             username={i.postedBy.username}
                                             originalData={i.originalPostedBy}
                                             postText={i.content}
+                                            editedText={i.content_BeforeEdit}
                                             createdAt={i.createdAt}
                                             // imageUrl="https://media.giphy.com/media/SWoRKslHVtqEasqYCJ/giphy.gif"
                                             verified="True"
-                                            //  parentHandler={()=>parentFunc()}   
+                                            parentHandler={() => parentFuncPd()}
+                                            //  parentHandler={()=>parentFuncPd()}   
 
                                             //  replyHandler={()=>replyFunc(i.content)}
                                             // replyHandler={()=>replyFunc()}
@@ -1357,6 +1381,7 @@ function PostDetails() {
                                             postDetails_boolean={true}
                                             postDetails_RootUser={rootData.postedBy.Name}
                                             postDetails_CurrentUser={data.postedBy.Name}
+                                            totalReplies={i.totalReplies}
                                         />
                                         
                                         

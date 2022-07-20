@@ -10,21 +10,34 @@ router.post('/add',protect,async(req,res)=>
 {
     try
     {    console.log("Poste mai",req.userAuth);
-         console.log("POST replyTo",req.body.replyTo);
+        //  console.log("POST replyTo",req.body.replyTo);
 
         var content=req.body.content
         const postedBy=req.userAuth
         var replyDataId;
+        var total_replies=0;
         
         if(req.body.replyTo)
         {
             console.log("hi");
             replyDataId=req.body.replyTo;
-            console.log("ReplyData",replyDataId);
+            // console.log("ReplyData",replyDataId);
+            
+            total_replies = await PostDb.find({replyDataId})
+            //.populate('postedBy', 'Name username email profilePicUrl').populate('originalPostedBy', 'Name username email profilePicUrl').populate('retweetDataId').populate('replyDataId').sort({ "createdAt": -1 })
+            
+            console.log("TOTAL REPLIES.", total_replies.length+1);
+            
+            const getUser = await PostDb.findById(replyDataId)
+            getUser.totalReplies=total_replies.length+1;
+    
+            const updatedUser=await getUser.save();
+
         }
         // const postUser=new PostDb({content:"haha", replyDataId:"yoo"})
         const postUser=await PostDb.create({content, postedBy ,replyDataId});
-        console.log("Yo1",postUser);  
+        // console.log("Yo1",postUser);  
+        
        
         try{
             res.status(201).json(postUser)

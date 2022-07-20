@@ -65,6 +65,10 @@ const PostSchema=new mongoose.Schema({
         ref:'Post'
         // ,
         // required:true,
+    },
+    totalReplies:
+    {
+        type:String,
     }
 
 

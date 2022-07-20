@@ -247,16 +247,32 @@
     padding: 6px;
 }
 
-.Post_bottomIcons .icon-comment:hover
+/* .Post_bottomIcons .icon-comment:hover
 {
     color: #138bd6;
     background-color: rgba(44,167,242,0.2);
     border-radius: 40%;
   
-}
+} */
 
 /* ------------------------------------------------------- */
 
+/* .Post_bottomIcons .icon-comment-blue
+{
+    color: #009bfb;
+    border-radius: 40%;
+    padding: 6px;
+} */
+
+.Post_bottomIcons .icon-comment:hover
+{
+    color: #009bfb;
+    background-color: rgba(0, 155, 251, 0.1);
+    border-radius: 40%;
+}
+
+/* ------------------------------------------ */
+/* ------------------------------------- */
 .Post_bottomIcons .icon-retweet
 {
     padding: 6px;
@@ -299,10 +315,17 @@
 {
     
     color: red;
+    /* font-weight: 600; */
 }
 .icon-retweet-number
 {
     color: rgb(32, 174, 32);
+}
+
+.icon-comment-number
+{
+    color: #009bfb;
+    font-weight: 600;
 }
 /* -------------------------------- */
 .icon-above-avator

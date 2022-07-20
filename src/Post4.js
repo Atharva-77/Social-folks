@@ -12,7 +12,7 @@ import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 
-function Post({id,Icon,displayName, username,originalData, profilePicUrl,postText, editedText,imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
+function Post({id,Icon,displayName, username,originalData, profilePicUrl,postText, editedText,imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,totalReplies,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
    
     // console.log("js.POST",typeof(retweetData)=='undefined',retweetUserList.length,typeof(retweetData),postText,retweetContent);
     // console.log("1.Yo",likesData,postText)
@@ -683,6 +683,7 @@ var editFlag=false;
                             
                         :
                         null
+                        // <h1>POSTDETAIL</h1>
                     }
 
                         {/* 
@@ -706,10 +707,35 @@ var editFlag=false;
                 <div className="Post_bottomIcons">
 
                          {/* <button onClick={onClick}> Click me {count} </button> */}
+                        {/* {totalReplies} */}
+                               
 
                         <button id="myBtn" className='Post_icon_button' onClick={()=>reply_clicked()}> 
-                            <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+                               
+                                <div className='icon-div-like-number'>
+                                     <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+                                       
+                                            {/* { userInfo!=undefined && typeof(userInfo.id)!='undefined'
+                                             ?
+                                                // <RepeatIcon fontSize="small" className={'icon-retweet-green'}/>
+                                                <ChatBubbleOutlineIcon fontSize="small" className='icon-comment-blue'/>
+                                             :
+                                                <ChatBubbleOutlineIcon fontSize="small" className='icon-comment'/>
+                                               
+                                            } */}
+                                            {/* <span className='icon-number'>{ totalReplies}</span> */}
+                                           
+                                            { userInfo!=undefined && typeof(userInfo.id)!='undefined'
+                                             ?
+                                                <span className='icon-comment-number'>{totalReplies}</span>
+                                             :
+                                                <span className='icon-number'>{totalReplies}</span>
+                                             }
+                                </div>
+                            
                         </button>
+                        
+                            
 
                             {/* **********************************MODAL START***************************************************** */}
                         {typeof(userInfo.id)!='undefined'

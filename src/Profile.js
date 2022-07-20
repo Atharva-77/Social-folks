@@ -746,8 +746,8 @@ function Profile() {
                                                                 {
                                                                     userInfo.username != undefined && id==userInfo.username
                                                                     ?
-                                                                        <button onClick={() => edit_clicked()} className='Post_icon_button'>
-                                                                            <EditIcon fontSize="small" className={'icon-like'} />
+                                                                        <button onClick={() => edit_clicked()} className='Profile_EditIcon_button'>
+                                                                            <EditIcon fontSize="small" className={'Profile_EditIcon'} />
                                                                         </button> 
                                                                     :
                                                                         null
@@ -864,6 +864,7 @@ function Profile() {
                                                                                 retweetUserList={i[0].retweetUserList}
                                                                                 retweetData={i[0].retweetDataId}
                                                                                 replyDataId={i[0].replyDataId}
+                                                                                totalReplies={i[0].totalReplies}
                                                                                 who={1}
                                                                             />
                                                                     : 
@@ -906,6 +907,7 @@ function Profile() {
                                                                                                 retweetUserList={i[0].retweetUserList}
                                                                                                 retweetData={i[0].retweetDataId}
                                                                                                 replyDataId={i[0].replyDataId}
+                                                                                                totalReplies={i[0].totalReplies}
                                                                                                 who={2}
                                                                                             />
                                                                                     :
@@ -947,6 +949,7 @@ function Profile() {
                                                                                                         retweetUserList={i[0].retweetUserList}
                                                                                                         retweetData={i[0].retweetDataId}
                                                                                                         replyDataId={i[0].replyDataId}
+                                                                                                        totalReplies={i[0].totalReplies}
                                                                                                         who={3}
                                                                                                     />                                                         
                                         

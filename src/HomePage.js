@@ -207,6 +207,7 @@ function HomePage() {
                                                 retweetData={i[0].retweetDataId}
                                                 //  retweetContent={i[0].retweetContent}
                                                 replyDataId={i[0].replyDataId}
+                                                totalReplies={i[0].totalReplies}
                                                 
                                             />
 
@@ -252,6 +253,7 @@ function HomePage() {
                                                     retweetData={i[0].retweetDataId}
                                                     //  retweetContent={i[0].retweetContent}
                                                     replyDataId={i[0].replyDataId}
+                                                    totalReplies={i[0].totalReplies}
                                                 />
 
                                                 // console.log("i=",i[0].likes.length,i[0])
@@ -299,6 +301,7 @@ function HomePage() {
                                         retweetData={i[0].retweetDataId}
                                         //  retweetContent={i[0].retweetContent}
                                         replyDataId={i[0].replyDataId}
+                                        totalReplies={i[0].totalReplies}
                                     />
 
                                     // console.log("i=",i[0].likes.length,i[0])

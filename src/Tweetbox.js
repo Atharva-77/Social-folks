@@ -97,7 +97,7 @@ function Tweetbox(props) {
    
     //  {console.log("POST38:-",content,content.length)}
     
-    {console.log("URLLLLLLLL-",picurl)}
+    // {console.log("URLLLLLLLL-",picurl)}
 
     return (
         <div className="Tweetbox">
@@ -120,7 +120,7 @@ function Tweetbox(props) {
                  {/* <button onClick={props.greeted}>Hi</button> */}
             </div>
             
-        {/* </form> */}
+            {/* </form> */}
         
         </div>
     )
