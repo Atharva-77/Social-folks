@@ -15,12 +15,17 @@ import RepeatIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
+import { useHistory } from "react-router-dom";
+
 function PostDetails() {
 
     const {id}=useParams();
     const { query } = useLocation();
 
-    console.log(id, "HI ", query);
+    let history = useHistory(); 
+    var rootsIdSpace=0;
+   
+    // console.log(id, "HI ", query);
     // console.log("ID in PD.js",id);
     var timestamp;//=timeDifference(new Date(),new Date(data.createdAt))
     const [rootId, setrootId] = useState(0); 
@@ -46,6 +51,7 @@ function PostDetails() {
     const [cnt, setcnt] = useState(0);
 
     const [replycontent, setreplycontent] = useState("");
+    const [frmPostBack, setfrmPostBack] = useState(0);
 
 
     var Rx=0;
@@ -121,39 +127,49 @@ function PostDetails() {
     useEffect(() => 
         {
             // console.log("ON POSTDETAILS",reload);
-            axios.get(`http://localhost:4000/post/${id}`)
-            .then(res=>
-                {
-                    console.log(" 111111111111111111111111111RES.DATA ",(res.data));
-                    setdata(res.data);
-                    setrootId(id);
-                    setrootData(res.data);
-
-
-                    setrootData_Likes(res.data.likes);
-                    setrootDataLen_Likes(res.data.likes.length);
-
-                    setdata_Likes(res.data.likes);
-                    setdataLen_Likes(res.data.likes.length);
-
-
-                    setrootData_RetweetId(res.data.retweetUserList);
-                    setrootDataLen_RetweetId(res.data.retweetUserList.length);
-
-                    setdata_RetweetId(res.data.retweetUserList); 
-                    setdataLen_RetweetId(res.data.retweetUserList.length);
-                    // timestamp=timeDifference(new Date(),new Date(data.createdAt));
-                })
-
-                axios.get(`http://localhost:4000/post/reply/${id}`)
+            // if(query!=undefined)
+            // {
+                axios.get(`http://localhost:4000/post/${id}`)
                 .then(res=>
                     {
-                        // console.log(" 2.RepliesRES.DATA ",(res.data));
-                        setrepliesData(res.data);
-                        // setreload(0)
-                        // console.log(" 3.RES.DATA ",repliesData);
+                        console.log(" 111111111111111111111111111RES.DATA ",(res.data),query);
+                        setdata(res.data);
+                        setrootId(id);
+                        setrootData(res.data);
+                        // rootsIdSpace=1;
+    
+    
+                        setrootData_Likes(res.data.likes);
+                        setrootDataLen_Likes(res.data.likes.length);
+    
+                        setdata_Likes(res.data.likes);
+                        setdataLen_Likes(res.data.likes.length);
+    
+    
+                        setrootData_RetweetId(res.data.retweetUserList);
+                        setrootDataLen_RetweetId(res.data.retweetUserList.length);
+    
+                        setdata_RetweetId(res.data.retweetUserList); 
+                        setdataLen_RetweetId(res.data.retweetUserList.length);
                         // timestamp=timeDifference(new Date(),new Date(data.createdAt));
                     })
+    
+                    axios.get(`http://localhost:4000/post/reply/${id}`)
+                    .then(res=>
+                        {
+                            // console.log(" 2.RepliesRES.DATA ",(res.data));
+                            setrepliesData(res.data);
+                            // setreload(0)
+                            // console.log(" 3.RES.DATA ",repliesData);
+                            // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                        })
+            //  }
+
+             if (query==undefined)
+             {
+                setfrmPostBack(1);
+             }
+          
 
         }, [])
 
@@ -166,7 +182,7 @@ function PostDetails() {
                 console.log("155 YOYOY---------------------------------------------------", query);
 
                       //If The root tweet is "Replying to", then there is an option of 'Link to Full tweet'. When this is cicked, it take to a tweet. So that tweet should become rootTweet . Hence rootTweet is reassigned.
-                    if (query == 1) 
+                    if (query == 1 || (query== undefined && frmPostBack==1)) 
                      {
                             axios.get(`http://localhost:4000/post/${id}`)
                                 .then(res => {
@@ -174,7 +190,7 @@ function PostDetails() {
                                     setdata(res.data);
                                     setrootId(id);
                                     setrootData(res.data);
-
+                                    
 
                                     setrootData_Likes(res.data.likes);
                                     setrootDataLen_Likes(res.data.likes.length);
@@ -201,13 +217,15 @@ function PostDetails() {
                                 })
                         }
 
-                    else 
+                    else if(query==0 || (query==undefined && frmPostBack==0))
                     {
                             axios.get(`http://localhost:4000/post/${id}`)
                                 .then(res => {
-                                    console.log(" 160RES.DATA ", (res.data));
+                                    rootsIdSpace=1;
+                                    console.log(" 160RES.DATA ", (res.data),rootsIdSpace);
                                     setdata(res.data);
                                     setreload(0);
+                                   
 
                                     setdata_RetweetId(res.data.retweetUserList);
                                     setdataLen_RetweetId(res.data.retweetUserList.length);
@@ -225,7 +243,42 @@ function PostDetails() {
                                     // console.log(" 3.RES.DATA ",repliesData);
                                     // timestamp=timeDifference(new Date(),new Date(data.createdAt));
                                 })
-                    }
+                     }
+
+                    //  else if(query== undefined && frmPostBack==1)
+                    //  {
+                    //     axios.get(`http://localhost:4000/post/${id}`)
+                    //             .then(res => {
+                    //                 console.log("ELSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE RES.DATA ", (res.data));
+                    //                 setdata(res.data);
+                    //                 setrootId(id);
+                    //                 setrootData(res.data);
+
+
+                    //                 setrootData_Likes(res.data.likes);
+                    //                 setrootDataLen_Likes(res.data.likes.length);
+
+                    //                 setdata_Likes(res.data.likes);
+                    //                 setdataLen_Likes(res.data.likes.length);
+
+
+                    //                 setrootData_RetweetId(res.data.retweetUserList);
+                    //                 setrootDataLen_RetweetId(res.data.retweetUserList.length);
+
+                    //                 setdata_RetweetId(res.data.retweetUserList);
+                    //                 setdataLen_RetweetId(res.data.retweetUserList.length);
+                    //                 // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                    //             })
+
+                    //         axios.get(`http://localhost:4000/post/reply/${id}`)
+                    //             .then(res => {
+                    //                 // console.log(" 2.RepliesRES.DATA ",(res.data));
+                    //                 setrepliesData(res.data);
+                    //                 // setreload(0)
+                    //                 // console.log(" 3.RES.DATA ",repliesData);
+                    //                 // timestamp=timeDifference(new Date(),new Date(data.createdAt));
+                    //             })
+                    //  }
 
 
             }
@@ -704,6 +757,7 @@ function PostDetails() {
                         {rootData!=0 && rootId!=id?
                   
                              <div className='PostDetail'>
+                                <div className='RootPost_title'>Root Post</div>
                                         {rootData.retweetDataId!=undefined
                                          ?
                                                 <div className='PostDetail_retweetText-header'>
@@ -975,14 +1029,21 @@ function PostDetails() {
                          null
                         }
 
-
-
+                        {/* <div className='Line'></div> */}
+                       
+                        
+                                {rootData!=0 && rootId!=id
+                                 ?
+                                     <div>&nbsp;</div> 
+                                 :
+                                    null
+                                }
                       {/*==================================================================================================================  */}
                          {/*==========================2nd PART========================================================================================  */}
                         {/* <Link to={`/post/${id}`} style={{ textDecoration: 'none',color:'#374151'}} onClick={() => divfun1()}> */}
                                 {/* 2nd partt */}
-                        <div className='PostDetail' id='PostDetail_header-largesize'>
-
+                        <div className='PostDetailTwo' id='PostDetail_header-largesize'>
+                          
                                 {data.retweetDataId!=undefined
                                     ?
                                         <div >

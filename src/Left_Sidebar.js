@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import './Left_Sidebar.css';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import SearchIcon from '@material-ui/icons/Search';
@@ -15,6 +15,7 @@ import Home from '@material-ui/icons/Home';
 import { Link } from 'react-router-dom';
 import { useDispatch,useSelector } from 'react-redux';
 import {logout_action} from './Reducers/actions/userActions'
+import Tweetbox from './Tweetbox';
 
 function Left_Sidebar() {
 
@@ -25,11 +26,20 @@ function Left_Sidebar() {
     const {loading, userInfo, error}=userLoginData
     console.log("USERINGOOO",userInfo);
 
+    const [TweetboxClick, setTweetboxClick] = useState(0)
     const logoutHandler=()=>
     {
         console.log("Logout clicked");
         dispatch(logout_action())
         
+    }
+    const PostClicked=()=>
+    {
+        if(TweetboxClick==0)
+            setTweetboxClick(1);
+        
+        else
+            setTweetboxClick(0);
     }
 
     return (
@@ -82,9 +92,19 @@ function Left_Sidebar() {
                          :
                             null
                         }
-                        
+
+                        {/* <Link to={`/`}  style={{ textDecoration: 'none',color:'#374151'}}> 
+                               <button className="post_button" onClick={PostClicked}>+ Post</button>
+                               
+                               {TweetboxClick==1?
+                                    <Tweetbox />
+                                :
+                                    null
+
+                               }
+                        </Link> */}
                     
-                            {/* <button className="post_button">+ Post</button> */}
+                            {/* <button className="post_button" onClick={PostClicked}>+ Post</button> */}
                  </div>
         </div>
     )
