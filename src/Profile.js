@@ -35,12 +35,15 @@ function Profile() {
     const [url, setUrl] = useState('')
     const [coverUrl, setcoverUrl] = useState('')
 
+    const [plsLoginMessg, setplsLoginMessg] = useState(false);
+
     const dispatch = useDispatch();
     const userLoginData=useSelector(state=>state.userLoginKey)
 
     const {loading, userInfo, error}=userLoginData
     
-    
+    var Totalpost=0;
+    var TotalRepliespost=0;
     // const [email, setemail] = useState('hi@1');
     // const [password, setpassword] = useState('q1');
 
@@ -343,23 +346,31 @@ function Profile() {
     const follow_following_func=()=>
     {
         console.log("Follwo Id of user is",profileData._id,profileData.followers.includes(userInfo.id));
-        
-        const postData=
-         {
-            "userFollowId":profileData._id
-         }
-
-        axios.put(`http://localhost:4000/profile/followRoute/${userInfo.username}`,postData)
-        .then(res=>
+         if(userInfo.id==undefined)
+        {
+            setplsLoginMessg(true);
+        }
+        else
+        {
+            const postData=
             {
-                // dispatch(userAction_details(userInfo.email,'q1')); 
-
-                console.log("Follow data all  RES.DATA ",(res.data));         
-                // setprofileData(res.data);   
-                setprofileData(res.data);    
-                
-                
-            })
+               "userFollowId":profileData._id
+            }
+   
+           axios.put(`http://localhost:4000/profile/followRoute/${userInfo.username}`,postData)
+           .then(res=>
+               {
+                   // dispatch(userAction_details(userInfo.email,'q1')); 
+   
+                   console.log("Follow data all  RES.DATA ",(res.data));         
+                   // setprofileData(res.data);   
+                   setprofileData(res.data);    
+                   
+                   
+               })
+               setplsLoginMessg(false);
+        }
+        
 
 
     }
@@ -697,7 +708,18 @@ function Profile() {
 
                                                     {Object.keys(userInfo)==0
                                                     ?
-                                                        <button className='Profile_follow_button'>Follow</button>
+                                                        <>
+                                                            <button className='Profile_follow_button' onClick={()=>follow_following_func()}>Follow</button>
+                                                        
+                                                            {plsLoginMessg && 
+                                
+                                                                <h3 className='Post_Please_Login_Message_Div'>
+                                                                    <Link to='/login' style={{ textDecoration: 'underline', color: 'red' }}>
+                                                                        <span lassName='Post_Please_Login_Message'>Please login</span>
+                                                                    </Link>
+                                                                </h3>
+                                                            }
+                                                        </>
                                                     :
                                                         <>
                                                                 {id!==userInfo.username?
@@ -868,9 +890,11 @@ function Profile() {
                                                                                 who={1}
                                                                             />
                                                                     : 
-                                                                    null
-                                                                    // <div className='Profile_NoTweets'>1.No Posts</div>
-                                                                
+                                                                    // null
+                                                                     <>
+                                                                        {console.log(Totalpost+=1) }
+                                                                        {/* <div className='Profile_NoTweets'>1.No Posts {Totalpost} {Object.keys(data).length}</div> */}
+                                                                     </>
                 
                                                                 })
                                                         
@@ -911,11 +935,12 @@ function Profile() {
                                                                                                 who={2}
                                                                                             />
                                                                                     :
-                                                                                        null
-                                                                                        // <>
+                                                                                        // null
+                                                                                        <>
+                                                                                            {console.log(TotalRepliespost+=1) }
                                                                                             {/* {console.log("2.2 No resul",result)} */}
                                                                                             {/* <div className='Profile_NoTweets'>2.22No Posts</div> */}
-                                                                                        // </>
+                                                                                         </>
                                                                                     
                                                                                 })
 
@@ -954,15 +979,15 @@ function Profile() {
                                                                                                     />                                                         
                                         
                                                                                         })
-                                                                                    :
+                                                                                     :
                                                                                         <>
                                                                                             {/*When it enters PostTab, daat is set to 1. At that time loading is required untilldata gets updated by axios.Else:- If no posts have been tweeted, then 'No Posts' is shown..  */}
                                                                                             {data==1?
-
-                                                                                                <div className='Profile_NoTweets'>Loading...</div>
+                                                                                                    // As far as i saw, this loading is never used because it never enters this part as Object.keys(data) is zero when data is 1.
+                                                                                                <div className='Profile_NoTweets'>Loading</div>
                                                                                                 :
                                                                                             
-                                                                                                <div className='Profile_NoTweets'>No Posts</div>
+                                                                                                <div className='Profile_NoTweets'>No Likes</div>
                                                                                         
                                                                                             }
                                                                                             
@@ -976,25 +1001,41 @@ function Profile() {
                                                         }
                                                     </> /* ⬆️ Post tab closing bracket */
                                                  :   
-                                                    /* ⬆️ If No Post && Likes data */
+                                                    /* ⬆️ If No Post && Likes data . i.e. data==0*/
                                                     <>
                                                         {
-                                                            Object.keys(data).length==0 && (postTabclicked==1 || replyTabclicked==1) && data!=1?
+                                                            //Data becomes momnetarily 1, at that time loading is shown. But if we get data as [] i.e. no data then "No Post" is printed.
+                                                            Object.keys(data).length==0 && (postTabclicked==1 || replyTabclicked==1) && data!=1
+                                                             ?
                                                                 <div className='Profile_NoTweets'>No Posts</div>
-                                                            :
-                                                            <>
-                                                                {data==1?
+                                                             :
+                                                                <>
+                                                                    {data==1?
+                                                                            //Momentarily this loading is shown... data is 1. Then gets updated by axios.Otherwise the same UI is rendered and then no changes if like button is clicked.
+                                                                        <div className='Profile_NoTweets'>Loading</div>
+                                                                    :
 
-                                                                    <div className='Profile_NoTweets'>Loading...</div>
-                                                                :
-
-                                                                    <div className='Profile_NoTweets'>No Likes</div>
-                                                                }
-                                                            </>
+                                                                        <div className='Profile_NoTweets'>No Likes</div>
+                                                                    }
+                                                                </>
                                                                 
                                                         }
+                                                       
                                                         
                                                     </>
+                                              }
+                                              {
+                                                    Object.keys(data).length>0 && Totalpost==Object.keys(data).length?
+                                                        <div className='Profile_NoTweets'>No Posts</div>
+                                                    :
+                                                    <>
+                                                    {
+                                                        Object.keys(data).length>0 && TotalRepliespost==Object.keys(data).length?
+                                                        <div className='Profile_NoTweets'>No Replies</div>
+                                                        :
+                                                        null
+                                                    }
+                                                   </>
                                               }
                                         
                                                 
