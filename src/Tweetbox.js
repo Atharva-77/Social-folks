@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import './Tweetbox.css';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import { LINKURL } from './Reducers/constants/userConstants';
 
 function Tweetbox(props) {
 
@@ -27,7 +28,7 @@ function Tweetbox(props) {
                 "username":userInfo.username
             }
     
-            axios.post(`http://localhost:4000/profile/${userInfo.username}`,user_data)
+            axios.post(`${LINKURL}/profile/${userInfo.username}`,user_data)
             .then( res =>
                     {
                         // console.log("......................AXIOS:-",res.data); 
@@ -82,7 +83,7 @@ function Tweetbox(props) {
             "content":content.trim()
         }
 
-        axios.post(`http://localhost:4000/post/add`,content_data,config)
+        axios.post(`${LINKURL}/post/add`,content_data,config)
         .then( res =>
                 {
                     console.log("AXIOS:-",res.data); 

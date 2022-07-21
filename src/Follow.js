@@ -7,6 +7,7 @@ import './Follow.css'
 
 import { userAction_details } from './Reducers/actions/userActions';
 import FollowList from './FollowList';
+import { LINKURL } from './Reducers/constants/userConstants';
 
 
 
@@ -27,7 +28,7 @@ function Follow() {
     useEffect(() => {
 
         console.log("IDDD",id);
-        axios.get(`http://localhost:4000/profile/allFollowers/${id}`)
+        axios.get(`${LINKURL}/profile/allFollowers/${id}`)
             .then(res => {
                 console.log("FOLLLOW data", res.data,typeof(res.data));
                 // console.log("\n\nFollowers data", typeof(res.data.followers));
@@ -55,7 +56,7 @@ function Follow() {
         //         "username":id
         //     }
 
-        //     axios.post(`http://localhost:4000/profile/${id}`,userData)
+        //     axios.post(`${LINKURL}/profile/${id}`,userData)
         //     .then(res=>
         //         {
         //             console.log("Profile RES.DATA ",(res.data));         
@@ -63,7 +64,7 @@ function Follow() {
 
         //         })
 
-        //     axios.get(`http://localhost:4000/post/postedBy/${id}`)
+        //     axios.get(`${LINKURL}/post/postedBy/${id}`)
         //     .then(res=>
         //         {
         //             // console.log("Posts all  RES.DATA ",(res.data));         
@@ -72,7 +73,7 @@ function Follow() {
 
         //         })
 
-        //     axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+        //     axios.get(`${LINKURL}/post/postedBy/likes/${id}`)
         //     .then(res=>
         //         {
         //             // console.log("Likes  RES.DATA ",(res.data));         

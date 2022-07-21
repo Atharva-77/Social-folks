@@ -8,6 +8,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
+import { LINKURL } from './Reducers/constants/userConstants';
 
 function Post({id,Icon,displayName, username, postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData}) {
    
@@ -133,7 +134,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
             "postid":id
          }
 
-        axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
+        axios.put(`${LINKURL}/post/${id}/like`,postData,config)
         .then( res =>
                 {
                     console.log("POST-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
@@ -169,7 +170,7 @@ function Post({id,Icon,displayName, username, postText, imageUrl, verified,creat
             "postid":id
          }
 
-        axios.post(`http://localhost:4000/post/${id}/retweet`,postData,config)
+        axios.post(`${LINKURL}/post/${id}/retweet`,postData,config)
         .then( res =>
                 {
                     console.log("POST-RETWEET-AXIOS:-",res.data.content, res.data.retweetUserList.length,res.data.retweetUserList);

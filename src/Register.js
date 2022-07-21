@@ -5,6 +5,7 @@ import './Register.css' ;
 import { useDispatch,useSelector } from 'react-redux';
 import {userAction_details} from './Reducers/actions/userActions'
 import {  useHistory } from 'react-router'; 
+import { LINKURL } from './Reducers/constants/userConstants';
 
 
 function Register() {
@@ -55,7 +56,7 @@ function Register() {
       }
 
 
-      axios.post(`http://localhost:4000/register/add`,register_data)
+      axios.post(`${LINKURL}/register/add`,register_data)
       .then( res =>
             {
                   console.log("AXIOS:-",res.data); 

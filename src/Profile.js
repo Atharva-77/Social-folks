@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import { storage } from './firebaseFolder/index2.js'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { LINKURL } from './Reducers/constants/userConstants';
 
 function Profile() {
   
@@ -70,7 +71,7 @@ function Profile() {
                     "username":id
                 }
             
-                axios.post(`http://localhost:4000/profile/${id}`,userData)
+                axios.post(`${LINKURL}/profile/${id}`,userData)
                 .then(res=>
                     {
                         console.log("Profile RES.DATA ",(res.data));         
@@ -78,7 +79,7 @@ function Profile() {
                         
                     })
 
-                axios.get(`http://localhost:4000/post/postedBy/${id}`)
+                axios.get(`${LINKURL}/post/postedBy/${id}`)
                 .then(res=>
                     {
                         // console.log("Posts all  RES.DATA ",(res.data));         
@@ -87,7 +88,7 @@ function Profile() {
                         
                     })
 
-                axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+                axios.get(`${LINKURL}/post/postedBy/likes/${id}`)
                 .then(res=>
                     {
                         // console.log("Likes  RES.DATA ",(res.data));         
@@ -132,7 +133,7 @@ function Profile() {
                     "coverPicUrl": coverUrl
                 }
 
-            //     axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+            //     axios.put(`${LINKURL}/profile/imgUrls/${id}`, userData,config)
             //         .then(res => {
             //             console.log("Profile RES.DATA ", (res.data));
             //             // setprofileData(res.data);
@@ -145,7 +146,7 @@ function Profile() {
                 {
                     console.log("BOTH URLS",url,"\n\n",coverUrl);
                     
-                    axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+                    axios.put(`${LINKURL}/profile/imgUrls/${id}`, userData,config)
                         .then(res => {
                             console.log("Profile RES.DATA ", (res.data));
                             setprofileData(res.data);
@@ -168,7 +169,7 @@ function Profile() {
                     console.log("ELSE If - BOTH URLS", url);
                     userData.coverPicUrl=undefined
 
-                    axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+                    axios.put(`${LINKURL}/profile/imgUrls/${id}`, userData,config)
                     .then(res => {
                         console.log("Profile RES.DATA ", (res.data));
                         setprofileData(res.data);
@@ -191,7 +192,7 @@ function Profile() {
                     console.log("3.Else if-BOTH CURLS", coverUrl);
                     userData.profilePicUrl=undefined
                     
-                    axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+                    axios.put(`${LINKURL}/profile/imgUrls/${id}`, userData,config)
                     .then(res => {
                         console.log("Profile RES.DATA ", (res.data));
                         setprofileData(res.data);
@@ -226,14 +227,14 @@ function Profile() {
         //         "profilePicUrl": coverUrl
         //     }
 
-        //     axios.put(`http://localhost:4000/profile/imgUrls/${id}`, userData,config)
+        //     axios.put(`${LINKURL}/profile/imgUrls/${id}`, userData,config)
         //         .then(res => {
         //             console.log("Profile RES.DATA ", (res.data));
         //             // setprofileData(res.data);
 
         //         })
 
-        //     // axios.post(`http://localhost:4000/profile/${id}`, userData)
+        //     // axios.post(`${LINKURL}/profile/${id}`, userData)
         //     //     .then(res => {
         //     //         console.log("Profile RES.DATA ", (res.data));
         //     //         setprofileData(res.data);
@@ -258,7 +259,7 @@ function Profile() {
             "username":id
         }
 
-        axios.get(`http://localhost:4000/post/postedBy/${id}`)
+        axios.get(`${LINKURL}/post/postedBy/${id}`)
         .then(res=>
             {
                 console.log("1.1.Posts all  RES.DATA ",(res.data));         
@@ -267,7 +268,7 @@ function Profile() {
                 
             })  
 
-        axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+        axios.get(`${LINKURL}/post/postedBy/likes/${id}`)
         .then(res=>
             {
                 console.log("Likes  RES.DATA ",(res.data));         
@@ -290,7 +291,7 @@ function Profile() {
          {
              "username":id
          }
-        axios.get(`http://localhost:4000/post/postedBy/${id}`)
+        axios.get(`${LINKURL}/post/postedBy/${id}`)
         .then(res=>
             {
                 console.log("ReplyPosts all  RES.DATA ",(res.data));         
@@ -299,7 +300,7 @@ function Profile() {
                 
             })  
 
-        axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+        axios.get(`${LINKURL}/post/postedBy/likes/${id}`)
         .then(res=>
             {
                 console.log("Likes  RES.DATA ",(res.data));         
@@ -318,7 +319,7 @@ function Profile() {
         setpostTabclicked(0);
         setreplyTabclicked(0);
         
-        axios.get(`http://localhost:4000/post/postedBy/likes/${id}`)
+        axios.get(`${LINKURL}/post/postedBy/likes/${id}`)
             .then(res=>
                 {
                     console.log("Likes  RES.DATA ",(res.data));         
@@ -332,7 +333,7 @@ function Profile() {
              "username":id
          }
          
-        axios.get(`http://localhost:4000/post/postedBy/${id}`)
+        axios.get(`${LINKURL}/post/postedBy/${id}`)
         .then(res=>
             {
                 console.log("ReplyPosts all  RES.DATA ",(res.data));         
@@ -357,7 +358,7 @@ function Profile() {
                "userFollowId":profileData._id
             }
    
-           axios.put(`http://localhost:4000/profile/followRoute/${userInfo.username}`,postData)
+           axios.put(`${LINKURL}/profile/followRoute/${userInfo.username}`,postData)
            .then(res=>
                {
                    // dispatch(userAction_details(userInfo.email,'q1')); 
@@ -427,7 +428,7 @@ function Profile() {
             "description": editDescription
         }
 
-        axios.post(`http://localhost:4000/profile/editUserDescp/${userInfo.username}`, postData,config)
+        axios.post(`${LINKURL}/profile/editUserDescp/${userInfo.username}`, postData,config)
             .then(res => {
                 // dispatch(userAction_details(userInfo.email,'q1')); 
 

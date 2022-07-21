@@ -10,6 +10,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import axios from 'axios';
 import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { LINKURL } from './Reducers/constants/userConstants';
 
 
 function PostDetails_Replies({id,Icon,displayName, username,originalData,postText, imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId}) {
@@ -111,7 +112,7 @@ var flag=false;
             "postid":id
          }
 
-        axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
+        axios.put(`${LINKURL}/post/${id}/like`,postData,config)
         .then( res =>
                 {
                     console.log("POST-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
@@ -145,7 +146,7 @@ var flag=false;
             "postid":id
          }
 
-        axios.post(`http://localhost:4000/post/${id}/retweet`,postData,config)
+        axios.post(`${LINKURL}/post/${id}/retweet`,postData,config)
         .then( res =>
                 {
                     console.log("POST-RETWEET-AXIOS:-",res.data.content, res.data.retweetUserList.length,res.data.retweetUserList);
@@ -256,7 +257,7 @@ var flag=false;
             "replyTo":id
         }
 
-        axios.post(`http://localhost:4000/post/add`,replycontent_data,config)
+        axios.post(`${LINKURL}/post/add`,replycontent_data,config)
         .then( res =>
                 {
                     console.log("AXIOS:-",res.data); 

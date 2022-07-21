@@ -11,6 +11,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import { logDOM } from '@testing-library/react';
 import Post4 from './Post4';
 import FollowList from './FollowList';
+import { LINKURL } from './Reducers/constants/userConstants';
 
 
 function Search() {
@@ -66,7 +67,7 @@ function Search() {
             // setusersData('')
             console.log("AAgaya", "Post",keyword);
            
-            axios.get(`http://localhost:4000/post/specificPost?keyword=${keyword}`)
+            axios.get(`${LINKURL}/post/specificPost?keyword=${keyword}`)
                 .then(res => {
                     // setdata('')
                     console.log("SPECIFIC POST:-", res.data);
@@ -81,7 +82,7 @@ function Search() {
             // setusersData('')
             console.log("AAgaya", "User", keyword);
            
-            axios.get(`http://localhost:4000/post/specificUsers?keyword=${keyword}`)
+            axios.get(`${LINKURL}/post/specificUsers?keyword=${keyword}`)
                 .then(res => {
 
                     console.log("USERS:-", res.data);

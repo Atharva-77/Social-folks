@@ -11,6 +11,7 @@ import axios from 'axios';
 import { Avatar } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
+import { LINKURL } from './Reducers/constants/userConstants';
 
 function Post({id,Icon,displayName, username,originalData, profilePicUrl,postText, editedText,imageUrl, verified,createdAt,parentHandler,replyHandler,onClick, count,likeslength,likesData,retweetUserList, retweetData,replyDataId,totalReplies,postDetails_boolean=false, postDetails_RootUser,postDetails_CurrentUser,who}) {
    
@@ -188,7 +189,7 @@ var editFlag=false;
                 "postid":id
              }
     
-            axios.put(`http://localhost:4000/post/${id}/like`,postData,config)
+            axios.put(`${LINKURL}/post/${id}/like`,postData,config)
             .then( res =>
                     {
                         // console.log("179 POST-LIKE-AXIOS:-",dataLen_Likes,data_Likes);
@@ -235,7 +236,7 @@ var editFlag=false;
                 "postid":id
              }
     
-            axios.post(`http://localhost:4000/post/${id}/retweet`,postData,config)
+            axios.post(`${LINKURL}/post/${id}/retweet`,postData,config)
             .then( res =>
                     {
                         console.log("POST-RETWEET-AXIOS:-",res.data.content, res.data.retweetUserList.length,res.data.retweetUserList);
@@ -427,7 +428,7 @@ var editFlag=false;
             "replyTo":id
         }
 
-        axios.post(`http://localhost:4000/post/add`,replycontent_data,config)
+        axios.post(`${LINKURL}/post/add`,replycontent_data,config)
         .then( res =>
                 {
                     console.log("AXIOS:-",res.data); 
@@ -521,8 +522,8 @@ var editFlag=false;
             "postId": id
         }
 
-        // console.log((`http://localhost:4000/post/editPost/add/${id}`));
-        axios.post(`http://localhost:4000/post/editPost/add/${id}`, editContent_data, config)
+        // console.log((`${LINKURL}/post/editPost/add/${id}`));
+        axios.post(`${LINKURL}/post/editPost/add/${id}`, editContent_data, config)
             .then(res => {
                 console.log("AXIOS:-", res.data);
                 // console.log("PROPS.parentHandler",props.parentHandler); 

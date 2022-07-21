@@ -14,6 +14,7 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
+import { LINKURL } from './Reducers/constants/userConstants';
 
 import { useHistory } from "react-router-dom";
 
@@ -129,7 +130,7 @@ function PostDetails() {
             // console.log("ON POSTDETAILS",reload);
             // if(query!=undefined)
             // {
-                axios.get(`http://localhost:4000/post/${id}`)
+                axios.get(`${LINKURL}/post/${id}`)
                 .then(res=>
                     {
                         // console.log(" 111111111111111111111111111RES.DATA ",(res.data),query);
@@ -154,7 +155,7 @@ function PostDetails() {
                         // timestamp=timeDifference(new Date(),new Date(data.createdAt));
                     })
     
-                    axios.get(`http://localhost:4000/post/reply/${id}`)
+                    axios.get(`${LINKURL}/post/reply/${id}`)
                     .then(res=>
                         {
                             // console.log(" 2.RepliesRES.DATA ",(res.data));
@@ -185,7 +186,7 @@ function PostDetails() {
                       //If The root tweet is "Replying to", then there is an option of 'Link to Full tweet'. When this is cicked, it take to a tweet. So that tweet should become rootTweet . Hence rootTweet is reassigned.
                     if (query == 1 || (query== undefined && frmPostBack==1)) 
                      {
-                            axios.get(`http://localhost:4000/post/${id}`)
+                            axios.get(`${LINKURL}/post/${id}`)
                                 .then(res => {
                                     // console.log(" DATAAAAAAAAAAAAAAAA RES.DATA ", (res.data));
                                     setdata(res.data);
@@ -209,7 +210,7 @@ function PostDetails() {
                                     setreload(0)
                                 })
 
-                            axios.get(`http://localhost:4000/post/reply/${id}`)
+                            axios.get(`${LINKURL}/post/reply/${id}`)
                                 .then(res => {
                                     // console.log(" 2.2222222222222222222222RepliesRES.DATA ",(res.data));
                                     setrepliesData(res.data);
@@ -222,7 +223,7 @@ function PostDetails() {
 
                     else if(query==0 || (query==undefined && frmPostBack==0))
                     {
-                            axios.get(`http://localhost:4000/post/${id}`)
+                            axios.get(`${LINKURL}/post/${id}`)
                                 .then(res => {
                                     rootsIdSpace=1;
                                     console.log(" 160R0000000000000000000000000000000000ES.DATA ", (res.data),rootsIdSpace);
@@ -239,7 +240,7 @@ function PostDetails() {
                                     // setreload(0)
                                 })
 
-                            axios.get(`http://localhost:4000/post/reply/${id}`)
+                            axios.get(`${LINKURL}/post/reply/${id}`)
                                 .then(res => {
                                     console.log(" 242222222222222222222222222222222222222222222.RepliesRES.DATA ",(res.data));
                                     setrepliesData(res.data);
@@ -261,7 +262,7 @@ function PostDetails() {
                 {
    
 
-                        axios.get(`http://localhost:4000/post/reply/${id}`)
+                        axios.get(`${LINKURL}/post/reply/${id}`)
                             .then(res => {
                                 console.log(" 2427777777777777777777777777777777777.RepliesRES.DATA ",(res.data));
                                 setrepliesData(res.data);
@@ -281,7 +282,7 @@ function PostDetails() {
         //             //If The root tweet is "Replying to", then there is an option of 'Link to Full tweet'. When this is cicked, it take to a tweet. So that tweet should become rootTweet . Hence rootTweet is reassigned.
         //         if(query==1)
         //            {
-        //                 axios.get(`http://localhost:4000/post/${id}`)
+        //                 axios.get(`${LINKURL}/post/${id}`)
         //                     .then(res => {
         //                         console.log(" DATAAAAAAAAAAAAAAAA RES.DATA ", (res.data));
         //                         setdata(res.data);
@@ -304,7 +305,7 @@ function PostDetails() {
         //                         // timestamp=timeDifference(new Date(),new Date(data.createdAt));
         //                     })
 
-        //                 axios.get(`http://localhost:4000/post/reply/${id}`)
+        //                 axios.get(`${LINKURL}/post/reply/${id}`)
         //                     .then(res => {
         //                         // console.log(" 2.RepliesRES.DATA ",(res.data));
         //                         setrepliesData(res.data);
@@ -316,7 +317,7 @@ function PostDetails() {
 
         //             else
         //             {
-        //                 axios.get(`http://localhost:4000/post/${id}`)
+        //                 axios.get(`${LINKURL}/post/${id}`)
         //                     .then(res => {
         //                         console.log(" 160RES.DATA ", (res.data));
         //                         setdata(res.data);
@@ -330,7 +331,7 @@ function PostDetails() {
         //                         // timestamp=timeDifference(new Date(),new Date(data.createdAt));
         //                     })
 
-        //                 axios.get(`http://localhost:4000/post/reply/${id}`)
+        //                 axios.get(`${LINKURL}/post/reply/${id}`)
         //                     .then(res => {
         //                         // console.log(" 2.RepliesRES.DATA ",(res.data));
         //                         setrepliesData(res.data);
@@ -373,7 +374,7 @@ function PostDetails() {
              {
                  console.log("1st pg",retweetSubmitId);
  
-                 axios.post(`http://localhost:4000/post/${retweetSubmitId}/retweet`,postData,config)
+                 axios.post(`${LINKURL}/post/${retweetSubmitId}/retweet`,postData,config)
                  .then( res =>
                          {
                              console.log("POSTDetails-Retweet-AXIOS:-",res.data, res.data.retweetUserList);
@@ -391,7 +392,7 @@ function PostDetails() {
                  console.log("2nd Pg+ RootId",rootData_Likes);
                  console.log("2.",data_Likes);
                 
-                 axios.post(`http://localhost:4000/post/${retweetSubmitId}/retweet`,postData,config)
+                 axios.post(`${LINKURL}/post/${retweetSubmitId}/retweet`,postData,config)
                  .then( res =>
                          {
                              // console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
@@ -409,7 +410,7 @@ function PostDetails() {
              else
              {
                  console.log("3rd pg+ id-likeid");
-                 axios.post(`http://localhost:4000/post/${retweetSubmitId}/retweet`,postData,config)
+                 axios.post(`${LINKURL}/post/${retweetSubmitId}/retweet`,postData,config)
                  .then( res =>
                          {
                              // console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
@@ -424,7 +425,7 @@ function PostDetails() {
                      )
              }
 
-            // axios.post(`http://localhost:4000/post/${retweetSubmitId}/retweet`,postData,config)
+            // axios.post(`${LINKURL}/post/${retweetSubmitId}/retweet`,postData,config)
             // .then( res =>
             //         {
             //             console.log("POST-RETWEET-AXIOS:-",res.data.content, res.data.retweetUserList.length,res.data.retweetUserList);
@@ -460,7 +461,7 @@ function PostDetails() {
             {
                 console.log("1st pg");
 
-                axios.put(`http://localhost:4000/post/${likeSubmitId}/like`,postData,config)
+                axios.put(`${LINKURL}/post/${likeSubmitId}/like`,postData,config)
                 .then( res =>
                         {
                             // console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
@@ -479,7 +480,7 @@ function PostDetails() {
                 console.log("2nd Pg+ RootId",rootData_Likes);
                 console.log("2.",data_Likes);
                
-                axios.put(`http://localhost:4000/post/${likeSubmitId}/like`,postData,config)
+                axios.put(`${LINKURL}/post/${likeSubmitId}/like`,postData,config)
                 .then( res =>
                         {
                             // console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
@@ -495,7 +496,7 @@ function PostDetails() {
             else
             {
                 console.log("3rd pg+ id-likeid");
-                axios.put(`http://localhost:4000/post/${likeSubmitId}/like`,postData,config)
+                axios.put(`${LINKURL}/post/${likeSubmitId}/like`,postData,config)
                 .then( res =>
                         {
                             // console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
@@ -519,7 +520,7 @@ function PostDetails() {
             // }
             
             //1
-            // axios.put(`http://localhost:4000/post/${likeSubmitId}/like`,postData,config)
+            // axios.put(`${LINKURL}/post/${likeSubmitId}/like`,postData,config)
             // .then( res =>
             //         {
             //             console.log("POSTDetails-LIKE-AXIOS:-",res.data.content, res.data.likes.length,res.data.likes);
@@ -606,14 +607,14 @@ function PostDetails() {
             "replyTo":replySubmitId
         }
 
-        axios.post(`http://localhost:4000/post/add`,replycontent_data,config)
+        axios.post(`${LINKURL}/post/add`,replycontent_data,config)
         .then( res =>
                 {
                     console.log("AXIOS:-",res.data); 
                     // console.log("PROPS.parentHandler",props.parentHandler); 
                     // props.parentHandler();
                     
-                    axios.get(`http://localhost:4000/post/reply/${id}`)
+                    axios.get(`${LINKURL}/post/reply/${id}`)
                     .then(res=>
                         {
                             console.log(" 2.RepliesRES.DATA ",(res.data));
@@ -706,13 +707,13 @@ function PostDetails() {
             "replyTo": replySubmitId
         }
 
-        axios.post(`http://localhost:4000/post/add`, replycontent_data, config)
+        axios.post(`${LINKURL}/post/add`, replycontent_data, config)
             .then(res => {
                 console.log("AXIOS:-", res.data);
                 // console.log("PROPS.parentHandler",props.parentHandler); 
                 // props.parentHandler();
 
-                axios.get(`http://localhost:4000/post/reply/${id}`)
+                axios.get(`${LINKURL}/post/reply/${id}`)
                     .then(res => {
                         console.log(" 2.RepliesRES.DATA ", (res.data));
                         setrepliesData(res.data);

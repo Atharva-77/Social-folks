@@ -3,7 +3,8 @@ import { USER_LOGIN_REQUEST,
          USER_LOGIN_SUCCESS, 
          USER_LOGIN_FAILURE,
 
-         USER_LOGOUT} from '../constants/userConstants'
+         USER_LOGOUT,
+         LINKURL} from '../constants/userConstants'
 
 const userLoginRequest=()=>
 {
@@ -59,7 +60,7 @@ export const userAction_details=(email,password)=>async(dispatch) =>
         // }
         
         //The result we get back is various objects with keys like config, data, headers, statustext. The data key has the all data, hence we destrucutre it.
-        const {data}=await axios.post(`http://localhost:4000/login/add`,{email,password})
+        const {data}=await axios.post(`${LINKURL}/login/add`,{email,password})
 
         console.log("DATA ",data);
         dispatch(userLoginSuccess(data))

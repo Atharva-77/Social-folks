@@ -7,6 +7,7 @@ import Post3 from './Post3';
 import Post4 from './Post4';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
+import { LINKURL } from './Reducers/constants/userConstants';
 
 
 import Tweetbox from './Tweetbox';
@@ -54,7 +55,7 @@ function HomePage() {
                     "postid": id
                 }
 
-                axios.get(`http://localhost:4000/post/allpost/following/${userInfo.username}`,config)
+                axios.get(`${LINKURL}/post/allpost/following/${userInfo.username}`,config)
                     .then(res => {
                         // console.log("HomePg RES.DATA ",(res.data));
                         setspecificFollowing_Data(res.data);
@@ -62,7 +63,7 @@ function HomePage() {
             }
 
 
-            axios.get(`http://localhost:4000/post/allpost`)
+            axios.get(`${LINKURL}/post/allpost`)
                 .then(res => {
 
                     console.log("HomePg RES.DATA ", (res.data));
