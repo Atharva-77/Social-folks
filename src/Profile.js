@@ -962,7 +962,7 @@ function Profile() {
                                                                                                 <div className='Profile_NoTweets'>Loading...</div>
                                                                                                 :
                                                                                             
-                                                                                                <div className='Profile_NoTweets'>1.2No Posts</div>
+                                                                                                <div className='Profile_NoTweets'>No Posts</div>
                                                                                         
                                                                                             }
                                                                                             

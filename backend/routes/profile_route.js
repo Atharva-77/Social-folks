@@ -1,5 +1,5 @@
 const exp=require('express');
-const { protect } = require('../middleware/authmiddleware');
+const { protect } = require('../middleware/authMiddleware');
 const router=exp.Router()
 
 let PostDb=require('../schema_model/post_schema');

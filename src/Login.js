@@ -9,8 +9,8 @@ import {  useHistory } from 'react-router';
 function Login() {
     let history = useHistory()
 
-    const [email, setemail] = useState('hi@2');
-    const [password, setpassword] = useState('q1');
+    const [email, setemail] = useState('');
+    const [password, setpassword] = useState('');
     // console.log(email);
 
     const dispatch = useDispatch();
