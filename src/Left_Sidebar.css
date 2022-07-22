@@ -69,7 +69,7 @@
     }
 }
 
-/* @media (max-width:400px) {
+@media (max-width:750px) {
     .Left_Sidebar
     {
         flex:0.25;
@@ -78,7 +78,7 @@
         border-bottom: 0px;
         min-width: 100px;
         min-height: 99.5vh;
-        background-color: red;
+        /* background-color: red; */
 
     }
     .main_icon
@@ -88,4 +88,44 @@
         font-size: 2.2rem !important;
         color: #1da1f2;
     }
-} */
+}
+
+@media (max-width:600px) {
+    .Left_Sidebar {
+        flex: 0.3;
+        border: 1px solid lightgray;
+        border-right: 1px solid lightgray;
+        border-bottom: 0px;
+        min-width: 100px;
+        min-height: 99.5vh;
+        /* background-color: red; */
+
+    }
+
+    .main_icon {
+        padding-left: 15px;
+        margin-top: 1rem;
+        font-size: 2.2rem !important;
+        color: #1da1f2;
+    }
+}
+
+@media (max-width:428px) {
+    .Left_Sidebar {
+        flex: 0.3;
+        border: 1px solid lightgray;
+        border-right: 1px solid lightgray;
+        border-bottom: 0px;
+        min-width: 90px;
+        min-height: 99.5vh;
+        /* background-color: red; */
+
+    }
+
+    .main_icon {
+        padding-left: 15px;
+        margin-top: 1rem;
+        font-size: 2.2rem !important;
+        color: #1da1f2;
+    }
+}

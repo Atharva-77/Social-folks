@@ -14,3 +14,21 @@
 
     }
 }
+
+@media (max-width:800px) {
+
+    .Right_Sidebar {
+        flex: 0.15;
+        border-left: 1px solid lightgray;
+
+    }
+}
+
+@media (max-width:600px) {
+
+    .Right_Sidebar {
+        flex: 0.1;
+        border-left: 1px solid lightgray;
+
+    }
+}
