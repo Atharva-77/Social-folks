@@ -610,7 +610,7 @@ margin-top: 5px;
 
    }
 
-    @media (max-width:465px) 
+    @media (max-width:475px) 
     {
 
 
@@ -630,4 +630,21 @@ margin-top: 5px;
             /* align-items: center; */
         }
 
+                .Post {
+    
+                    padding: 1rem;
+                    border-bottom: 2px solid lightgray;
+                    padding-left: 2px;/************************************This is changed*/
+                    padding-right: 1px;/************************************This is changed*/
+                    padding-bottom: 0rem;
+                    cursor: pointer;
+    
+                    border-right: 2px solid lightgray;
+                    border-left: 2px solid lightgray;
+                    border-top: 2px solid lightgray;
+    
+                }
+
     }
+
+        

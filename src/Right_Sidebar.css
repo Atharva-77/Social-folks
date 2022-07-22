@@ -32,3 +32,21 @@
 
     }
 }
+
+@media (max-width:455px) {
+
+    .Right_Sidebar {
+        flex: 0.0;
+        border-left: 1px solid lightgray;
+
+    }
+}
+
+/* @media (max-width:420px) {
+
+    .Right_Sidebar {
+        flex: 0.1;
+        border-left: 1px solid lightgray;
+
+    }
+} */

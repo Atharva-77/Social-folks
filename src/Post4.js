@@ -645,7 +645,7 @@ var editFlag=false;
                                 <div className='Post_date'>{timestamp}</div>
                             
                             </div>
-                        
+                            {/* {window.innerWidth} */}
                         
                             <div className="Post_text_img">
                                     <p className="Post_postText">{postText}</p>

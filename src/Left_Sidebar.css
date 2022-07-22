@@ -92,7 +92,7 @@
 
 @media (max-width:600px) {
     .Left_Sidebar {
-        flex: 0.3;
+        flex: 0.25;
         border: 1px solid lightgray;
         border-right: 1px solid lightgray;
         border-bottom: 0px;
@@ -110,13 +110,13 @@
     }
 }
 
-@media (max-width:428px) {
+@media (max-width:455px) {
     .Left_Sidebar {
-        flex: 0.3;
+        /* flex: 0.3; */
         border: 1px solid lightgray;
         border-right: 1px solid lightgray;
         border-bottom: 0px;
-        min-width: 90px;
+        min-width: 85px;
         min-height: 99.5vh;
         /* background-color: red; */
 
@@ -126,6 +126,26 @@
         padding-left: 15px;
         margin-top: 1rem;
         font-size: 2.2rem !important;
+        color: #1da1f2;
+    }
+}
+
+@media (max-width:420px) {
+    .Left_Sidebar {
+        /* flex: 0.3; */
+        border: 1px solid lightgray;
+        border-right: 1px solid lightgray;
+        border-bottom: 0px;
+        min-width: 80px;
+        min-height: 99.5vh;
+        /* background-color: red; */
+
+    }
+
+    .main_icon {
+        padding-left: 15px;
+        margin-top: 1rem;
+        font-size: 2rem !important;
         color: #1da1f2;
     }
 }
