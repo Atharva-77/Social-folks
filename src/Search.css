@@ -1,5 +1,5 @@
 .Search_top {
-    flex: 0.60;
+    flex: 0.55;
     /* border:2px solid rgb(233, 33, 33); */
     border-right: 1px solid lightgray;
 
@@ -122,7 +122,105 @@
     
 }
 
-input:focus{
+/* input:focus */
+.header_input:focus{
     outline: 2px solid #1da1f2;
     background-color: white;
+}
+
+
+/* $(".header_input"):focus {
+    outline: 2px solid #1da1f2;
+    background-color: white;
+} */
+
+/* ------------------------------------------------- */
+@media (max-width:1100px) {
+
+    .Search_top {
+        flex: 0.5;
+        border-right: 1px solid lightgray;
+        border-bottom: 1px solid lightgray;
+    }
+
+    .header_search {     /************************************This is changed*/
+        padding-top: 25px;
+        padding-left: 8px;
+        padding-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header_input {
+
+        height: 22px;
+        width: 280px;/************************************This is changed*/
+
+        border-radius: 2px;
+        border: none;
+
+        background-color: #eff3f4;
+        padding: 5px;
+    }
+
+    .header_searchIcon {
+
+
+        background-color: rgb(106, 195, 247);
+        height: 22px !important;
+        padding: 4px;
+        position: absolute;
+        margin-left: 258px;/************************************This is changed*/
+        border-radius: 2px;
+
+    }
+}
+
+
+/* ------------------------------------------------- */
+@media (max-width:900px) {
+
+    .Search_top
+    {
+        flex: 0.5;
+        border-right: 1px solid lightgray;    
+        border-bottom: 1px solid lightgray;
+    }
+
+    .header_search /************************************This is changed*/
+    {
+        padding-top: 25px;
+        padding-left: 8px;
+        padding-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .header_input 
+    {
+
+        height: 22px;
+        width: 200px;/************************************This is changed*/
+
+        border-radius: 2px;
+        border: none;
+
+        background-color: #eff3f4;
+        padding: 5px;
+    }
+
+    .header_searchIcon 
+    {
+        
+
+        background-color: rgb(106, 195, 247);
+        height: 22px !important;
+        padding: 4px;
+        position: absolute;
+        margin-left: 180px;/************************************This is changed*/
+        border-radius: 2px;
+
+    }
 }

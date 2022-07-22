@@ -517,7 +517,7 @@
     cursor: pointer;
     font-weight: 500;
 
-    padding: 5px 17px;
+    padding: -1px 17px;
     margin-top: 24px;
 }
 
@@ -538,7 +538,7 @@
     cursor: pointer;
     font-weight: 500;
 
-    padding: 5px 17px;
+    padding: -1px 17px;
     margin-top: 24px;
 }
 
@@ -586,4 +586,65 @@ input[type="file"] {
 
 .span-img {
     /* color: red; */
+}
+
+
+
+
+@media (max-width:800px) {
+
+    .modal-textarea {
+        margin-left: 3rem;
+        margin-right: 3rem;
+        margin-bottom: 1.3rem;
+
+        height: 80px;
+        width: 70%;/************************************This is changed*/
+        border: none;
+        border: 0.8px solid black;
+        font-size: 1.2rem;
+        background-color: rgb(247, 247, 247);
+
+
+    }
+}
+
+@media (max-width:770px) {
+
+.Profile_EditPic_modal-content {
+        background-color: rgb(247, 247, 247);
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 35%;/************************************This is changed*/
+        min-height: 34%;
+       
+    }
+}
+
+
+@media (max-width:662px) {
+
+    .Profile_EditPic_modal-content {
+        background-color: rgb(247, 247, 247);
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 45%;/************************************This is changed*/
+        min-height: 34%;
+        
+    }
+}
+
+@media (max-width:522px) {
+
+    .Profile_EditPic_modal-content {
+        background-color: rgb(247, 247, 247);
+        margin: 5% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 65%;/************************************This is changed*/
+        min-height: 34%;
+       
+    }
 }
