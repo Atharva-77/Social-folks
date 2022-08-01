@@ -1,5 +1,5 @@
 # [Social-folks](https://social-folks.herokuapp.com/)
-This is website in MERN stack like twitter:- https://social-folks.herokuapp.com/
+This is website in **MERN(MongoDB Express, Reactjs, Nodejs)** stack like twitter:- https://social-folks.herokuapp.com/
 
 You can  **Create a Post**, **Retweet** Post, **Comment** on a Post.   
 **Unique Feature** (which isn't on twitter):- User can also **Edit** a Post. Also other users can see the **original post that was edited**.   
