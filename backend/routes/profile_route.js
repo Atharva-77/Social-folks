@@ -1,189 +1,151 @@
-const exp=require('express');
-const { protect } = require('../middleware/authMiddleware');
-const router=exp.Router()
+const exp = require("express");
+const { protect } = require("../middleware/authMiddleware.js");
+const router = exp.Router();
 
-let PostDb=require('../schema_model/post_schema');
-let RegisterDb=require('../schema_model/register_schema')
+let PostDb = require("../schema_model/post_schema");
+let RegisterDb = require("../schema_model/register_schema");
 
-router.post('/:username',async(req,res)=>
-{
-    try
-    {    
-       
+router.post("/:username", async (req, res) => {
+  try {
+    var username = req.params.username || req.body.username;
 
-        var username=req.params.username || req.body.username
-        
-        console.log("PROFILE Route ",username,req.params.username);
+    console.log("PROFILE Route ", username, req.params.username);
 
-        const getUser= await RegisterDb.findOne({username:username})
-        // console.log("\n\nPROF DB",getUser);
-        
-        if(getUser!=null)
-            res.status(201).json(getUser)
-       
-        else
-            res.status(201).json("NO SUCH USER")
-       
-       
-    
-    }
-    catch(err)
-    {
-        console.log("Error hai",err);
-        // res.status(401).json("Invalid Details",err)
-    }
-})
+    const getUser = await RegisterDb.findOne({ username: username });
+    // console.log("\n\nPROF DB",getUser);
+
+    if (getUser != null) res.status(201).json(getUser);
+    else res.status(201).json("NO SUCH USER");
+  } catch (err) {
+    console.log("Error hai", err);
+    // res.status(401).json("Invalid Details",err)
+  }
+});
 
 //Follow / unfollow user. Update followers, following list
-router.put('/followRoute/:username',async(req,res)=>
-{
-    try
-    {    
-       
-        var username=req.params.username || req.body.username
-        
-        console.log("PROFILE Route ",username,req.params.username);
+router.put("/followRoute/:username", async (req, res) => {
+  try {
+    var username = req.params.username || req.body.username;
 
-        const getUser= await RegisterDb.findOne({username:username})
-        console.log("\n\nPROF DB",username,getUser._id);
+    console.log("PROFILE Route ", username, req.params.username);
 
-        var profileUserId=getUser._id;
-        var userToFollowid=req.body.userFollowId;//sent by frontend
+    const getUser = await RegisterDb.findOne({ username: username });
+    console.log("\n\nPROF DB", username, getUser._id);
 
-        var isfollow=getUser.following && getUser.following.includes(userToFollowid);
-        var option= isfollow ? "$pull" : "$addToSet";
+    var profileUserId = getUser._id;
+    var userToFollowid = req.body.userFollowId; //sent by frontend
 
-        console.log("\n\nPROF DB",getUser._id, isfollow, option);
+    var isfollow =
+      getUser.following && getUser.following.includes(userToFollowid);
+    var option = isfollow ? "$pull" : "$addToSet";
 
-        //Update your following list
-        const updateFollowList=await RegisterDb.findByIdAndUpdate(profileUserId, { [option] : {following : userToFollowid}}, {new:true} ).catch(err=>res.status(401).json("POST ka Error is "+err)) 
-        
-        //Update others followers list
-        const updateFollowiingList=await RegisterDb.findByIdAndUpdate(userToFollowid, { [option] : {followers : profileUserId}}, {new:true} ).catch(err=>res.status(401).json("POST ka Error is "+err)) 
-        
-        // console.log("FOLLOW LIST",updateFollowList);
-        
-        // if(getUser!=null)
-            res.status(201).json(updateFollowiingList)
-       
-        // else
-            // res.status(201).json("NO SUCH USER")
-       
-       
-    
-    }
-    catch(err)
-    {
-        console.log("Error hai",err);
-        // res.status(401).json("Invalid Details",err)
-    }
-})
+    console.log("\n\nPROF DB", getUser._id, isfollow, option);
 
+    //Update your following list
+    const updateFollowList = await RegisterDb.findByIdAndUpdate(
+      profileUserId,
+      { [option]: { following: userToFollowid } },
+      { new: true }
+    ).catch((err) => res.status(401).json("POST ka Error is " + err));
+
+    //Update others followers list
+    const updateFollowiingList = await RegisterDb.findByIdAndUpdate(
+      userToFollowid,
+      { [option]: { followers: profileUserId } },
+      { new: true }
+    ).catch((err) => res.status(401).json("POST ka Error is " + err));
+
+    // console.log("FOLLOW LIST",updateFollowList);
+
+    // if(getUser!=null)
+    res.status(201).json(updateFollowiingList);
+
+    // else
+    // res.status(201).json("NO SUCH USER")
+  } catch (err) {
+    console.log("Error hai", err);
+    // res.status(401).json("Invalid Details",err)
+  }
+});
 
 // All followers of a user
-router.get('/allFollowers/:username',async(req,res)=>
-{
-    try
-    {    
-       
+router.get("/allFollowers/:username", async (req, res) => {
+  try {
+    var username = req.params.username || req.body.username;
 
-        var username=req.params.username || req.body.username
-        
-        console.log("PROFILE Route ",username,req.params.username);
+    console.log("PROFILE Route ", username, req.params.username);
 
-        const getUser= await RegisterDb.findOne({username:username}).populate('followers','-password -followers -following').populate('following','-password -followers -following').select('-password -likes -retweets')
-       
-        const allDetails=getUser
-       
-        if(getUser!=null)
-            res.status(201).json(allDetails)
-       
-        else
-            res.status(201).json("NO SUCH USER")
-       
-       
-    
-    }
-    catch(err)
-    {
-        console.log("Error hai",err);
-        res.status(400).send("Invalid Details"+err)
-    }
-})
+    const getUser = await RegisterDb.findOne({ username: username })
+      .populate("followers", "-password -followers -following")
+      .populate("following", "-password -followers -following")
+      .select("-password -likes -retweets");
 
+    const allDetails = getUser;
 
+    if (getUser != null) res.status(201).json(allDetails);
+    else res.status(201).json("NO SUCH USER");
+  } catch (err) {
+    console.log("Error hai", err);
+    res.status(400).send("Invalid Details" + err);
+  }
+});
 
 //Edit User. Change description.
-router.post('/editUserDescp/:username', protect,async (req, res) => {
-    try {
+router.post("/editUserDescp/:username", protect, async (req, res) => {
+  try {
+    var username = req.params.username || req.body.username;
+    var description = req.body.description;
 
+    console.log("DESCR", description == undefined);
 
-        var username = req.params.username || req.body.username
-        var description = req.body.description
+    const getUser = await RegisterDb.findOne({ username: username });
 
-        console.log("DESCR", description==undefined);
+    getUser.description = description.trim();
 
-        const getUser = await RegisterDb.findOne({ username: username })
-       
-        getUser.description=description.trim()
-       
-        const updateUser = await getUser.save();  
-        // console.log("\n\nPROF DB",getUser);
+    const updateUser = await getUser.save();
+    // console.log("\n\nPROF DB",getUser);
 
-        // if (getUser != null)
-            res.status(201).json(getUser)
+    // if (getUser != null)
+    res.status(201).json(getUser);
 
-        // else
-        //     res.status(201).json("NO SUCH USER")
-
-
-
-    }
-    catch (err) {
-        console.log("Error hai", err);
-        // res.status(401).json("Invalid Details",err)
-    }
-})
-
-
-
+    // else
+    //     res.status(201).json("NO SUCH USER")
+  } catch (err) {
+    console.log("Error hai", err);
+    // res.status(401).json("Invalid Details",err)
+  }
+});
 
 //PUT A IMG URL
-router.put('/imgUrls/:username',protect, async (req, res) => {
-    try {
+router.put("/imgUrls/:username", protect, async (req, res) => {
+  try {
+    var username = req.params.username || req.body.username;
+    var coverPicUrl = req.body.coverPicUrl;
+    var profilePicUrl = req.body.profilePicUrl;
 
+    console.log(
+      "PICS Route ",
+      username,
+      coverPicUrl != undefined,
+      profilePicUrl != undefined
+    );
 
-        var username = req.params.username || req.body.username
-        var coverPicUrl= req.body.coverPicUrl;
-        var profilePicUrl = req.body.profilePicUrl;
-
-
-        console.log("PICS Route ", username, coverPicUrl != undefined, profilePicUrl != undefined);
-
-        const getUser = await RegisterDb.findOne({ username: username })
-        if (coverPicUrl != undefined)
-        {
-            console.log("COVERPIC URL");
-            getUser.coverPicUrl=coverPicUrl;
-        }
-        if (profilePicUrl != undefined)
-        {   
-            console.log("PROFILE URL");
-            getUser.profilePicUrl=profilePicUrl
-        }
-        const updateUser = await getUser.save();
-      
-        res.status(201).json(updateUser)
-
-
-
+    const getUser = await RegisterDb.findOne({ username: username });
+    if (coverPicUrl != undefined) {
+      console.log("COVERPIC URL");
+      getUser.coverPicUrl = coverPicUrl;
     }
-    catch (err) {
-        console.log("Error hai", err);
-        // res.status(401).json("Invalid Details",err)
+    if (profilePicUrl != undefined) {
+      console.log("PROFILE URL");
+      getUser.profilePicUrl = profilePicUrl;
     }
-})
+    const updateUser = await getUser.save();
 
+    res.status(201).json(updateUser);
+  } catch (err) {
+    console.log("Error hai", err);
+    // res.status(401).json("Invalid Details",err)
+  }
+});
 
-
-module.exports=router;
+module.exports = router;
