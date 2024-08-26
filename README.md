@@ -1,5 +1,5 @@
 # [Social-folks](https://social-folks.vercel.app/)
-This is website in **MERN(MongoDB Express, Reactjs, Nodejs)** stack like twitter:- https://social-folks.vercel.app/
+This website is in **MERN(MongoDB Express, Reactjs, Nodejs)** stack like twitter:- https://social-folks.vercel.app/
 
 You can  **Create a Post**, **Retweet** Post, **Comment** on a Post.   
 **Unique Feature** (which isn't on twitter):- User can also **Edit** a Post. Also other users can see the **original post that was edited**.   
